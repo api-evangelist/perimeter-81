@@ -1,0 +1,347 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Objects Services API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Objects Services
+paths:
+  /v2.3/objects/services:
+    get:
+      operationId: getObjectsServices
+      summary: Get object services
+      description: 'Required permissions: `["objects:read"]`.'
+      responses:
+        '200':
+          description: Completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectsServicesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+      - Objects Services
+    post:
+      operationId: postObjectsServices
+      summary: Create new Service object
+      description: 'Required permission: `["objects:create"]`.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectsServicesRequestObj'
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                - $ref: '#/components/schemas/ObjectsServicesResponseObj'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+      - Objects Services
+  /v2.3/objects/services/{objectId}:
+    put:
+      operationId: putObjectsServices
+      summary: Update Service object
+      description: 'Required permission: `["objects:update"]`'
+      parameters:
+      - name: objectId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectsServicesRequestObj'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ObjectsServicesResponseObj'
+                - description: The updated service.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict - You cannot update a service that is associated with one or more policies
+      tags:
+      - Objects Services
+    delete:
+      operationId: deleteObjectsServices
+      summary: Delete Service object
+      description: 'Required permission: `["objects:delete"]`'
+      parameters:
+      - name: objectId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict - You cannot delete a service that is associated with one or more policies
+      tags:
+      - Objects Services
+components:
+  schemas:
+    ObjectsServicesResponseObj:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ObjectsName'
+        description:
+          type: string
+        protocols:
+          items:
+            $ref: '#/components/schemas/ObjectsServicesProtocolResponseObj'
+          type: array
+      required:
+      - name
+      - protocols
+    ObjectsServicesProtocolResponseObj:
+      anyOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
+      - $ref: '#/components/schemas/ObjectServiceProtocolICMPResponse'
+    ObjectsServicesResponse:
+      allOf:
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectsServicesResponseObj'
+        required:
+        - data
+      - $ref: '#/components/schemas/ObjectsPaginationObj'
+    ObjectServiceProtocolICMPResponse:
+      type: object
+      required:
+      - protocol
+      - protocolOptions
+      properties:
+        protocol:
+          type: string
+          enum:
+          - icmp
+        protocolOptions:
+          $ref: '#/components/schemas/ObjectServiceProtocolOptionsICMPresponse'
+    ObjectsServicesProtocolRequestObj:
+      anyOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
+      - $ref: '#/components/schemas/ObjectServiceProtocolICMPRequest'
+    ObjectServiceProtocolTCPUDP:
+      oneOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolSingle'
+      - $ref: '#/components/schemas/ObjectServiceProtocolRange'
+      - $ref: '#/components/schemas/ObjectServiceProtocolList'
+      type: object
+      required:
+      - protocol
+      properties:
+        protocol:
+          type: string
+          enum:
+          - tcp
+          - udp
+    ObjectsPaginationObj:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/NumberPositive500'
+        totalPage:
+          $ref: '#/components/schemas/NumberPositive500'
+        itemsTotal:
+          $ref: '#/components/schemas/NumberPositive500'
+      required:
+      - page
+      - totalPage
+      - itemsTotal
+    NumberPositive500:
+      type: number
+      minimum: 0
+      maximum: 500
+    ObjectsName:
+      type: string
+      pattern: ^[a-zA-Z0-9_ ]+$
+      description: The name of the Objects
+      minLength: 3
+      maxLength: 100
+    ObjectServiceProtocolList:
+      type: object
+      required:
+      - valueType
+      - value
+      properties:
+        valueType:
+          type: string
+          enum:
+          - list
+        value:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PortNumber'
+    PortNumber:
+      type: integer
+      minimum: 1
+      maximum: 65535
+    ObjectsServicesRequestObj:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ObjectsName'
+        description:
+          type: string
+        protocols:
+          items:
+            $ref: '#/components/schemas/ObjectsServicesProtocolRequestObj'
+          type: array
+      additionalProperties: false
+      required:
+      - name
+      - protocols
+    ObjectServiceProtocolSingle:
+      type: object
+      required:
+      - valueType
+      - value
+      properties:
+        valueType:
+          type: string
+          enum:
+          - single
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/PortNumber'
+    ObjectServiceProtocolOptionsICMPrequest:
+      description: -1 means 'any', the rest of the values are the RFC default ICMP parameters
+      type: integer
+      enum:
+      - -1
+      - 0
+      - 3
+      - 5
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 40
+      - 42
+      - 43
+    ObjectServiceProtocolOptionsICMPresponse:
+      description: -1 means 'any', the rest of the values are the RFC default ICMP parameters
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+      enum:
+      - code: -1
+        description: Any
+      - code: 0
+        description: Echo Reply
+      - code: 3
+        description: Destination Unreachable
+      - code: 5
+        description: Redirect
+      - code: 8
+        description: Echo
+      - code: 9
+        description: Router Advertisement
+      - code: 10
+        description: Router Selection
+      - code: 11
+        description: Time Exceeded
+      - code: 12
+        description: Parameter Problem
+      - code: 13
+        description: Timestamp
+      - code: 14
+        description: Timestamp Reply
+      - code: 40
+        description: Photuris
+      - code: 42
+        description: Extended Echo Request
+      - code: 43
+        description: Extended Echo Reply
+    ObjectServiceProtocolICMPRequest:
+      type: object
+      required:
+      - protocol
+      - protocolOptions
+      properties:
+        protocol:
+          type: string
+          enum:
+          - icmp
+        protocolOptions:
+          $ref: '#/components/schemas/ObjectServiceProtocolOptionsICMPrequest'
+    ObjectServiceProtocolRange:
+      type: object
+      required:
+      - valueType
+      - value
+      properties:
+        valueType:
+          type: string
+          enum:
+          - range
+        value:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/PortNumber'
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

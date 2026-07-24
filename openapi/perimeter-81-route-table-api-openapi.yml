@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Route Table API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Route Table
+paths:
+  /v2.3/networks/standard/{networkId}/route-table:
+    get:
+      operationId: standard_getRouteTable
+      summary: Get route table
+      description: 'Required permissions: `["network:read"]`'
+      parameters:
+      - name: networkId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Route ID
+                    subnets:
+                      type: array
+                      items:
+                        type: string
+                    interfaceName:
+                      type: string
+                      description: Route table name
+                    propagated:
+                      type: boolean
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - Route Table
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+  responses:
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

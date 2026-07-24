@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Firewall Policy API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Firewall Policy
+paths:
+  /v2.3/networks/{networkId}/policy:
+    get:
+      operationId: getFirewallPolicy
+      summary: Get firewall policy by network Id
+      description: 'Required permissions: `["network:read"]`.'
+      parameters:
+      - name: networkId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallPolicy'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Network not found
+      tags:
+      - Firewall Policy
+    put:
+      operationId: updateFirewallPolicy
+      summary: Update firewall policy by network ID
+      description: 'Required permissions: `["network:update"]`.'
+      parameters:
+      - name: networkId
+        required: true
+        in: path
+        schema:
+          $ref: '#/components/schemas/Alphanumeric'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallPolicy'
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncOperationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Network not found
+      tags:
+      - Firewall Policy
+components:
+  schemas:
+    Addresses:
+      type: object
+      properties:
+        addresses:
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+          type: array
+          minItems: 1
+          description: List of IDs of address objects.
+      required:
+      - addresses
+      additionalProperties: false
+    SourcesAndDestinations:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/UsersAndGroups'
+      - $ref: '#/components/schemas/Addresses'
+    AlphanumericWithSpace:
+      type: string
+      pattern: ^[a-zA-Z0-9 ]+$
+      description: Any alphanumeric value with space
+      minLength: 1
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    FirewallPolicy:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: whether the policy is enabled.
+        allowed:
+          type: boolean
+          description: whether the policy is accept or drop.
+        id:
+          allOf:
+          - $ref: '#/components/schemas/Alphanumeric'
+          - description: network policy id
+          - example: ZwAeo5wqiF
+        policyRules:
+          items:
+            $ref: '#/components/schemas/FirewallPolicyRule'
+          type: array
+          description: an array of policy rules.
+          required:
+          - sources
+          - destinations
+        trace:
+          type: boolean
+          description: whether the policy is traced.
+      required:
+      - enabled
+      - allowed
+      - id
+      - policyRules
+      additionalProperties: false
+    FirewallPolicyRule:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/Alphanumeric'
+          - description: Policy rule ID.
+        name:
+          type: string
+          minLength: 5
+          maxLength: 50
+          description: Policy rule ID.
+        enabled:
+          type: boolean
+          description: wether the rule is enabled.
+        allowed:
+          type: boolean
+          description: wether the rule is enabled.
+        sources:
+          $ref: '#/components/schemas/SourcesAndDestinations'
+        destinations:
+          $ref: '#/components/schemas/SourcesAndDestinations'
+        services:
+          items:
+            type: string
+            pattern: ^[a-zA-Z0-9_- ]+$
+          type: array
+          minItems: 1
+          description: List of services objects IDs.
+      required:
+      - name
+      - enabled
+      - allowed
+      - sources
+      - destinations
+      additionalProperties: false
+    UsersAndGroups:
+      type: object
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+          type: array
+          minItems: 1
+          maxItems: 10
+          description: List of IDs of users.
+        groups:
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+          type: array
+          minItems: 1
+          description: List of IDs of groups.
+      additionalProperties: false
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

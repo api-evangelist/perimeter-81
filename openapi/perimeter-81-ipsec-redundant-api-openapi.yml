@@ -1,0 +1,516 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application IPSec-Redundant API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: IPSec-Redundant
+paths:
+  /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant:
+    post:
+      operationId: Standard_createIPSecRedundantTunnel
+      summary: Create a new IPSec Redundant tunnel
+      description: 'Required permissions: `["network:write]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIPSecRedundantPayload'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/402'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - IPSec-Redundant
+  /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}:
+    get:
+      operationId: Standard_getIPSecRedundantTunnel
+      summary: Get one IPSec Redundant tunnel
+      description: 'Required permissions: `["network:read"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/haTunnelIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPSecRedundantTunnels'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - IPSec-Redundant
+    put:
+      operationId: Standard_updateIPSecRedundantTunnel
+      summary: Update a new IPSec Redundant tunnel
+      description: 'Required permissions: `["network:write]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/haTunnelIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIPSecRedundantPayload'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - IPSec-Redundant
+    delete:
+      operationId: Standard_deleteIPSecRedundantTunnel
+      summary: Delete IPSec Redundant tunnel
+      description: 'Required permissions: `["network:delete"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/haTunnelIdParam'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - IPSec-Redundant
+components:
+  responses:
+    '422':
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+  schemas:
+    IPSecAdvancedSettings:
+      type: object
+      properties:
+        keyExchange:
+          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
+    CreateIPSecRedundantPayload:
+      type: object
+      properties:
+        tunnelName:
+          $ref: '#/components/schemas/TunnelName'
+        regionID:
+          type: string
+        tunnel1:
+          $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+        tunnel2:
+          $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+        sharedSettings:
+          $ref: '#/components/schemas/IPSecSharedSettingsCreate'
+        advancedSettings:
+          $ref: '#/components/schemas/IPSecAdvancedSettings'
+      required:
+      - tunnelName
+      - regionID
+      - tunnel1
+      - tunnel2
+      - sharedSettings
+      - advancedSettings
+      additionalProperties: false
+    IP:
+      type: string
+      format: ipv4
+    IPSecRedundantTunnel:
+      allOf:
+      - $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+      - type: object
+        properties:
+          tunnelID:
+            type: string
+    IPSecRedundantTunnels:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          tunnelName:
+            $ref: '#/components/schemas/TunnelName'
+          regionID:
+            type: string
+          tunnel1:
+            $ref: '#/components/schemas/IPSecRedundantTunnel'
+          tunnel2:
+            $ref: '#/components/schemas/IPSecRedundantTunnel'
+          sharedSettings:
+            $ref: '#/components/schemas/IPSecSharedSettings'
+          advancedSettings:
+            $ref: '#/components/schemas/IPSecAdvancedSettings'
+    IPSecAlgorithms:
+      type: object
+      properties:
+        auth:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - md5
+            - sha1
+            - sha384
+            - sha256
+            - sha512
+            - aesxcbc
+            - aescmac
+            - prfmd5
+            - prfsha1
+            - prfaesxcbc
+            - prfaescmac
+            - prfsha256
+            - prfsha384
+            - prfsha512
+        encryption:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - 3des
+            - blowfish128
+            - blowfish192
+            - blowfish256
+            - aes128
+            - aes192
+            - aes256
+            - aes128ctr
+            - aes192ctr
+            - aes256ctr
+            - camellia128
+            - camellia192
+            - camellia256
+            - camellia128ctr
+            - camellia192ctr
+            - camellia256ctr
+            - aes128ccm8
+            - aes192ccm8
+            - aes256ccm8
+            - aes128ccm16
+            - aes192ccm16
+            - aes256ccm16
+            - aes128gcm8
+            - aes192gcm8
+            - aes256gcm8
+            - aes128gcm16
+            - aes192gcm16
+            - aes256gcm16
+            - camellia128ccm16
+            - camellia192ccm16
+            - camellia256ccm16
+            - chacha20poly1305
+    UpdateIPSecRedundantPayload:
+      type: object
+      properties:
+        tunnel1:
+          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
+        tunnel2:
+          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
+        sharedSettings:
+          $ref: '#/components/schemas/IPSecSharedSettings'
+        advancedSettings:
+          $ref: '#/components/schemas/IPSecAdvancedSettings'
+      required:
+      - tunnels
+      - sharedSettings
+      - advancedSettings
+      additionalProperties: false
+    IPSecRedundantTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/IPSecRedundantTunnelDetails'
+      - type: object
+        properties:
+          gatewayID:
+            type: string
+        required:
+        - gatewayID
+        additionalProperties: false
+    IPSecPhaseConfig:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAlgorithms'
+      - $ref: '#/components/schemas/IPSecPhaseCommon'
+    PeakBandwidth:
+      type: integer
+      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
+      minimum: 10
+      maximum: 8000
+      default: 1000
+    RemoteASN:
+      type: integer
+      oneOf:
+      - type: integer
+        minimum: 1
+        maximum: 23455
+      - type: integer
+        minimum: 23457
+        maximum: 64495
+      - type: integer
+        minimum: 64512
+        maximum: 65534
+      - type: integer
+        minimum: 131072
+        maximum: 4294967294
+    IPSecRedundantTunnelDetails:
+      type: object
+      properties:
+        passphrase:
+          $ref: '#/components/schemas/CreatePassphrase'
+        p81GWInternalIP:
+          $ref: '#/components/schemas/IP'
+        remoteGWInternalIP:
+          $ref: '#/components/schemas/IP'
+        remotePublicIP:
+          $ref: '#/components/schemas/IP'
+        remoteASN:
+          $ref: '#/components/schemas/RemoteASN'
+        remoteID:
+          $ref: '#/components/schemas/remoteID'
+      required:
+      - passphrase
+      - p81GWInternalIP
+      - remoteGWInternalIP
+      - remotePublicIP
+      - remoteASN
+      - remoteID
+      additionalProperties: false
+    Lifetime:
+      type: string
+      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
+    IPSecRedundantTunnelUpdatePayload:
+      allOf:
+      - $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+      - type: object
+        properties:
+          tunnelId:
+            type: string
+        required:
+        - tunnelId
+        additionalProperties: false
+    IPSecSharedSettings:
+      type: object
+      properties:
+        p81GatewaySubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        remoteGatewaySubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        peakBandwidth:
+          $ref: '#/components/schemas/PeakBandwidth'
+        p81ASN:
+          $ref: '#/components/schemas/RemoteASN'
+        features:
+          type: object
+          properties:
+            symmetricInnerMesh:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  default: false
+              additionalProperties: false
+      required:
+      - p81GatewaySubnets
+      - remoteGatewaySubnets
+      additionalProperties: false
+    IPSecSharedSettingsCreate:
+      allOf:
+      - $ref: '#/components/schemas/IPSecSharedSettings'
+      - type: object
+        properties:
+          p81ASN:
+            $ref: '#/components/schemas/RemoteASN'
+      required:
+      - p81ASN
+      additionalProperties: false
+    IPSecPhaseCommon:
+      type: object
+      properties:
+        dh:
+          description: Diffie Helman encryption
+          minLength: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            enum:
+            - 2
+            - 5
+            - 14
+            - 19
+            - 20
+            - 21
+            - 31
+      required:
+      - auth
+      - encryption
+      - dh
+      additionalProperties: false
+    CreatePassphrase:
+      type: string
+      pattern: ^[a-zA-Z1-9._][a-zA-Z0-9._]{7,63}$
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    remoteID:
+      oneOf:
+      - $ref: '#/components/schemas/IP'
+      - type: string
+        pattern: ^[a-zA-Z0-9]{3,25}$
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+  parameters:
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    haTunnelIdParam:
+      name: haTunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

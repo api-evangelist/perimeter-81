@@ -1,0 +1,507 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Enhanced Networks API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Enhanced Networks
+  description: 'The Enhanced Network API allows you to manage and configure enhanced networks.
+
+    '
+paths:
+  /v2.3/networks/enhanced:
+    get:
+      tags:
+      - Enhanced Networks
+      summary: Get all enhanced networks
+      description: List all enhanced networks
+      operationId: getEnhancedNetworks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnhancedNetwork'
+                description: Enhanced network list.
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+    post:
+      tags:
+      - Enhanced Networks
+      summary: Create enhanced network
+      description: Create a new enhanced network with regions
+      operationId: createEnhancedNetwork
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployEnhancedNetwork'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '402':
+          $ref: '#/components/responses/402_Insufficient_licenses'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+  /v2.3/networks/enhanced/{networkId}:
+    get:
+      tags:
+      - Enhanced Networks
+      summary: Get enhanced network by ID
+      description: Get a specific enhanced network
+      operationId: getEnhancedNetwork
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnhancedNetwork'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    put:
+      tags:
+      - Enhanced Networks
+      summary: Update enhanced network
+      description: Update an existing enhanced network
+      operationId: updateEnhancedNetwork
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnhancedNetworkUpdate'
+      responses:
+        '200':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnhancedNetwork'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    delete:
+      tags:
+      - Enhanced Networks
+      summary: Delete enhanced network
+      description: Delete an enhanced network and all its resources
+      operationId: deleteEnhancedNetwork
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+  /v2.3/networks/enhanced/{networkId}/health:
+    get:
+      tags:
+      - Enhanced Networks
+      summary: Get enhanced network health status
+      description: Get health status of all tunnels in the enhanced network.
+      operationId: getEnhancedNetworkHealth
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      responses:
+        '200':
+          description: Health status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnhancedHealthResponse'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+  /v2.3/networks/enhanced/network-customer-certificate:
+    get:
+      operationId: Enhanced_NetworksControllerV2_3_getNetworkCustomerCertificate
+      summary: Get network customer certificate
+      description: 'Required permissions: `["network:read"]`<br><br>Get network customer certificate details.'
+      parameters: []
+      responses:
+        '200':
+          description: Completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkCustomerCertificateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+      - Enhanced Networks
+components:
+  responses:
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    402_Insufficient_licenses:
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    EnhancedHealthCheck:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/EnhancedHealthCheckType'
+        meta:
+          $ref: '#/components/schemas/EnhancedHealthCheckMeta'
+        status:
+          $ref: '#/components/schemas/HealthStatus'
+      required:
+      - type
+      - meta
+      - status
+      additionalProperties: false
+    EnhancedNetwork:
+      allOf:
+      - $ref: '#/components/schemas/BasicNetwork'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/Attributes'
+    ASN:
+      type: integer
+      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
+      oneOf:
+      - minimum: 1
+        maximum: 64496
+        description: Public ASN range
+      - minimum: 64512
+        maximum: 65535
+        description: Private ASN range (16-bit)
+      - minimum: 131072
+        maximum: 4294967295
+        description: Private ASN range (32-bit)
+    EnhancedRegionCreate:
+      type: object
+      properties:
+        harmonySaseRegionId:
+          type: string
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - harmonySaseRegionId
+    NetworkCustomerCertificateResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Certificate ID
+          displayName:
+            type: string
+            description: Certificate display name
+          expiresAt:
+            type: string
+            format: date-time
+            description: Certificate expiration date
+        required:
+        - id
+        - displayName
+        - expiresAt
+    DeployEnhancedNetwork:
+      type: object
+      properties:
+        network:
+          type: object
+          properties:
+            subnet:
+              type: string
+              maxLength: 20
+              description: Subnet of the network. Cannot be changed later. Allowed private subnet ranges are 10.0.0.0/12-22, 172.16.0.0/12-22, 192.168.0.0/16-22, or 198.18.0.0/15-22.
+              default: 10.255.0.0/16
+            name:
+              type: string
+              description: Network name.
+              minLength: 5
+              maxLength: 32
+            tags:
+              type: array
+              items:
+                type: string
+              description: List of network tags.
+          required:
+          - name
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnhancedRegionCreate'
+          minItems: 1
+      required:
+      - network
+      - regions
+    BasicNetwork:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          dns:
+            type: string
+            description: DNS of the network.
+          subnet:
+            type: string
+            description: Subnet of the network.
+          accessType:
+            enum:
+            - public
+            - private
+            type: string
+          applications:
+            items:
+              type: string
+            type: array
+            description: List of IDs of assigned applications.
+          tags:
+            items:
+              type: string
+            type: array
+            description: List of network tags.
+          name:
+            type: string
+            description: Network name.
+          isDefault:
+            type: boolean
+            description: Indicates that the network is default.
+          id:
+            type: string
+            description: Unique ID.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+          asn:
+            $ref: '#/components/schemas/ASN'
+        required:
+        - dns
+        - subnet
+        - accessType
+        - applications
+        - tags
+        - name
+        - isDefault
+        - id
+        - tenantId
+    EnhancedNetworkUpdate:
+      type: object
+      properties:
+        network:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Network name.
+              minLength: 5
+              maxLength: 32
+            tags:
+              type: array
+              items:
+                type: string
+              description: List of network tags.
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    Attributes:
+      type: object
+      properties:
+        splitTunneling:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        customDNS:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        networkController:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        dnsFiltering:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        openVPNTCP:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+      additionalProperties: false
+    HealthStatus:
+      type: string
+      enum:
+      - passing
+      - critical
+      - unknown
+      description: Health status of the component
+    EnhancedHealthResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnhancedHealthCheck'
+          description: List of health checks for enhanced networks (tunnels only)
+      required:
+      - data
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    EnhancedHealthCheckMeta:
+      type: object
+      properties:
+        networkId:
+          type: string
+          description: ID of the network
+        tunnelName:
+          type: string
+          description: Name of the tunnel
+        tunnelId:
+          type: string
+          description: ID of the tunnel
+        regionId:
+          type: string
+          description: ID of the region where the tunnel is deployed
+      required:
+      - networkId
+      - tunnelName
+      - tunnelId
+      - regionId
+      additionalProperties: false
+    EnhancedHealthCheckType:
+      type: string
+      enum:
+      - tunnel
+      description: Type of health check component for enhanced networks (tunnel only)
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+  parameters:
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

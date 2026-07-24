@@ -1,0 +1,807 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Application
+paths:
+  /v2.3/applications:
+    get:
+      tags:
+      - Application
+      summary: Get Applications List
+      description: This GET API will retrieve a list of all applications. Required permissions [application:read]
+      operationId: getApplications
+      parameters:
+      - name: name
+        in: query
+        required: false
+        description: Application name to filter
+        schema:
+          type: string
+      - name: host
+        in: query
+        required: false
+        description: Application host to filter
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: false
+        description: Application type to filter
+        schema:
+          type: string
+          example: http
+          enum:
+          - http
+          - https
+          - rdp
+          - ssh
+          - vnc
+      - name: page
+        in: query
+        required: false
+        description: Specifies the current page of the paginated result set
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Defines the number of results per page
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: Sorts the results based on a specified field and order. Available fields for sorting are name, host and type.
+        schema:
+          type: string
+          example: sort[name]=asc
+      responses:
+        '200':
+          description: Applications list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationsListPaginatedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+      - Application
+      summary: Create Application
+      description: This POST API will allow to create a new application. Required permissions [application:create]
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/HttpCreateApplication'
+              - $ref: '#/components/schemas/HttpsCreateApplication'
+              - $ref: '#/components/schemas/RdpCreateApplication'
+      responses:
+        '202':
+          description: Application created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncOperationResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  /v2.3/applications/{applicationId}:
+    get:
+      tags:
+      - Application
+      summary: Get Application by Id
+      description: This GET API will allow to retrieve detailed information for a specific application by Id. Required permissions [application:read]
+      operationId: getApplicationById
+      parameters:
+      - name: applicationId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/HttpApplication'
+                - $ref: '#/components/schemas/HttpsApplication'
+                - $ref: '#/components/schemas/RdpApplication'
+                - $ref: '#/components/schemas/SshApplication'
+                - $ref: '#/components/schemas/VncApplication'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Application Not Found
+        '500':
+          description: Internal Server Error
+  /v2.3/applications/status/{statusId}:
+    get:
+      tags:
+      - Application
+      summary: Get status of Application creation process by statusId
+      description: This endpoint should retrieve status of creating application process using statusId. Required permissions [application:read]
+      operationId: getApplicationStatus
+      parameters:
+      - name: statusId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationStatusResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Application Not Found
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    ApplicationPort:
+      type: object
+      description: Application port settings
+      properties:
+        value:
+          oneOf:
+          - type: integer
+            minimum: 1
+            maximum: 65353
+          - type: string
+            minLength: 1
+        source:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - source
+    SshAttributes:
+      type: object
+      description: SSH Application attributes
+      properties:
+        maxConnections:
+          type: integer
+      required:
+      - maxConnections
+    ApplicationStatusResponse:
+      type: object
+      properties:
+        completed:
+          type: boolean
+          description: Shows whether the operation is completed
+        result:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+              description: Response status code
+            resource:
+              type: string
+              description: Endpoint to get the resource if exists
+            reason:
+              type: array
+              description: Failure reasons
+              items:
+                type: string
+    RdpApplication:
+      allOf:
+      - $ref: '#/components/schemas/BasicApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/RdpAttributes'
+    IP:
+      type: string
+      format: ipv4
+    SshApplication:
+      allOf:
+      - $ref: '#/components/schemas/BasicApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/SshAttributes'
+    FixedHost:
+      type: object
+      description: Application host fixed data
+      properties:
+        source:
+          type: string
+          description: Application host source
+          enum:
+          - fixed
+        value:
+          oneOf:
+          - allOf:
+            - $ref: '#/components/schemas/FQDN'
+            - description: Application host FQDN
+            - example: example.com
+          - allOf:
+            - $ref: '#/components/schemas/IP'
+            - type: string
+              pattern: ^(?!0\.0\.0\.0$)(?!127\.)(?!localhost$)
+            - description: Application host IP, but not localhost
+            - example: 10.0.0.1
+      required:
+      - source
+      - value
+    ApplicationsListObject:
+      allOf:
+      - $ref: '#/components/schemas/CommonApplication'
+      - type: object
+        properties:
+          network:
+            type: object
+            description: Application related Network data
+            properties:
+              id:
+                type: string
+                description: Network Id
+              name:
+                type: string
+                description: Network name
+            required:
+            - id
+            - name
+          host:
+            type: string
+            description: Application host
+          port:
+            oneOf:
+            - type: integer
+              minimum: 1
+              maximum: 65353
+            - type: string
+              minLength: 1
+            description: Application port
+        required:
+        - network
+        - host
+        - port
+    RdpCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/CommonCreateApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/RdpAttributes'
+          auth:
+            $ref: '#/components/schemas/ApplicationAuth'
+        required:
+        - attributes
+        - auth
+    HttpsApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpsAttributes'
+    HttpsCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebCreateApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpsAttributes'
+        required:
+        - attributes
+    IdpPort:
+      type: object
+      description: Application port idp data
+      properties:
+        source:
+          type: string
+          description: Application port source
+          enum:
+          - idp
+        value:
+          type: string
+          description: Application port value
+          pattern: ^[a-zA-Z0-9_.-]{2,255}$
+          example: idpExample
+      required:
+      - source
+      - value
+    VncAttributes:
+      type: object
+      description: VNC Application attributes
+      properties:
+        maxConnections:
+          type: integer
+        disableClipboard:
+          type: boolean
+      required:
+      - maxConnections
+    FixedPort:
+      type: object
+      description: Application port fixed data
+      properties:
+        source:
+          type: string
+          description: Application port source
+          enum:
+          - fixed
+        value:
+          allOf:
+          - $ref: '#/components/schemas/PortNumber'
+          - description: Application port value
+          - example: 443
+      required:
+      - source
+      - value
+    HttpCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebCreateApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpAttributes'
+        required:
+        - attributes
+    HttpsAttributes:
+      allOf:
+      - $ref: '#/components/schemas/HttpAttributes'
+      - type: object
+        description: HTTPS Application attributes
+        properties:
+          sslCertificateVerification:
+            type: boolean
+            default: true
+    CommonCreateApplication:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Application name
+          minLength: 5
+          maxLength: 32
+          pattern: ^[^~`()!#$%^&*+=[]\';,/{}|":<>?№@]+$
+          example: MyApplication
+        type:
+          type: string
+          description: Application type
+          enum:
+          - http
+          - https
+          - rdp
+        network:
+          allOf:
+          - $ref: '#/components/schemas/Alphanumeric'
+          - description: Application network ID. To get the ID use endpoint '/networks' with [network:read] permission.
+          - example: ZwAeo5wqiF
+        host:
+          oneOf:
+          - $ref: '#/components/schemas/FixedHost'
+          - $ref: '#/components/schemas/IdpHost'
+        port:
+          oneOf:
+          - $ref: '#/components/schemas/FixedPort'
+          - $ref: '#/components/schemas/IdpPort'
+        users:
+          type: array
+          description: List of IDs of assigned users. To get the IDs use endpoint '/users' with [user:read] permission.
+          minItems: 1
+          example:
+          - mWKM26JMc1
+          - mWKM26JMc2
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+        groups:
+          type: array
+          description: List of IDs of assigned groups. To get the IDs use endpoint '/groups' with [group:read] permission.
+          minItems: 1
+          example:
+          - mWKM26JMc1
+          - mWKM26JMc2
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+      required:
+      - name
+      - type
+      - network
+      - host
+      - port
+      oneOf:
+      - properties:
+          users:
+            type: array
+        required:
+        - users
+      - properties:
+          groups:
+            type: array
+        required:
+        - groups
+    ApplicationAuth:
+      type: object
+      description: Authentication settings related to the application
+      properties:
+        authEnabled:
+          type: boolean
+        authUsername:
+          type: string
+          minLength: 1
+        authPassword:
+          type: string
+          minLength: 1
+        authDomain:
+          type: string
+          pattern: ^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]*\.[a-zA-Z0-9]{2,11}?$
+          example: domain.com
+      required:
+      - authEnabled
+    FQDN:
+      type: string
+      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
+    CommonApplication:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique application ID
+        name:
+          type: string
+          description: Application name
+        type:
+          type: string
+          description: Application type
+          enum:
+          - http
+          - https
+          - rdp
+          - ssh
+          - vnc
+        enabled:
+          type: boolean
+          description: Application enabling status
+        policy:
+          type: object
+          description: Application related Policy data
+          properties:
+            id:
+              type: string
+              description: Policy Id
+            name:
+              type: string
+              description: Policy name
+          required:
+          - id
+          - name
+        createdAt:
+          type: string
+          description: Application create date
+      required:
+      - id
+      - name
+      - type
+    ApplicationsListPaginatedResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApplicationsListResponse'
+        page:
+          type: integer
+          description: Current page number
+        totalPage:
+          type: integer
+          description: Number of all pages
+        itemsTotal:
+          type: integer
+          description: Number of all items
+    RdpAttributes:
+      type: object
+      description: RDP Application attributes
+      properties:
+        clientType:
+          type: string
+          description: RDP client type
+          default: web
+          enum:
+          - web
+          - native
+        disableClipboard:
+          type: boolean
+          default: false
+        disablePrinting:
+          type: boolean
+          default: false
+        ignoreTLSVerification:
+          type: boolean
+          default: true
+        adminConsole:
+          type: boolean
+          default: false
+        maxConnections:
+          oneOf:
+          - type: integer
+            minimum: 1
+            maximum: 1024
+            default: 32
+            description: Maximum connections value for Web client
+          - type: integer
+            minimum: 1
+            maximum: 1
+            default: 1
+            description: Maximum connections value for Native client
+        rdpSecurity:
+          oneOf:
+          - type: string
+            enum:
+            - any
+            - nla
+            - nla-ext
+            - tls
+            - vmconnect
+            - rdp
+            default: any
+            description: Security mode for Web client
+          - type: string
+            enum:
+            - any
+            default: any
+            description: Security mode for Native client
+        enableMultiMonitors:
+          type: boolean
+    ApplicationHost:
+      type: object
+      description: Application host settings
+      properties:
+        value:
+          type: string
+          minLength: 1
+        source:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - source
+    WebApplication:
+      allOf:
+      - $ref: '#/components/schemas/BasicApplication'
+      - type: object
+        properties:
+          headers:
+            type: object
+            description: Web Application headers
+    PortNumber:
+      type: integer
+      minimum: 1
+      maximum: 65535
+    HttpApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpAttributes'
+    VncApplication:
+      allOf:
+      - $ref: '#/components/schemas/BasicApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/VncAttributes'
+    AlphanumericWithSpace:
+      type: string
+      pattern: ^[a-zA-Z0-9 ]+$
+      description: Any alphanumeric value with space
+      minLength: 1
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
+    BasicApplication:
+      allOf:
+      - $ref: '#/components/schemas/CommonApplication'
+      - type: object
+        properties:
+          network:
+            type: object
+            description: Application related Network data
+            properties:
+              id:
+                type: string
+                description: Network Id
+              name:
+                type: string
+                description: Network name
+              dns:
+                type: string
+                description: DNS of the network
+              subnet:
+                type: string
+                description: Subnet of the network
+            required:
+            - id
+            - name
+          icon:
+            type: object
+            description: Application icon
+            properties:
+              name:
+                type: string
+                description: Icon name
+              url:
+                type: string
+                description: Icon URL
+          users:
+            type: array
+            description: List of IDs of assigned users
+            items:
+              type: object
+              description: Application users
+              properties:
+                id:
+                  type: string
+                  description: Unique User ID
+                fullName:
+                  type: string
+                  description: User's firstname and lastname
+                username:
+                  type: string
+                  description: User's username
+          groups:
+            type: array
+            description: List of IDs of assigned groups
+            items:
+              type: object
+              description: Application groups
+              properties:
+                id:
+                  type: string
+                  description: Unique Group ID
+                name:
+                  type: string
+                  description: Group's name
+          auth:
+            $ref: '#/components/schemas/ApplicationAuth'
+          alias:
+            $ref: '#/components/schemas/ApplicationAlias'
+          displayIconAtLogin:
+            type: boolean
+            description: Determines if the application icon is displayed during user login
+          fqdn:
+            type: string
+            minLength: 1
+            description: Fully qualified domain name (FQDN) associated with the application
+          host:
+            $ref: '#/components/schemas/ApplicationHost'
+          port:
+            $ref: '#/components/schemas/ApplicationPort'
+          updatedAt:
+            type: string
+            description: Application update date
+        required:
+        - network
+        - auth
+        - alias
+        - displayIconAtLogin
+        - fqdn
+        - host
+        - port
+    ApplicationAlias:
+      type: object
+      description: URL alias settings to access the application via a user-friendly URL under your own domain
+      properties:
+        aliasEnabled:
+          type: boolean
+        cname:
+          type: string
+          minLength: 1
+        sslCertificate:
+          type: string
+          minLength: 1
+      required:
+      - aliasEnabled
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    ApplicationsListResponse:
+      type: array
+      description: List of retrieved applications
+      items:
+        $ref: '#/components/schemas/ApplicationsListObject'
+    IdpHost:
+      type: object
+      description: Application host idp data
+      properties:
+        source:
+          type: string
+          description: Application host source
+          enum:
+          - idp
+        value:
+          type: string
+          description: Application host value
+          pattern: ^[a-zA-Z0-9_.-]{2,255}$
+          example: idpExample
+      required:
+      - source
+      - value
+    HttpAttributes:
+      type: object
+      description: HTTP Application attributes
+      properties:
+        checkStatus:
+          type: integer
+          default: 200
+        checkPath:
+          type: string
+          default: ''
+          example: checkPath
+        startRelativePath:
+          type: string
+          default: ''
+          pattern: ^$|^\/[\w\d-._~!$&'()*+,;=:@/?#%]+$
+          example: /startRelativePath
+    WebCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/CommonCreateApplication'
+      - type: object
+        properties:
+          headers:
+            type: object
+            description: Application specific headers. Keys must not contain . and $
+            pattern: ^[^.$]+$
+            example:
+              X-Custom-Header: value
+        required:
+        - headers
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

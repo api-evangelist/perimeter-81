@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Wireguard API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Wireguard
+paths:
+  /v2.3/networks/standard/{networkId}/tunnels/wireguard:
+    post:
+      operationId: Standard_createWireguardTunnel
+      summary: Create a new Wireguard tunnel
+      description: 'Required permissions: `["network:write"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWireguardTunnelPayload'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/402'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - Wireguard
+  /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}:
+    get:
+      operationId: Standard_getWireguardTunnel
+      summary: Get a Wireguard tunnel
+      description: 'Required permissions: `["network:read"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WireguardTunnel'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - Wireguard
+    put:
+      operationId: Standard_updateWireguardTunnel
+      summary: Update a Wireguard tunnel
+      description: 'Required permissions: `["network:write"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WireGuradDetails'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - Wireguard
+    delete:
+      operationId: Standard_deleteWireguardTunnel
+      summary: Delete Wireguard tunnel
+      description: 'Required permissions: `["network:delete"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - Wireguard
+components:
+  schemas:
+    WireGuradDetails:
+      type: object
+      properties:
+        remoteEndpoint:
+          $ref: '#/components/schemas/IP'
+        remoteSubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      required:
+      - remoteEndpoint
+      - remoteSubnets
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    IP:
+      type: string
+      format: ipv4
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    BaseTunnelValues:
+      type: object
+      properties:
+        regionID:
+          type: string
+          description: Region ID
+        gatewayID:
+          type: string
+          description: Gateway ID
+        tunnelName:
+          $ref: '#/components/schemas/TunnelName'
+      required:
+      - regionID
+      - gatewayID
+      - tunnelName
+    CreateWireguardTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    WireguardTunnel:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          tunnelID:
+            type: string
+          type:
+            type: string
+            default: wireguard
+  responses:
+    '422':
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

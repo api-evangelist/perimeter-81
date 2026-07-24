@@ -1,0 +1,253 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application OpenVPN API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: OpenVPN
+paths:
+  /v2.3/networks/standard/{networkId}/tunnels/openvpn:
+    post:
+      operationId: Standard_createOpenVPNTunnel
+      summary: Create a new OpenVPN tunnel
+      description: 'Required permissions: `["network:write"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseTunnelValues'
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVPNAsyncOperationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/402'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - OpenVPN
+  /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}:
+    get:
+      operationId: Standard_getOpenVPNTunnel
+      summary: Get one openVPN tunnel
+      description: 'Required permissions: `["network:read"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVPNTunnel'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - OpenVPN
+    put:
+      operationId: Standard_updateOpenVPNTunnel
+      summary: Update openVPN Tunnel
+      description: 'Required permissions: `["network:write"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      responses:
+        '202':
+          description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVPNAsyncOperationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+      - OpenVPN
+    delete:
+      operationId: Standard_deleteOpenVPNTunnel
+      summary: Delete OpenVPN tunnel
+      description: 'Required permissions: `["network:delete"]`'
+      parameters:
+      - $ref: '#/components/parameters/networkIdParam'
+      - $ref: '#/components/parameters/tunnelIdParam'
+      responses:
+        '202':
+          $ref: '#/components/responses/202'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      tags:
+      - OpenVPN
+components:
+  schemas:
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    BaseTunnelValues:
+      type: object
+      properties:
+        regionID:
+          type: string
+          description: Region ID
+        gatewayID:
+          type: string
+          description: Gateway ID
+        tunnelName:
+          $ref: '#/components/schemas/TunnelName'
+      required:
+      - regionID
+      - gatewayID
+      - tunnelName
+    OpenVPNAsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+        secretAccessKey:
+          type: string
+          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    OpenVPNTunnel:
+      allOf:
+      - $ref: '#/components/schemas/BaseTunnelValues'
+      - $ref: '#/components/schemas/BaseDates'
+      type: object
+      properties:
+        tunnelID:
+          type: string
+        type:
+          type: string
+          default: OpenVPN
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+          description: Secret access key for the OpenVPN tunnel. This is only the hashed value. The original value will not be retrievable after creation.
+  responses:
+    '422':
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

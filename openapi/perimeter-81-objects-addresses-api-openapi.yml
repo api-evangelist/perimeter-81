@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Objects Addresses API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Objects Addresses
+paths:
+  /v2.3/objects/addresses:
+    get:
+      operationId: getObjectsAddresses
+      summary: Get object addresses
+      description: 'Required permissions: `["objects:read"]`.'
+      responses:
+        '200':
+          description: Completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectsAddressesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+      - Objects Addresses
+    post:
+      operationId: postObjectsAddresses
+      summary: Create new Address object
+      description: 'Required permission: `["objects:create"]`.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectsAddressObj'
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                - $ref: '#/components/schemas/ObjectsAddressObj'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+      - Objects Addresses
+  /v2.3/objects/addresses/{objectId}:
+    put:
+      operationId: putObjectsAddresses
+      summary: Update Address object
+      description: 'Required permission: `["objects:update"]`'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectsAddressObj'
+      parameters:
+      - name: objectId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectsAddressObj'
+                description: The updated address.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict - You cannot delete an address that is associated with one or more policies
+      tags:
+      - Objects Addresses
+    delete:
+      operationId: deleteObjectsAddresses
+      summary: Delete Address object
+      description: 'Required permission: `["objects:delete"]`'
+      parameters:
+      - name: objectId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict - You cannot delete an address that is associated with one or more policies
+      tags:
+      - Objects Addresses
+components:
+  schemas:
+    FQDN:
+      type: string
+      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
+    CIDR:
+      type: string
+      pattern: ^((?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3})(\/(3[0-2]|[1-2][0-9]|[0-9]))$
+    ObjectsAddressIP:
+      type: object
+      required:
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - ip
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/IP'
+    ObjectsAddressIPList:
+      type: object
+      required:
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - list
+        value:
+          description: Must be a unique list of IPs
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/IP'
+    ObjectsAddressObj:
+      required:
+      - name
+      allOf:
+      - type: object
+        required:
+        - name
+        properties:
+          id:
+            type: string
+            description: Unique Address ID
+          name:
+            $ref: '#/components/schemas/ObjectsName'
+          description:
+            type: string
+      - type: object
+        oneOf:
+        - $ref: '#/components/schemas/ObjectsAddressIP'
+        - $ref: '#/components/schemas/ObjectsAddressIPList'
+        - $ref: '#/components/schemas/ObjectsAddressCIDR'
+        - $ref: '#/components/schemas/ObjectsAddressFQDN'
+    ObjectsAddressCIDR:
+      type: object
+      required:
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - cidr
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/CIDR'
+    ObjectsAddressesResponse:
+      allOf:
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectsAddressObj'
+        required:
+        - data
+      - $ref: '#/components/schemas/ObjectsPaginationObj'
+    ObjectsName:
+      type: string
+      pattern: ^[a-zA-Z0-9_ ]+$
+      description: The name of the Objects
+      minLength: 3
+      maxLength: 100
+    IP:
+      type: string
+      format: ipv4
+    ObjectsPaginationObj:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/NumberPositive500'
+        totalPage:
+          $ref: '#/components/schemas/NumberPositive500'
+        itemsTotal:
+          $ref: '#/components/schemas/NumberPositive500'
+      required:
+      - page
+      - totalPage
+      - itemsTotal
+    NumberPositive500:
+      type: number
+      minimum: 0
+      maximum: 500
+    ObjectsAddressFQDN:
+      type: object
+      required:
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - fqdn
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/FQDN'
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

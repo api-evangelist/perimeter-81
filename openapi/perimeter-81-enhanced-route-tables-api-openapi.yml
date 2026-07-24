@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  version: 2.3.0
+  title: Harmony SASE Public Application Enhanced Route Tables API
+  description: 'The YAML for Harmony SASE Public API.
+
+    '
+  contact: {}
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0
+- description: Harmony SASE API US
+  url: https://api.perimeter81.com/api/rest
+- description: Harmony SASE API EU
+  url: https://api.eu.sase.checkpoint.com/api/rest
+- description: Harmony SASE API Australia
+  url: https://api.au.sase.checkpoint.com/api/rest
+- description: Harmony SASE API India
+  url: https://api.in.sase.checkpoint.com/api/rest
+security:
+- bearer: []
+tags:
+- name: Enhanced Route Tables
+  description: 'The Enhanced Route Tables API allows you to manage and configure enhanced route tables of static and dynamic tunnels.
+
+    '
+paths:
+  /v2.3/networks/enhanced/{networkId}/route-table:
+    get:
+      tags:
+      - Enhanced Route Tables
+      summary: Get route table
+      description: Get the complete route table for an enhanced network
+      operationId: getEnhancedRouteTable
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      - name: page
+        in: query
+        required: false
+        description: Specifies the current page of the paginated result set
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Defines the number of results per page
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnhancedRouteTable'
+                  itemsTotal:
+                    type: number
+                  page:
+                    type: number
+                  totalPage:
+                    type: number
+                required:
+                - data
+                - itemsTotal
+                - page
+                - totalPage
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+  /v2.3/networks/enhanced/{networkId}/route-table/static:
+    post:
+      tags:
+      - Enhanced Route Tables
+      summary: Create static route
+      description: Create a new static route entry. The selected static tunnel must not already have a route table.
+      operationId: createStaticRoute
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnhancedRouteTableStaticCreate'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+  /v2.3/networks/enhanced/{networkId}/route-table/dynamic:
+    post:
+      tags:
+      - Enhanced Route Tables
+      summary: Create dynamic route
+      description: Create a new dynamic route entry. The selected dynamic tunnel must not already have a route table.
+      operationId: createDynamicRoute
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnhancedRouteTableDynamicCreate'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+  /v2.3/networks/enhanced/{networkId}/route-table/{routeId}:
+    get:
+      tags:
+      - Enhanced Route Tables
+      summary: Get route entry
+      description: Get a specific route entry
+      operationId: getRouteEntry
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      - $ref: '#/components/parameters/routeId'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnhancedRouteTable'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    put:
+      tags:
+      - Enhanced Route Tables
+      summary: Update route entry
+      description: Update a specific route entry. Only non-propagated route tables can be edited.
+      operationId: updateRouteEntry
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      - $ref: '#/components/parameters/routeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteTableUpdate'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    delete:
+      tags:
+      - Enhanced Route Tables
+      summary: Delete route entry
+      description: Delete a specific route entry. Only non-propagated route tables can be deleted.
+      operationId: deleteRouteEntry
+      parameters:
+      - $ref: '#/components/parameters/networkId'
+      - $ref: '#/components/parameters/routeId'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_Accepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+components:
+  parameters:
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    EnhancedRouteTableStaticCreate:
+      type: object
+      properties:
+        tunnelId:
+          type: string
+          description: Static tunnel ID
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelId
+      - subnets
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    EnhancedRouteTableDynamicCreate:
+      type: object
+      properties:
+        tunnelIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: All IDs of dynamic tunnels
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelIds
+      - subnets
+    RouteTableUpdate:
+      type: object
+      properties:
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - subnets
+    EnhancedRouteTable:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Route table entry ID
+        tunnelIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of tunnels ID
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of subnet CIDR blocks
+        propagated:
+          type: boolean
+          description: Whether the route is propagated automatically
+          default: false
+      required:
+      - id
+      - tunnelIds
+      - subnets
+      - propagated
+  responses:
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
