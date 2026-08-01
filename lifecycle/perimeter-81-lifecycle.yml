@@ -1,0 +1,18 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/perimeter-81-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v2.3
+  docs: https://support.perimeter81.com/docs/api-getting-started
+  note: Resource paths carry the version segment (e.g. /v2.3/networks/enhanced).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support was found; no operations are marked deprecated in the OpenAPI.
+status_page: https://status.perimeter81.com/
+sla:
+  url: null
+deprecated_operations: []
+ownership:
+  note: Perimeter 81 was acquired by Check Point in 2023 and is delivered as Check Point Harmony SASE; regional gateways span US, EU (checkpoint.com), Australia, and India.

@@ -1,0 +1,548 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/perimeter-81-openapi-original.json
+note: Candidate MCP tool surface derived one-per-operation from the Harmony SASE Public API OpenAPI. No
+  official hosted MCP server was found; this is a starting point for a generated server.
+server:
+  name: perimeter-81
+  transport: http
+  base_url: https://api.perimeter81.com/api/rest
+  auth: bearer-jwt (see authentication/perimeter-81-authentication.yml)
+tool_count: 107
+tools:
+- name: getEnhancedNetworks
+  description: Get all enhanced networks
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedNetworks
+  method: GET
+  path: /v2.3/networks/enhanced
+- name: createEnhancedNetwork
+  description: Create enhanced network
+  source_operation: openapi/perimeter-81-openapi-original.json#createEnhancedNetwork
+  method: POST
+  path: /v2.3/networks/enhanced
+- name: getEnhancedNetwork
+  description: Get enhanced network by ID
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedNetwork
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}
+- name: updateEnhancedNetwork
+  description: Update enhanced network
+  source_operation: openapi/perimeter-81-openapi-original.json#updateEnhancedNetwork
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}
+- name: deleteEnhancedNetwork
+  description: Delete enhanced network
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteEnhancedNetwork
+  method: DELETE
+  path: /v2.3/networks/enhanced/{networkId}
+- name: getEnhancedNetworkHealth
+  description: Get enhanced network health status
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedNetworkHealth
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/health
+- name: Enhanced_NetworksControllerV2_getRegions
+  description: List of available Harmony SASE regions that supports enhanced networks
+  source_operation: openapi/perimeter-81-openapi-original.json#Enhanced_NetworksControllerV2_getRegions
+  method: GET
+  path: /v2.3/networks/enhanced/harmony-sase-regions
+- name: Enhanced_NetworksControllerV2_3_getNetworkCustomerCertificate
+  description: Get network customer certificate
+  source_operation: openapi/perimeter-81-openapi-original.json#Enhanced_NetworksControllerV2_3_getNetworkCustomerCertificate
+  method: GET
+  path: /v2.3/networks/enhanced/network-customer-certificate
+- name: listEnhancedRegions
+  description: List regions
+  source_operation: openapi/perimeter-81-openapi-original.json#listEnhancedRegions
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/regions
+- name: createEnhancedRegion
+  description: Create enhanced region
+  source_operation: openapi/perimeter-81-openapi-original.json#createEnhancedRegion
+  method: POST
+  path: /v2.3/networks/enhanced/{networkId}/regions
+- name: getEnhancedRegion
+  description: Get region
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedRegion
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}
+- name: deleteEnhancedRegion
+  description: Delete enhanced region
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteEnhancedRegion
+  method: DELETE
+  path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}
+- name: increaseScaleUnit
+  description: Increase scale units
+  source_operation: openapi/perimeter-81-openapi-original.json#increaseScaleUnit
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/scale-unit/increase
+- name: reduceScaleUnit
+  description: Reduce scale units
+  source_operation: openapi/perimeter-81-openapi-original.json#reduceScaleUnit
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/scale-unit/reduce
+- name: getEnhancedRegionTunnelsPerNetwork
+  description: Get tunnels for a network
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedRegionTunnelsPerNetwork
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/tunnels
+- name: getEnhancedRegionTunnelsPerRegion
+  description: Get tunnels for a region
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedRegionTunnelsPerRegion
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/tunnels
+- name: createDynamicTunnel
+  description: Create dynamic IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createDynamicTunnel
+  method: POST
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic
+- name: getDynamicTunnel
+  description: Get dynamic IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getDynamicTunnel
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+- name: updateDynamicTunnel
+  description: Update dynamic IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateDynamicTunnel
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+- name: deleteDynamicTunnel
+  description: Delete dynamic IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteDynamicTunnel
+  method: DELETE
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+- name: createStaticTunnel
+  description: Create static IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createStaticTunnel
+  method: POST
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static
+- name: getStaticTunnel
+  description: Get static IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getStaticTunnel
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+- name: updateStaticTunnel
+  description: Update static IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateStaticTunnel
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+- name: deleteStaticTunnel
+  description: Delete static IPSec tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteStaticTunnel
+  method: DELETE
+  path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+- name: getEnhancedRouteTable
+  description: Get route table
+  source_operation: openapi/perimeter-81-openapi-original.json#getEnhancedRouteTable
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/route-table
+- name: createStaticRoute
+  description: Create static route
+  source_operation: openapi/perimeter-81-openapi-original.json#createStaticRoute
+  method: POST
+  path: /v2.3/networks/enhanced/{networkId}/route-table/static
+- name: createDynamicRoute
+  description: Create dynamic route
+  source_operation: openapi/perimeter-81-openapi-original.json#createDynamicRoute
+  method: POST
+  path: /v2.3/networks/enhanced/{networkId}/route-table/dynamic
+- name: getRouteEntry
+  description: Get route entry
+  source_operation: openapi/perimeter-81-openapi-original.json#getRouteEntry
+  method: GET
+  path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+- name: updateRouteEntry
+  description: Update route entry
+  source_operation: openapi/perimeter-81-openapi-original.json#updateRouteEntry
+  method: PUT
+  path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+- name: deleteRouteEntry
+  description: Delete route entry
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteRouteEntry
+  method: DELETE
+  path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+- name: getNetworks
+  description: Get all Networks
+  source_operation: openapi/perimeter-81-openapi-original.json#getNetworks
+  method: GET
+  path: /v2.3/networks
+- name: NetworksControllerV2_networkCreate
+  description: Create network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_networkCreate
+  method: POST
+  path: /v2.3/networks
+- name: NetworksControllerV2_networkDelete
+  description: Delete network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_networkDelete
+  method: DELETE
+  path: /v2.3/networks/{networkId}
+- name: NetworksControllerV2_networkFind
+  description: Get network by Id
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_networkFind
+  method: GET
+  path: /v2.3/networks/{networkId}
+- name: NetworksControllerV2_networkUpdate
+  description: Update network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_networkUpdate
+  method: PUT
+  path: /v2.3/networks/{networkId}
+- name: NetworksControllerV2_getNetworkHealth
+  description: Get network health status
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_getNetworkHealth
+  method: GET
+  path: /v2.3/networks/{networkId}/health
+- name: NetworksControllerV2_addNetworkInstance
+  description: Add gateway
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_addNetworkInstance
+  method: POST
+  path: /v2.3/networks/{networkId}/instances
+- name: NetworksControllerV2_deleteNetworkInstance
+  description: Remove Gateways from Network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_deleteNetworkInstance
+  method: DELETE
+  path: /v2.3/networks/{networkId}/instances
+- name: getInstance
+  description: Get Instance of a GW by ID
+  source_operation: openapi/perimeter-81-openapi-original.json#getInstance
+  method: GET
+  path: /v2.3/networks/{networkId}/instances/{gatewayId}
+- name: NetworksControllerV2_status
+  description: Get status of asynchronous operations.
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_status
+  method: GET
+  path: /v2.3/networks/status/{statusId}
+- name: NetworksControllerV2_getRegions
+  description: List of available regions
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_getRegions
+  method: GET
+  path: /v2.3/networks/harmony-sase-regions
+- name: NetworksControllerV2_addNetworkRegion
+  description: Add regions to a network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_addNetworkRegion
+  method: PUT
+  path: /v2.3/networks/{networkId}/regions
+- name: NetworksControllerV2_deleteNetworkRegion
+  description: Remove regions from network
+  source_operation: openapi/perimeter-81-openapi-original.json#NetworksControllerV2_deleteNetworkRegion
+  method: DELETE
+  path: /v2.3/networks/{networkId}/regions
+- name: getRegion
+  description: Get region by ID
+  source_operation: openapi/perimeter-81-openapi-original.json#getRegion
+  method: GET
+  path: /v2.3/networks/{networkId}/regions/{regionId}
+- name: createWireguardTunnel
+  description: Create a new Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createWireguardTunnel
+  method: POST
+  path: /v2.3/networks/{networkId}/tunnels/wireguard
+- name: getWireguardTunnel
+  description: Get a Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getWireguardTunnel
+  method: GET
+  path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+- name: updateWireguardTunnel
+  description: Update a Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateWireguardTunnel
+  method: PUT
+  path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+- name: deleteWireguardTunnel
+  description: Delete Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteWireguardTunnel
+  method: DELETE
+  path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+- name: createOpenVPNTunnel
+  description: Create a new OpenVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createOpenVPNTunnel
+  method: POST
+  path: /v2.3/networks/{networkId}/tunnels/openvpn
+- name: getOpenVPNTunnel
+  description: Get one openVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getOpenVPNTunnel
+  method: GET
+  path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+- name: updateOpenVPNTunnel
+  description: Update openVPN Tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateOpenVPNTunnel
+  method: PUT
+  path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+- name: deleteOpenVPNTunnel
+  description: Delete OpenVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteOpenVPNTunnel
+  method: DELETE
+  path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+- name: createIPSecSingleTunnel
+  description: Create a new IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createIPSecSingleTunnel
+  method: POST
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/single
+- name: getIPSecSingleTunnel
+  description: Get one IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getIPSecSingleTunnel
+  method: GET
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: updateIPSecSingleTunnel
+  description: Update IPSec Single Tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateIPSecSingleTunnel
+  method: PUT
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: deleteIPSecSingleTunnel
+  description: Delete IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteIPSecSingleTunnel
+  method: DELETE
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: createIPSecRedundantTunnel
+  description: Create a new IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#createIPSecRedundantTunnel
+  method: POST
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant
+- name: getIPSecRedundantTunnel
+  description: Get one IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#getIPSecRedundantTunnel
+  method: GET
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: updateIPSecRedundantTunnel
+  description: Update a new IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#updateIPSecRedundantTunnel
+  method: PUT
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: deleteIPSecRedundantTunnel
+  description: Delete IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteIPSecRedundantTunnel
+  method: DELETE
+  path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: getRouteTable
+  description: Get route table
+  source_operation: openapi/perimeter-81-openapi-original.json#getRouteTable
+  method: GET
+  path: /v2.3/networks/{networkId}/route-table
+- name: Standard_getNetworks
+  description: Get all Networks
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getNetworks
+  method: GET
+  path: /v2.3/networks/standard
+- name: Standard_NetworksControllerV2_networkCreate
+  description: Create network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_networkCreate
+  method: POST
+  path: /v2.3/networks/standard
+- name: Standard_NetworksControllerV2_networkDelete
+  description: Delete network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_networkDelete
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}
+- name: Standard_NetworksControllerV2_networkFind
+  description: Get network by Id
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_networkFind
+  method: GET
+  path: /v2.3/networks/standard/{networkId}
+- name: Standard_NetworksControllerV2_networkUpdate
+  description: Update network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_networkUpdate
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}
+- name: Standard_NetworksControllerV2_addNetworkInstance
+  description: Add gateway
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_addNetworkInstance
+  method: POST
+  path: /v2.3/networks/standard/{networkId}/instances
+- name: Standard_NetworksControllerV2_deleteNetworkInstance
+  description: Remove Gateways from Network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_deleteNetworkInstance
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/instances
+- name: Standard_GetInstance
+  description: Get Instance of a GW by ID
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_GetInstance
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/instances/{gatewayId}
+- name: Standard_NetworksControllerV2_getNetworkHealth
+  description: Get network health status
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_getNetworkHealth
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/health
+- name: Standard_NetworksControllerV2_status
+  description: Get status of asynchronous operations.
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_status
+  method: GET
+  path: /v2.3/networks/standard/status/{statusId}
+- name: Standard_NetworksControllerV2_getRegions
+  description: List of available Harmony SASE regions that supports standard networks
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_getRegions
+  method: GET
+  path: /v2.3/networks/standard/harmony-sase-regions
+- name: Standard_NetworksControllerV2_addNetworkRegion
+  description: Add regions to a network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_addNetworkRegion
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}/regions
+- name: Standard_NetworksControllerV2_deleteNetworkRegion
+  description: Remove regions from network
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_NetworksControllerV2_deleteNetworkRegion
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/regions
+- name: Standard_getRegion
+  description: Get region by ID
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getRegion
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/regions/{regionId}
+- name: Standard_createWireguardTunnel
+  description: Create a new Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_createWireguardTunnel
+  method: POST
+  path: /v2.3/networks/standard/{networkId}/tunnels/wireguard
+- name: Standard_getWireguardTunnel
+  description: Get a Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getWireguardTunnel
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+- name: Standard_updateWireguardTunnel
+  description: Update a Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_updateWireguardTunnel
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+- name: Standard_deleteWireguardTunnel
+  description: Delete Wireguard tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_deleteWireguardTunnel
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+- name: Standard_createOpenVPNTunnel
+  description: Create a new OpenVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_createOpenVPNTunnel
+  method: POST
+  path: /v2.3/networks/standard/{networkId}/tunnels/openvpn
+- name: Standard_getOpenVPNTunnel
+  description: Get one openVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getOpenVPNTunnel
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+- name: Standard_updateOpenVPNTunnel
+  description: Update openVPN Tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_updateOpenVPNTunnel
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+- name: Standard_deleteOpenVPNTunnel
+  description: Delete OpenVPN tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_deleteOpenVPNTunnel
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+- name: Standard_createIPSecSingleTunnel
+  description: Create a new IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_createIPSecSingleTunnel
+  method: POST
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single
+- name: Standard_getIPSecSingleTunnel
+  description: Get one IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getIPSecSingleTunnel
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: Standard_updateIPSecSingleTunnel
+  description: Update IPSec Single Tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_updateIPSecSingleTunnel
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: Standard_deleteIPSecSingleTunnel
+  description: Delete IPSec Single tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_deleteIPSecSingleTunnel
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+- name: Standard_createIPSecRedundantTunnel
+  description: Create a new IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_createIPSecRedundantTunnel
+  method: POST
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant
+- name: Standard_getIPSecRedundantTunnel
+  description: Get one IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_getIPSecRedundantTunnel
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: Standard_updateIPSecRedundantTunnel
+  description: Update a new IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_updateIPSecRedundantTunnel
+  method: PUT
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: Standard_deleteIPSecRedundantTunnel
+  description: Delete IPSec Redundant tunnel
+  source_operation: openapi/perimeter-81-openapi-original.json#Standard_deleteIPSecRedundantTunnel
+  method: DELETE
+  path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+- name: standard_getRouteTable
+  description: Get route table
+  source_operation: openapi/perimeter-81-openapi-original.json#standard_getRouteTable
+  method: GET
+  path: /v2.3/networks/standard/{networkId}/route-table
+- name: getStatus
+  description: Get system status
+  source_operation: openapi/perimeter-81-openapi-original.json#getStatus
+  method: GET
+  path: /v2.3/status
+- name: getFirewallPolicy
+  description: Get firewall policy by network Id
+  source_operation: openapi/perimeter-81-openapi-original.json#getFirewallPolicy
+  method: GET
+  path: /v2.3/networks/{networkId}/policy
+- name: updateFirewallPolicy
+  description: Update firewall policy by network ID
+  source_operation: openapi/perimeter-81-openapi-original.json#updateFirewallPolicy
+  method: PUT
+  path: /v2.3/networks/{networkId}/policy
+- name: getObjectsAddresses
+  description: Get object addresses
+  source_operation: openapi/perimeter-81-openapi-original.json#getObjectsAddresses
+  method: GET
+  path: /v2.3/objects/addresses
+- name: postObjectsAddresses
+  description: Create new Address object
+  source_operation: openapi/perimeter-81-openapi-original.json#postObjectsAddresses
+  method: POST
+  path: /v2.3/objects/addresses
+- name: putObjectsAddresses
+  description: Update Address object
+  source_operation: openapi/perimeter-81-openapi-original.json#putObjectsAddresses
+  method: PUT
+  path: /v2.3/objects/addresses/{objectId}
+- name: deleteObjectsAddresses
+  description: Delete Address object
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteObjectsAddresses
+  method: DELETE
+  path: /v2.3/objects/addresses/{objectId}
+- name: getObjectsServices
+  description: Get object services
+  source_operation: openapi/perimeter-81-openapi-original.json#getObjectsServices
+  method: GET
+  path: /v2.3/objects/services
+- name: postObjectsServices
+  description: Create new Service object
+  source_operation: openapi/perimeter-81-openapi-original.json#postObjectsServices
+  method: POST
+  path: /v2.3/objects/services
+- name: putObjectsServices
+  description: Update Service object
+  source_operation: openapi/perimeter-81-openapi-original.json#putObjectsServices
+  method: PUT
+  path: /v2.3/objects/services/{objectId}
+- name: deleteObjectsServices
+  description: Delete Service object
+  source_operation: openapi/perimeter-81-openapi-original.json#deleteObjectsServices
+  method: DELETE
+  path: /v2.3/objects/services/{objectId}
+- name: getApplications
+  description: Get Applications List
+  source_operation: openapi/perimeter-81-openapi-original.json#getApplications
+  method: GET
+  path: /v2.3/applications
+- name: createApplication
+  description: Create Application
+  source_operation: openapi/perimeter-81-openapi-original.json#createApplication
+  method: POST
+  path: /v2.3/applications
+- name: getApplicationById
+  description: Get Application by Id
+  source_operation: openapi/perimeter-81-openapi-original.json#getApplicationById
+  method: GET
+  path: /v2.3/applications/{applicationId}
+- name: getApplicationStatus
+  description: Get status of Application creation process by statusId
+  source_operation: openapi/perimeter-81-openapi-original.json#getApplicationStatus
+  method: GET
+  path: /v2.3/applications/status/{statusId}

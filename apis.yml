@@ -1,8 +1,14 @@
 aid: perimeter-81
 name: Perimeter 81
-description: 'Perimeter 81 is a company surfaced as a portfolio company of insight-partners and added
-  to the API Evangelist network as a stub for enrichment. Sector: cybersecurity. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: 'Perimeter 81 is a cloud-native Secure Access Service Edge (SASE) and Zero
+  Trust Network Access (ZTNA) platform, now part of Check Point as Check Point Harmony
+  SASE following its 2023 acquisition. It lets organizations build and manage secure,
+  software-defined networks that connect a distributed workforce to on-premises resources,
+  cloud infrastructure, and SaaS applications without legacy hardware appliances. The
+  Harmony SASE Public API (v2.3) exposes programmatic control over networks, regions
+  and points-of-presence, gateways, IPSec/WireGuard/OpenVPN tunnels, route tables,
+  firewall policies, and network objects, using a two-step API-key-to-JWT access-token
+  authentication model across US, EU, Australia, and India regional gateways.'
 url: https://raw.githubusercontent.com/api-evangelist/perimeter-81/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,18 +16,551 @@ x-backed-by:
 - insight-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://www.perimeter81.com/favicon.ico
 tags:
 - Company
 - Cybersecurity
-apis: []
+- SASE
+- Zero Trust
+- Networking
+- VPN
+- ZTNA
+- Security
+- Cloud Security
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: perimeter-81:perimeter-81-application-api
+  name: Perimeter 81 Application API
+  description: The Application API from Perimeter 81 — 3 operation(s) for application.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Application
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-application-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-enhanced-networks-api
+  name: Perimeter 81 Enhanced Networks API
+  description: The Enhanced Network API allows you to manage and configure enhanced networks.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Enhanced Networks
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-enhanced-networks-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-enhanced-regions-api
+  name: Perimeter 81 Enhanced Regions API
+  description: >-
+    The Enhanced Region API allows you to manage and configure enhanced regions, including scale units.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Enhanced Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-enhanced-regions-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-enhanced-route-tables-api
+  name: Perimeter 81 Enhanced Route Tables API
+  description: >-
+    The Enhanced Route Tables API allows you to manage and configure enhanced route tables of static and
+    dynamic tunnels.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Enhanced Route Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-enhanced-route-tables-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-enhanced-tunnels-api
+  name: Perimeter 81 Enhanced Tunnels API
+  description: The Enhanced Tunnel API allows you to manage and configure enhanced tunnels.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Enhanced Tunnels
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-enhanced-tunnels-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-firewall-policy-api
+  name: Perimeter 81 Firewall Policy API
+  description: The Firewall Policy API from Perimeter 81 — 1 operation(s) for firewall policy.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Firewall Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-firewall-policy-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-gateways-api
+  name: Perimeter 81 Gateways API
+  description: The Gateways API from Perimeter 81 — 2 operation(s) for gateways.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Gateways
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-gateways-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-ipsec-redundant-api
+  name: Perimeter 81 IPSec-Redundant API
+  description: The IPSec-Redundant API from Perimeter 81 — 2 operation(s) for ipsec-redundant.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - IPSec-Redundant
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-ipsec-redundant-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-ipsec-single-api
+  name: Perimeter 81 IPSec-Single API
+  description: The IPSec-Single API from Perimeter 81 — 2 operation(s) for ipsec-single.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - IPSec-Single
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-ipsec-single-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-networks-api
+  name: Perimeter 81 Networks API
+  description: >-
+    This API allows you to manage and configure standard networks using the old API and keep you BC.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Networks
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-networks-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-objects-addresses-api
+  name: Perimeter 81 Objects Addresses API
+  description: The Objects Addresses API from Perimeter 81 — 2 operation(s) for objects addresses.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Objects Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-objects-addresses-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-objects-services-api
+  name: Perimeter 81 Objects Services API
+  description: The Objects Services API from Perimeter 81 — 2 operation(s) for objects services.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Objects Services
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-objects-services-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-openvpn-api
+  name: Perimeter 81 OpenVPN API
+  description: The OpenVPN API from Perimeter 81 — 2 operation(s) for openvpn.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - OpenVPN
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-openvpn-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-regions-api
+  name: Perimeter 81 Regions API
+  description: The Regions API from Perimeter 81 — 3 operation(s) for regions.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-regions-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-route-table-api
+  name: Perimeter 81 Route Table API
+  description: The Route Table API from Perimeter 81 — 1 operation(s) for route table.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Route Table
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-route-table-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-standard-networks-api
+  name: Perimeter 81 Standard Networks API
+  description: The Standard Network API allows you to manage and configure standard networks.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Standard Networks
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-standard-networks-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
+- aid: perimeter-81:perimeter-81-wireguard-api
+  name: Perimeter 81 Wireguard API
+  description: The Wireguard API from Perimeter 81 — 2 operation(s) for wireguard.
+  humanURL: https://support.perimeter81.com/docs/api-getting-started
+  baseURL: https://api.perimeter81.com/api/rest
+  tags:
+  - Wireguard
+  properties:
+  - type: OpenAPI
+    url: openapi/perimeter-81-wireguard-api-openapi.yml
+  - type: APIReference
+    url: https://support.perimeter81.com/apidocs/introduction
+  - type: GettingStarted
+    url: https://support.perimeter81.com/docs/api-getting-started
+  - type: Authentication
+    url: authentication/perimeter-81-authentication.yml
+  - type: ErrorCatalog
+    url: errors/perimeter-81-problem-types.yml
+  - type: Conventions
+    url: conventions/perimeter-81-conventions.yml
+  - type: RateLimits
+    url: conventions/perimeter-81-conventions.yml
+  - type: DataModel
+    url: data-model/perimeter-81-data-model.yml
+  - type: Conformance
+    url: conformance/perimeter-81-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/perimeter-81-agentic-access.yml
 common:
+- type: DomainSecurity
+  url: security/perimeter-81-domain-security.yml
 - type: Website
   url: https://www.perimeter81.com/
+- type: DeveloperPortal
+  url: https://support.perimeter81.com/docs
+- type: Documentation
+  url: https://support.perimeter81.com/docs
+- type: APIReference
+  url: https://app.swaggerhub.com/apis/Check-Point/Harmony-SASE-API
+- type: GettingStarted
+  url: https://support.perimeter81.com/docs/api-getting-started
+- type: Support
+  url: https://support.perimeter81.com/
+- type: Blog
+  url: https://www.perimeter81.com/blog
+- type: Pricing
+  url: https://www.perimeter81.com/pricing
+- type: PrivacyPolicy
+  url: https://www.perimeter81.com/privacy-policy
+- type: StatusPage
+  url: https://status.perimeter81.com/
+- type: Lifecycle
+  url: lifecycle/perimeter-81-lifecycle.yml
+- type: LLMsTxt
+  url: llms/perimeter-81-llms.txt
+- type: WellKnown
+  url: well-known/perimeter-81-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: nochange
+  artifacts_added: 0
+  pass: local-v1

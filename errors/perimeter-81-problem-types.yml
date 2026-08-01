@@ -1,0 +1,42 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/perimeter-81-openapi-original.json
+format: json
+envelope:
+  note: >-
+    Errors are returned as a JSON body conforming to the components.schemas.Error model
+    (not RFC 9457 application/problem+json). HTTP status codes below are derived from the
+    4xx/5xx responses declared across the 107 operations of the Harmony SASE Public API.
+problems:
+- status: 400
+  title: Bad request
+  meaning: The request was malformed or failed validation.
+  operations_count: 27
+- status: 401
+  title: Unauthorized
+  meaning: Missing, invalid, or expired bearer access token. Re-authorize via POST /v1/auth/authorize.
+  operations_count: 107
+- status: 402
+  title: Insufficient licenses
+  meaning: The workspace plan or license count does not cover the requested action (API access requires Premium Plus or Enterprise).
+  operations_count: 13
+- status: 403
+  title: Forbidden
+  meaning: The authenticated key lacks the permission required for this operation.
+  operations_count: 107
+- status: 404
+  title: Not found
+  meaning: The referenced resource (network, region, gateway, tunnel, route, object) does not exist.
+  operations_count: 85
+- status: 409
+  title: Conflict
+  meaning: The resource state conflicts with the request (e.g. network region does not exist or already exists).
+  operations_count: 10
+- status: 422
+  title: Unprocessable entity
+  meaning: The request was well-formed but semantically invalid and could not be processed.
+  operations_count: 22
+- status: 500
+  title: Internal server error
+  meaning: An unexpected error occurred on the Harmony SASE gateway.
+  operations_count: 4

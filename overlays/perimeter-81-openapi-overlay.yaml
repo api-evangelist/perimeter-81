@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Harmony SASE Public API
+  version: 1.0.0
+extends: openapi/perimeter-81-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: perimeter-81
+    x-apievangelist-product: Check Point Harmony SASE (formerly Perimeter 81)
+    x-apievangelist-auth: two-step API-key to 60-minute JWT bearer (POST /v1/auth/authorize)
+    x-apievangelist-rate-limit: 500 requests / 5 minutes / IP
+    x-apievangelist-status-page: https://status.perimeter81.com/
+    x-apievangelist-getting-started: https://support.perimeter81.com/docs/api-getting-started
+- target: $.servers
+  update:
+    x-apievangelist-note: >-
+      The first SwaggerHub virtserver entry is a mock; the production US gateway is
+      https://api.perimeter81.com/api/rest with EU/AU/IN regional equivalents.

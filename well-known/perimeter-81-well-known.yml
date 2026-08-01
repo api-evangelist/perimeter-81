@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: live probes of Harmony SASE / Perimeter 81 hosts
+hosts:
+- host: https://api.perimeter81.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.perimeter81.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 202
+    note: Returned a 202 Cloudflare interstitial (challenge), not a valid RFC 9116 security.txt; not saved.
+note: >-
+  No valid /.well-known/ discovery documents were served. A machine-readable docs index is
+  published instead at https://support.perimeter81.com/llms.txt (captured in llms/).

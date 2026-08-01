@@ -1,0 +1,71 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/perimeter-81-openapi-original.json
+note: >-
+  Entity-relationship graph derived from the Harmony SASE Public API OpenAPI path hierarchy
+  and id-reference parameters (networkId, regionId, gatewayId, objectId, applicationId).
+  169 component schemas back these entities.
+entities:
+- name: Network
+  description: A secure software-defined network (enhanced or standard); the top-level container.
+  id_param: networkId
+  relationships:
+  - has_many: Region
+    via: networkId
+  - has_many: Gateway
+    via: networkId
+  - has_one: RouteTable
+    via: networkId
+  - has_many: FirewallPolicy
+    via: networkId
+  - has_many: Application
+    via: networkId
+- name: Region
+  description: A regional point-of-presence within a network (Harmony SASE region / PoP).
+  id_param: regionId
+  relationships:
+  - belongs_to: Network
+    via: networkId
+  - has_many: Tunnel
+    via: regionId
+- name: Tunnel
+  description: A connectivity tunnel into a region/network - dynamic or static IPSec, WireGuard, or OpenVPN.
+  subtypes: [IPSec-Dynamic, IPSec-Static, IPSec-Single, IPSec-Redundant, Wireguard, OpenVPN]
+  relationships:
+  - belongs_to: Region
+    via: regionId
+  - belongs_to: Network
+    via: networkId
+- name: RouteTable
+  description: The routing table attached to a network.
+  relationships:
+  - belongs_to: Network
+    via: networkId
+  - has_many: Route
+    via: routeTable
+- name: Route
+  description: A static or dynamic route entry within a route table.
+  relationships:
+  - belongs_to: RouteTable
+    via: routeTable
+- name: Gateway
+  description: A gateway instance attached to a network.
+  id_param: gatewayId
+  relationships:
+  - belongs_to: Network
+    via: networkId
+- name: FirewallPolicy
+  description: Firewall policy rules governing a network.
+  relationships:
+  - belongs_to: Network
+    via: networkId
+- name: Object
+  description: Reusable network objects referenced by policies - addresses and services.
+  id_param: objectId
+  subtypes: [Address, Service]
+- name: Application
+  description: An application resource published to a network.
+  id_param: applicationId
+  relationships:
+  - belongs_to: Network
+    via: networkId

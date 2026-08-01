@@ -1,0 +1,1478 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/perimeter-81-openapi-original.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 107
+  by_action_class:
+    connected: 44
+    acting: 63
+  by_consequence:
+    read: 44
+    write: 43
+    safety-critical: 14
+    physical: 6
+  human_in_the_loop_required: 14
+operations:
+- path: /v2.3/networks/enhanced
+  method: get
+  operationId: getEnhancedNetworks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced
+  method: post
+  operationId: createEnhancedNetwork
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}
+  method: get
+  operationId: getEnhancedNetwork
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}
+  method: put
+  operationId: updateEnhancedNetwork
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}
+  method: delete
+  operationId: deleteEnhancedNetwork
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/health
+  method: get
+  operationId: getEnhancedNetworkHealth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/harmony-sase-regions
+  method: get
+  operationId: Enhanced_NetworksControllerV2_getRegions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/network-customer-certificate
+  method: get
+  operationId: Enhanced_NetworksControllerV2_3_getNetworkCustomerCertificate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/regions
+  method: get
+  operationId: listEnhancedRegions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/regions
+  method: post
+  operationId: createEnhancedRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}
+  method: get
+  operationId: getEnhancedRegion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}
+  method: delete
+  operationId: deleteEnhancedRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/scale-unit/increase
+  method: put
+  operationId: increaseScaleUnit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/scale-unit/reduce
+  method: put
+  operationId: reduceScaleUnit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels
+  method: get
+  operationId: getEnhancedRegionTunnelsPerNetwork
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/regions/{regionId}/tunnels
+  method: get
+  operationId: getEnhancedRegionTunnelsPerRegion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic
+  method: post
+  operationId: createDynamicTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+  method: get
+  operationId: getDynamicTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+  method: put
+  operationId: updateDynamicTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic/{dynamicTunnelId}
+  method: delete
+  operationId: deleteDynamicTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static
+  method: post
+  operationId: createStaticTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+  method: get
+  operationId: getStaticTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+  method: put
+  operationId: updateStaticTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/static/{tunnelId}
+  method: delete
+  operationId: deleteStaticTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/route-table
+  method: get
+  operationId: getEnhancedRouteTable
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/route-table/static
+  method: post
+  operationId: createStaticRoute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/route-table/dynamic
+  method: post
+  operationId: createDynamicRoute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+  method: get
+  operationId: getRouteEntry
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+  method: put
+  operationId: updateRouteEntry
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/enhanced/{networkId}/route-table/{routeId}
+  method: delete
+  operationId: deleteRouteEntry
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks
+  method: get
+  operationId: getNetworks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks
+  method: post
+  operationId: NetworksControllerV2_networkCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}
+  method: delete
+  operationId: NetworksControllerV2_networkDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}
+  method: get
+  operationId: NetworksControllerV2_networkFind
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}
+  method: put
+  operationId: NetworksControllerV2_networkUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}/health
+  method: get
+  operationId: NetworksControllerV2_getNetworkHealth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/instances
+  method: post
+  operationId: NetworksControllerV2_addNetworkInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}/instances
+  method: delete
+  operationId: NetworksControllerV2_deleteNetworkInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}/instances/{gatewayId}
+  method: get
+  operationId: getInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/status/{statusId}
+  method: get
+  operationId: NetworksControllerV2_status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/harmony-sase-regions
+  method: get
+  operationId: NetworksControllerV2_getRegions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/regions
+  method: put
+  operationId: NetworksControllerV2_addNetworkRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}/regions
+  method: delete
+  operationId: NetworksControllerV2_deleteNetworkRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/{networkId}/regions/{regionId}
+  method: get
+  operationId: getRegion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/tunnels/wireguard
+  method: post
+  operationId: createWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+  method: get
+  operationId: getWireguardTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+  method: put
+  operationId: updateWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/wireguard/{tunnelId}
+  method: delete
+  operationId: deleteWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/openvpn
+  method: post
+  operationId: createOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+  method: get
+  operationId: getOpenVPNTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+  method: put
+  operationId: updateOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/openvpn/{tunnelId}
+  method: delete
+  operationId: deleteOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/single
+  method: post
+  operationId: createIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: get
+  operationId: getIPSecSingleTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: put
+  operationId: updateIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: delete
+  operationId: deleteIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant
+  method: post
+  operationId: createIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: get
+  operationId: getIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: put
+  operationId: updateIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: delete
+  operationId: deleteIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/{networkId}/route-table
+  method: get
+  operationId: getRouteTable
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard
+  method: get
+  operationId: Standard_getNetworks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard
+  method: post
+  operationId: Standard_NetworksControllerV2_networkCreate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}
+  method: delete
+  operationId: Standard_NetworksControllerV2_networkDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}
+  method: get
+  operationId: Standard_NetworksControllerV2_networkFind
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}
+  method: put
+  operationId: Standard_NetworksControllerV2_networkUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/instances
+  method: post
+  operationId: Standard_NetworksControllerV2_addNetworkInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/instances
+  method: delete
+  operationId: Standard_NetworksControllerV2_deleteNetworkInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/instances/{gatewayId}
+  method: get
+  operationId: Standard_GetInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/health
+  method: get
+  operationId: Standard_NetworksControllerV2_getNetworkHealth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/status/{statusId}
+  method: get
+  operationId: Standard_NetworksControllerV2_status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/harmony-sase-regions
+  method: get
+  operationId: Standard_NetworksControllerV2_getRegions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/regions
+  method: put
+  operationId: Standard_NetworksControllerV2_addNetworkRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/regions
+  method: delete
+  operationId: Standard_NetworksControllerV2_deleteNetworkRegion
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/regions/{regionId}
+  method: get
+  operationId: Standard_getRegion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/tunnels/wireguard
+  method: post
+  operationId: Standard_createWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+  method: get
+  operationId: Standard_getWireguardTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+  method: put
+  operationId: Standard_updateWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/wireguard/{tunnelId}
+  method: delete
+  operationId: Standard_deleteWireguardTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/openvpn
+  method: post
+  operationId: Standard_createOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+  method: get
+  operationId: Standard_getOpenVPNTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+  method: put
+  operationId: Standard_updateOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/openvpn/{tunnelId}
+  method: delete
+  operationId: Standard_deleteOpenVPNTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single
+  method: post
+  operationId: Standard_createIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: get
+  operationId: Standard_getIPSecSingleTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: put
+  operationId: Standard_updateIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/single/{tunnelId}
+  method: delete
+  operationId: Standard_deleteIPSecSingleTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant
+  method: post
+  operationId: Standard_createIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: get
+  operationId: Standard_getIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: put
+  operationId: Standard_updateIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/tunnels/ipsec/redundant/{haTunnelId}
+  method: delete
+  operationId: Standard_deleteIPSecRedundantTunnel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/networks/standard/{networkId}/route-table
+  method: get
+  operationId: standard_getRouteTable
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/status
+  method: get
+  operationId: getStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/policy
+  method: get
+  operationId: getFirewallPolicy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/networks/{networkId}/policy
+  method: put
+  operationId: updateFirewallPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/addresses
+  method: get
+  operationId: getObjectsAddresses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/objects/addresses
+  method: post
+  operationId: postObjectsAddresses
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/addresses/{objectId}
+  method: put
+  operationId: putObjectsAddresses
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/addresses/{objectId}
+  method: delete
+  operationId: deleteObjectsAddresses
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/services
+  method: get
+  operationId: getObjectsServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/objects/services
+  method: post
+  operationId: postObjectsServices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/services/{objectId}
+  method: put
+  operationId: putObjectsServices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/objects/services/{objectId}
+  method: delete
+  operationId: deleteObjectsServices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/applications
+  method: get
+  operationId: getApplications
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/applications
+  method: post
+  operationId: createApplication
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2.3/applications/{applicationId}
+  method: get
+  operationId: getApplicationById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2.3/applications/status/{statusId}
+  method: get
+  operationId: getApplicationStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

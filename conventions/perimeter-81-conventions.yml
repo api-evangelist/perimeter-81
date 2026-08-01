@@ -1,0 +1,50 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/perimeter-81-openapi-original.json
+docs: https://support.perimeter81.com/docs/api-getting-started
+authentication:
+  style: bearer-jwt
+  model: two-step (console API key exchanged at POST /v1/auth/authorize for a 60-minute JWT access token)
+  header: 'Authorization: Bearer <access_token>'
+  see: authentication/perimeter-81-authentication.yml
+base_url:
+  us: https://api.perimeter81.com/api/rest
+  eu: https://api.eu.sase.checkpoint.com/api/rest
+  australia: https://api.au.sase.checkpoint.com/api/rest
+  india: https://api.in.sase.checkpoint.com/api/rest
+versioning:
+  scheme: uri-path
+  current: v2.3
+  note: Resource paths are prefixed with the version segment (e.g. /v2.3/networks/enhanced); the auth endpoint sits under /v1/auth/authorize.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    in: query
+    description: 1-based page index.
+  - name: limit
+    in: query
+    description: Maximum number of items per page.
+  sort_param: sort
+idempotency:
+  supported: false
+  note: The API declares no Idempotency-Key header or idempotency contract; write operations are not documented as idempotent.
+async_operations:
+  supported: true
+  pattern: >-
+    Long-running operations (e.g. network/gateway provisioning) return HTTP 202 Accepted with an
+    operation identifier; poll GET /v2.3/.../operations (getAsyncOperationStatus / getStatusOfAsynchronousOperations)
+    for completion status.
+rate_limiting:
+  limit: 500 requests
+  window: 5 minutes
+  scope: per IP address
+  source: https://support.perimeter81.com/docs/api-getting-started
+error_envelope:
+  format: json
+  schema: components.schemas.Error
+  rfc9457: false
+  see: errors/perimeter-81-problem-types.yml
+access_requirements:
+  plan: Premium Plus or Enterprise
+  note: API access is gated to Premium Plus and Enterprise workspace plans.

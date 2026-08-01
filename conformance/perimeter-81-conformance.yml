@@ -1,0 +1,28 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/perimeter-81-openapi-original.json
+standards:
+- id: http-bearer-jwt
+  conforms: true
+  evidence: openapi securityScheme type http, scheme bearer, bearerFormat JWT
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme declared; auth is a proprietary API-key-to-JWT exchange
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a proprietary Error schema, not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: page and limit query parameters across list operations
+- id: idempotency
+  conforms: false
+  evidence: no Idempotency-Key header or documented idempotency contract
+- id: rfc8594-sunset
+  conforms: false
+- id: json-api
+  conforms: false
+- id: openapi-3
+  conforms: true
+  evidence: OpenAPI 3.0.0 document with 107 operationIds and 169 component schemas

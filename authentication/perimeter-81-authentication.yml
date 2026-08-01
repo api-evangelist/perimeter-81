@@ -1,0 +1,36 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/perimeter-81-openapi-original.json
+docs: https://support.perimeter81.com/docs/api-getting-started
+summary:
+  types:
+  - http
+  model: two-step (API key -> time-based JWT access token)
+schemes:
+- name: bearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/perimeter-81-openapi-original.json
+flow:
+  description: >-
+    Harmony SASE (Perimeter 81) uses two-step secure tokens. A long-lived API key is
+    generated in the Web Management Console (Settings -> API Support -> Generate New Key)
+    with a chosen expiration date and a set of selected key permissions (e.g. 'View list
+    of users', 'Add new members', 'Delete groups'). The API key is then exchanged for a
+    short-lived JWT access token that is sent as an HTTP bearer token on every request.
+  steps:
+  - step: 1
+    action: Generate an API key in the Web Management Console (Settings -> API Support).
+    note: Requires Premium Plus or Enterprise plan; key carries selected permissions and an expiration date.
+  - step: 2
+    action: 'POST /v1/auth/authorize with body {grantType: "api_key", apiKey: <API_KEY>} to obtain an access token.'
+    endpoint: POST https://api.perimeter81.com/api/v1/auth/authorize
+    docs: https://support.perimeter81.com/docs/access-token-post
+  - step: 3
+    action: "Send the access token as 'Authorization: Bearer <access_token>' on all API calls."
+    note: Access token expires 60 minutes after issue; regenerate via the authorize endpoint.
+permissions_model: >-
+  Key-scoped permissions are chosen at API-key generation time in the console (not OAuth2 scopes).
+  No oauth2 securityScheme is declared in the OpenAPI, so no scopes/ artifact is emitted.

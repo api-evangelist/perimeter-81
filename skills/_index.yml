@@ -1,0 +1,12 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/perimeter-81-openapi-original.json
+skills:
+- file: perimeter-81-provision-enhanced-network.md
+  name: Provision a Harmony SASE enhanced network with a region and IPSec tunnel
+  api: openapi/perimeter-81-openapi-original.json
+  operations: [createEnhancedNetwork, listEnhancedRegions, createEnhancedRegion, createDynamicTunnel, getEnhancedNetworkHealth]
+- file: perimeter-81-manage-firewall-objects.md
+  name: Define network objects and update a Harmony SASE firewall policy
+  api: openapi/perimeter-81-openapi-original.json
+  operations: [postObjectsAddresses, getObjectsAddresses, postObjectsServices, getFirewallPolicy, updateFirewallPolicy]
