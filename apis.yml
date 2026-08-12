@@ -529,6 +529,10 @@ apis:
   - type: AgenticAccess
     url: agentic-access/perimeter-81-agentic-access.yml
 common:
+- type: MCPServer
+  url: mcp/perimeter-81-mcp.yml
+- type: Overlay
+  url: overlays/perimeter-81-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/perimeter-81-domain-security.yml
 - type: Website
