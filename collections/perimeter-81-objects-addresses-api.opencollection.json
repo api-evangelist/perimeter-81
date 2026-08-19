@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application Objects Addresses API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Objects Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get object addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/objects/addresses"
+          },
+          "docs": "Required permissions: `[\"objects:read\"]`."
+        },
+        {
+          "info": {
+            "name": "Create new Address object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/objects/addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permission: `[\"objects:create\"]`."
+        },
+        {
+          "info": {
+            "name": "Update Address object",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/objects/addresses/:objectId",
+            "params": [
+              {
+                "name": "objectId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permission: `[\"objects:update\"]`"
+        },
+        {
+          "info": {
+            "name": "Delete Address object",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/objects/addresses/:objectId",
+            "params": [
+              {
+                "name": "objectId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permission: `[\"objects:delete\"]`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

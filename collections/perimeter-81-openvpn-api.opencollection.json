@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application OpenVPN API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OpenVPN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new OpenVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/tunnels/openvpn",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Get one openVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Update openVPN Tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Delete OpenVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

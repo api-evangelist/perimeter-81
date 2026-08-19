@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application Enhanced Networks API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enhanced Networks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all enhanced networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced"
+          },
+          "docs": "List all enhanced networks"
+        },
+        {
+          "info": {
+            "name": "Create enhanced network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new enhanced network with regions"
+        },
+        {
+          "info": {
+            "name": "Get enhanced network by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific enhanced network"
+        },
+        {
+          "info": {
+            "name": "Update enhanced network",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing enhanced network"
+        },
+        {
+          "info": {
+            "name": "Delete enhanced network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an enhanced network and all its resources"
+        },
+        {
+          "info": {
+            "name": "Get enhanced network health status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/health",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get health status of all tunnels in the enhanced network."
+        },
+        {
+          "info": {
+            "name": "Get network customer certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/network-customer-certificate"
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>Get network customer certificate details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

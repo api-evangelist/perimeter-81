@@ -1,0 +1,279 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application Enhanced Tunnels API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enhanced Tunnels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tunnels for a network",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the current page of the paginated result set"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of results per page"
+              }
+            ]
+          },
+          "docs": "List all tunnels in a specific enhanced network"
+        },
+        {
+          "info": {
+            "name": "Get tunnels for a region",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/regions/:regionId/tunnels",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the current page of the paginated result set"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of results per page"
+              }
+            ]
+          },
+          "docs": "List all tunnels in a specific region of an enhanced network"
+        },
+        {
+          "info": {
+            "name": "Create dynamic IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/dynamic",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new dynamic IPSec tunnel in an enhanced network"
+        },
+        {
+          "info": {
+            "name": "Get dynamic IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/dynamic/:dynamicTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "dynamicTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a dynamic IPSec tunnel"
+        },
+        {
+          "info": {
+            "name": "Update dynamic IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/dynamic/:dynamicTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "dynamicTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a dynamic IPSec tunnel configuration"
+        },
+        {
+          "info": {
+            "name": "Delete dynamic IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/dynamic/:dynamicTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "dynamicTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a dynamic IPSec tunnel"
+        },
+        {
+          "info": {
+            "name": "Create static IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/static",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new static IPSec tunnel in an enhanced network"
+        },
+        {
+          "info": {
+            "name": "Get static IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/static/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a static IPSec tunnel"
+        },
+        {
+          "info": {
+            "name": "Update static IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/static/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a static IPSec tunnel configuration"
+        },
+        {
+          "info": {
+            "name": "Delete static IPSec tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/enhanced/:networkId/tunnels/ipsec/static/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a static IPSec tunnel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

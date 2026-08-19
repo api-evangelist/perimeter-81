@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Applications List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/applications",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Application name to filter"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Application host to filter"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Application type to filter"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the current page of the paginated result set"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Defines the number of results per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results based on a specified field and order. Available fields for sorting are name, host and type."
+              }
+            ]
+          },
+          "docs": "This GET API will retrieve a list of all applications. Required permissions [application:read]"
+        },
+        {
+          "info": {
+            "name": "Create Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This POST API will allow to create a new application. Required permissions [application:create]"
+        },
+        {
+          "info": {
+            "name": "Get Application by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This GET API will allow to retrieve detailed information for a specific application by Id. Required permissions [application:read]"
+        },
+        {
+          "info": {
+            "name": "Get status of Application creation process by statusId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/applications/status/:statusId",
+            "params": [
+              {
+                "name": "statusId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint should retrieve status of creating application process using statusId. Required permissions [application:read]"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

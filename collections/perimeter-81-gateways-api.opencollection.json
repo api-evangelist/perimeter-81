@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application Gateways API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gateways",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/instances",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:create\"]`<br><br>Add gateway."
+        },
+        {
+          "info": {
+            "name": "Remove Gateways from Network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/instances",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:update\"]`<br><br>Remove Gateways from Network."
+        },
+        {
+          "info": {
+            "name": "Get Instance of a GW by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/standard/:networkId/instances/:gatewayId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "gatewayId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>Get Gateway."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

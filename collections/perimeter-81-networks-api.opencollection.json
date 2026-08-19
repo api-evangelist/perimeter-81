@@ -1,0 +1,694 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Harmony SASE Public Application Networks API",
+    "version": "2.3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Networks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks"
+          },
+          "docs": "List all networks"
+        },
+        {
+          "info": {
+            "name": "Create network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:create\"]`<br><br>Create networks."
+        },
+        {
+          "info": {
+            "name": "Get network by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>List network."
+        },
+        {
+          "info": {
+            "name": "Update network",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:update\"]`<br><br>Update network."
+        },
+        {
+          "info": {
+            "name": "Delete network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`<br><br>Delete network."
+        },
+        {
+          "info": {
+            "name": "Get network health status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/health",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>Get health status of all gateways and tunnels in the standard network."
+        },
+        {
+          "info": {
+            "name": "Add gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/instances",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:create\"]`<br><br>Add gateway."
+        },
+        {
+          "info": {
+            "name": "Remove Gateways from Network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/instances",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:update\"]`<br><br>Remove Gateways from Network."
+        },
+        {
+          "info": {
+            "name": "Get Instance of a GW by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/instances/:gatewayId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "gatewayId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>Get Gateway."
+        },
+        {
+          "info": {
+            "name": "Get status of asynchronous operations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/status/:statusId",
+            "params": [
+              {
+                "name": "statusId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br> status of asynchronous operations."
+        },
+        {
+          "info": {
+            "name": "List of available regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/harmony-sase-regions"
+          },
+          "docs": "Required permissions: `[\"addon:read\"]`<br><br>List of regions."
+        },
+        {
+          "info": {
+            "name": "Add regions to a network",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/regions",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"Network:Update\"]`<br><br>Network Update."
+        },
+        {
+          "info": {
+            "name": "Remove regions from network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/regions",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"Network:Delete\"]`<br><br>Remove Region. Gateways will still be avaidble through the remaining regions, in case you removed the last region, the gateways will be removed as well."
+        },
+        {
+          "info": {
+            "name": "Get region by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/regions/:regionId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`<br><br>Get Region."
+        },
+        {
+          "info": {
+            "name": "Create a new Wireguard tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/wireguard",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Get a Wireguard tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/wireguard/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Update a Wireguard tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/wireguard/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Delete Wireguard tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/wireguard/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`"
+        },
+        {
+          "info": {
+            "name": "Create a new OpenVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/openvpn",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write]`"
+        },
+        {
+          "info": {
+            "name": "Get one openVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Update openVPN Tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Delete OpenVPN tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/openvpn/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`"
+        },
+        {
+          "info": {
+            "name": "Create a new IPSec Single tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/single",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write]`"
+        },
+        {
+          "info": {
+            "name": "Get one IPSec Single tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/single/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Update IPSec Single Tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/single/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write\"]`"
+        },
+        {
+          "info": {
+            "name": "Delete IPSec Single tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/single/:tunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`"
+        },
+        {
+          "info": {
+            "name": "Create a new IPSec Redundant tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/redundant",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write]`"
+        },
+        {
+          "info": {
+            "name": "Get one IPSec Redundant tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/redundant/:haTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "haTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Update a new IPSec Redundant tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/redundant/:haTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "haTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Required permissions: `[\"network:write]`"
+        },
+        {
+          "info": {
+            "name": "Delete IPSec Redundant tunnel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/tunnels/ipsec/redundant/:haTunnelId",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "haTunnelId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:delete\"]`"
+        },
+        {
+          "info": {
+            "name": "Get route table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/networks/:networkId/route-table",
+            "params": [
+              {
+                "name": "networkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Required permissions: `[\"network:read\"]`"
+        },
+        {
+          "info": {
+            "name": "Get system status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0/v2.3/status"
+          },
+          "docs": "Required permissions: `[]`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1554 @@
+{
+  "item": [
+    {
+      "id": "d8cdbed3-6db0-4772-a7f0-c08009a3e317",
+      "name": "IPSec-Redundant",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "76899e02-7258-4421-8bd2-cea4cf1b107f",
+          "name": "Create a new IPSec Redundant tunnel",
+          "request": {
+            "name": "Create a new IPSec Redundant tunnel",
+            "description": {
+              "content": "Required permissions: `[\"network:write]`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.3",
+                "networks",
+                "standard",
+                ":networkId",
+                "tunnels",
+                "ipsec",
+                "redundant"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "networkId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\",\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\",\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c35e8e1-df8a-430c-a8e7-ddc05713af5d",
+              "name": "Request accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusUrl\": \"string\",\n  \"samplingTime\": 761\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cac8651e-28e5-4b8b-a3a8-e6c4fe8fac4c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b8aa466-0e03-40f2-9bd8-44d0692fcee2",
+              "name": "Insufficient licenses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "549383b4-4e24-4225-a905-5a577ceed6f1",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daf943ca-f74c-45b8-a50f-4d2b8d32726f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce390abd-a8d1-49a4-b3fa-6f63e227baff",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": \"<ipv4>\",\n    \"remotePublicIP\": \"<ipv4>\"\n  },\n  \"sharedSettings\": {\n    \"p81ASN\": \"<integer>\",\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81d24a59-ea80-44b3-b9b3-be9f1c3379c1",
+          "name": "Get one IPSec Redundant tunnel",
+          "request": {
+            "name": "Get one IPSec Redundant tunnel",
+            "description": {
+              "content": "Required permissions: `[\"network:read\"]`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.3",
+                "networks",
+                "standard",
+                ":networkId",
+                "tunnels",
+                "ipsec",
+                "redundant",
+                ":haTunnelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "networkId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "haTunnelId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efb77cde-560c-415f-8571-6c78b8c97552",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1998-12-19T03:54:57.896Z\",\n  \"updatedAt\": \"1986-06-21T22:45:58.754Z\",\n  \"tunnelName\": \"<string>\",\n  \"regionID\": \"string\",\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelID\": \"string\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelID\": \"string\"\n  },\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04a685e5-865b-436c-878c-117bd8ca9853",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e269454e-549d-4fa7-8c1f-af8fa27eb7f5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "613d4b9d-a42c-4b3c-acdd-4e5975935418",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6d0fe23-6011-42e5-aed1-543654cf4e85",
+          "name": "Update a new IPSec Redundant tunnel",
+          "request": {
+            "name": "Update a new IPSec Redundant tunnel",
+            "description": {
+              "content": "Required permissions: `[\"network:write]`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.3",
+                "networks",
+                "standard",
+                ":networkId",
+                "tunnels",
+                "ipsec",
+                "redundant",
+                ":haTunnelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "networkId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "haTunnelId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\",\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\",\n        \"<integer>\"\n      ]\n    }\n  },\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "79ac06a0-7553-4a86-8482-47e0aea013b0",
+              "name": "Request accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  },\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusUrl\": \"string\",\n  \"samplingTime\": 761\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4587555a-4085-48a6-968f-ec6ad05f2452",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  },\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12b550e2-70a8-445c-8efc-733abb0e8972",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  },\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8ced4a8-17bf-4735-b224-a993d06b620b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sharedSettings\": {\n    \"p81GatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"remoteGatewaySubnets\": [\n      \"<string>\"\n    ],\n    \"peakBandwidth\": 1000,\n    \"p81ASN\": \"<integer>\",\n    \"features\": {\n      \"symmetricInnerMesh\": {\n        \"enabled\": false\n      }\n    }\n  },\n  \"advancedSettings\": {\n    \"keyExchange\": \"<string>\",\n    \"ikeLifeTime\": \"<string>\",\n    \"lifetime\": \"<string>\",\n    \"dpdDelay\": \"<string>\",\n    \"dpdTimeout\": \"<string>\",\n    \"phase1\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    },\n    \"phase2\": {\n      \"auth\": [\n        \"<string>\"\n      ],\n      \"encryption\": [\n        \"<string>\"\n      ],\n      \"dh\": [\n        \"<integer>\"\n      ]\n    }\n  },\n  \"tunnel1\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  },\n  \"tunnel2\": {\n    \"gatewayID\": \"<string>\",\n    \"p81GWInternalIP\": \"<ipv4>\",\n    \"passphrase\": \"<string>\",\n    \"remoteASN\": \"<integer>\",\n    \"remoteGWInternalIP\": \"<ipv4>\",\n    \"remoteID\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"remotePublicIP\": \"<ipv4>\",\n    \"tunnelId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ff21508-71ce-4f6a-b7f8-b5ab75b67de7",
+          "name": "Delete IPSec Redundant tunnel",
+          "request": {
+            "name": "Delete IPSec Redundant tunnel",
+            "description": {
+              "content": "Required permissions: `[\"network:delete\"]`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2.3",
+                "networks",
+                "standard",
+                ":networkId",
+                "tunnels",
+                "ipsec",
+                "redundant",
+                ":haTunnelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "networkId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "haTunnelId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6a911a5-f079-46e3-948f-b1b5f2af29ac",
+              "name": "Request accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusUrl\": \"string\",\n  \"samplingTime\": 761\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2620148a-3788-4c6b-adce-f10957b9a816",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9eea699-2927-47b9-846a-0e0c95a2d978",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0efc51b-ad9d-4171-bc3f-801f8fdfb3f4",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f95d11b4-794b-4229-abf9-d83f674236af",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2.3",
+                    "networks",
+                    "standard",
+                    ":networkId",
+                    "tunnels",
+                    "ipsec",
+                    "redundant",
+                    ":haTunnelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "networkId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "haTunnelId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://virtserver.swaggerhub.com/perimeter81/public-api-yaml/1.0.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7684cb4a-d6b7-4317-a7ad-10373f9eea1c",
+    "name": "Harmony SASE Public Application IPSec-Redundant API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The YAML for Harmony SASE Public API.\n",
+      "type": "text/plain"
+    }
+  }
+}

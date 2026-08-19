@@ -546,3 +546,9 @@ tools:
   source_operation: openapi/perimeter-81-openapi-original.json#getApplicationStatus
   method: GET
   path: /v2.3/applications/status/{statusId}
+deployment:
+  mode: none
+  verified: derived
+  tools: 107
+  checked: '2026-08-12'
+  source: catalog MCP census
