@@ -1,0 +1,103 @@
+slug: perimeter-81
+provider: Perimeter 81
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: Enhanced Networks
+  spec_file: perimeter-81-enhanced-networks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: POST /v2.3/networks/enhanced createEnhancedNetwork Create enhanced network; GET .../{networkId}/health
+    Get enhanced network health status; schemas DeployEnhancedNetwork, ScaleUnitsCount
+  reason: 'Lifecycle management of software-defined overlay networks for an enterprise SASE deployment
+    — compute/network infrastructure provisioning, i.e. Cross-Industry IT Infrastructure Management. Not
+    telecom carrier network operations: the vendor connects a distributed workforce to cloud and on-prem
+    resources, it does not run an operator''s access/core network.'
+- tag: Networks
+  spec_file: perimeter-81-networks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: POST /v2.3/networks NetworksControllerV2_networkCreate Create network; GET /v2.3/networks/{networkId}/health
+    Get network health status; PUT .../regions Add regions to a network
+  reason: Core network object lifecycle — create/update/delete networks, attach gateways and regions,
+    check health. This is provisioning and operation of the customer's software-defined network infrastructure,
+    i.e. Cross-Industry IT Infrastructure Management.
+- tag: Standard Networks
+  spec_file: perimeter-81-standard-networks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: POST /v2.3/networks/standard  Create network ... GET /v2.3/networks/standard/{networkId}/health  Get
+    network health status
+  reason: Create/update/delete software-defined networks and check their health — lifecycle management
+    of network infrastructure resources for a SASE platform. Cross-industry IT infrastructure is the correct
+    frame for a devtool vendor.
+- tag: Enhanced Route Tables
+  spec_file: perimeter-81-enhanced-route-tables-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /v2.3/networks/enhanced/{networkId}/route-table/static createStaticRoute; createDynamicRoute
+    Create dynamic route
+  reason: Static and dynamic IP routing configuration for the customer's software-defined network — network
+    infrastructure configuration under Cross-Industry IT Infrastructure Management rather than any telecom
+    operator capability.
+- tag: Enhanced Tunnels
+  spec_file: perimeter-81-enhanced-tunnels-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /v2.3/networks/enhanced/{networkId}/tunnels/ipsec/dynamic createDynamicTunnel Create
+    dynamic IPSec tunnel; schemas IPSecAlgorithms, IPSecSharedSettings
+  reason: Creation and maintenance of IPSec site-to-site tunnels connecting customer sites to the SASE
+    network — network connectivity infrastructure. Mapped to IT Infrastructure Management; the security-architecture
+    reading is possible, hence not higher confidence.
+- tag: Firewall Policy
+  spec_file: perimeter-81-firewall-policy-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.7
+  evidence: PUT /v2.3/networks/{networkId}/policy updateFirewallPolicy Update firewall policy by network
+    ID; schemas FirewallPolicyRule, UsersAndGroups, SourcesAndDestinations
+  reason: 'Definition of firewall rules over sources, destinations and user groups is a security control
+    surface, so Cybersecurity Management at L1. No L2 asserted: the rules blend zero-trust access policy
+    (IAM) with network security enforcement (security architecture), and the evidence does not settle
+    which.'
+- tag: OpenVPN
+  spec_file: perimeter-81-openvpn-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /v2.3/networks/standard/{networkId}/tunnels/openvpn  Create a new OpenVPN tunnel
+  reason: 'Operations create/update/delete OpenVPN tunnels within software-defined networks — provisioning
+    of secure network connectivity infrastructure, i.e. IT Infrastructure Management (network/cloud).
+    Not subscriber or telecom network operations: this is a corporate SASE devtool surface, so the cross-industry
+    IT capability is the honest mapping.'
+- tag: Wireguard
+  spec_file: perimeter-81-wireguard-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /v2.3/networks/standard/{networkId}/tunnels/wireguard  Create a new Wireguard tunnel
+  reason: CRUD over WireGuard VPN tunnels attached to a network — secure network connectivity provisioning,
+    mapped to IT Infrastructure Management.

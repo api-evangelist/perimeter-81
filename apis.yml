@@ -543,6 +543,9 @@ apis:
   - type: AgenticAccess
     url: agentic-access/perimeter-81-agentic-access.yml
 common:
+- type: CapabilityMap
+  url: capabilities/perimeter-81-capability-edges.yml
+  name: Perimeter 81 Business Capability Map
 - type: MCPServer
   url: mcp/perimeter-81-mcp.yml
 - type: Overlay
