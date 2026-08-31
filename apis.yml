@@ -518,7 +518,7 @@ apis:
   humanURL: https://support.perimeter81.com/docs/api-getting-started
   baseURL: https://api.perimeter81.com/api/rest
   tags:
-  - WireGuard
+  - Wireguard
   tags_raw:
   - Wireguard
   properties:
