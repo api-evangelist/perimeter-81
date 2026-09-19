@@ -545,6 +545,11 @@ apis:
   - type: AgenticAccess
     url: agentic-access/perimeter-81-agentic-access.yml
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/checkpoint/
+  name: Check Point
+  x-relationship: acquired
+  x-evidence: "description names Check Point and https://www.perimeter81.com/ now redirects to sase.checkpoint.com (roadmap#390, corroborate-dead.py)"
 - type: CapabilityMap
   url: capabilities/perimeter-81-capability-edges.yml
   name: Perimeter 81 Business Capability Map
