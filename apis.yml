@@ -545,6 +545,8 @@ apis:
   - type: AgenticAccess
     url: agentic-access/perimeter-81-agentic-access.yml
 common:
+- type: Plans
+  url: plans/perimeter-81-plans-pricing.yml
 - type: ParentCompany
   url: https://apis.io/providers/checkpoint/
   name: Check Point

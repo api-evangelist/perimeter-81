@@ -1,0 +1,19 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://sase.checkpoint.com:443/
+sources:
+- https://sase.checkpoint.com:443/
+- https://www.perimeter81.com/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: none
+published: false
+note: No numeric price is published on the pricing page; Product marketing homepage for Check Point SASE
+  (Perimeter 81); no pricing information or numeric prices shown, only demo/start-now CTAs and a TCO calculator
+  link.
+plan_count: 0
+plans: []
