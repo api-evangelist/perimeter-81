@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 2.3.0
-  title: Harmony SASE Public Application Wireguard API
-  description: 'The YAML for Harmony SASE Public API.
-
-    '
+  title: Harmony SASE Public Wireguard API
+  description: The YAML for Harmony SASE Public API.
   contact: {}
 servers:
 - description: SwaggerHub API Auto Mocking
@@ -121,20 +119,6 @@ paths:
       - Wireguard
 components:
   schemas:
-    WireGuradDetails:
-      type: object
-      properties:
-        remoteEndpoint:
-          $ref: '#/components/schemas/IP'
-        remoteSubnets:
-          minLength: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-      required:
-      - remoteEndpoint
-      - remoteSubnets
     BaseDates:
       type: object
       properties:
@@ -149,23 +133,6 @@ components:
       required:
       - createdAt
       additionalProperties: false
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    IP:
-      type: string
-      format: ipv4
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
     BaseTunnelValues:
       type: object
       properties:
@@ -181,16 +148,30 @@ components:
       - regionID
       - gatewayID
       - tunnelName
-    CreateWireguardTunnelPayload:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
-    TunnelName:
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    IP:
       type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
+      format: ipv4
+    WireGuradDetails:
+      type: object
+      properties:
+        remoteEndpoint:
+          $ref: '#/components/schemas/IP'
+        remoteSubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      required:
+      - remoteEndpoint
+      - remoteSubnets
     WireguardTunnel:
       allOf:
       - $ref: '#/components/schemas/WireGuradDetails'
@@ -203,9 +184,39 @@ components:
           type:
             type: string
             default: wireguard
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    CreateWireguardTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+  parameters:
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    '422':
-      description: Unprocessable entity
+    '404':
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -216,20 +227,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '404':
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '202':
       description: Request accepted
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AsyncOperationResponse'
-    '401':
-      description: Unauthorized
+    '422':
+      description: Unprocessable entity
       content:
         application/json:
           schema:
@@ -240,19 +245,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    networkIdParam:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    tunnelIdParam:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearer:
       scheme: bearer

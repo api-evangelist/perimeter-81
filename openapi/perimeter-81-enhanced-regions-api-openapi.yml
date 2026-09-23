@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 2.3.0
-  title: Harmony SASE Public Application Enhanced Regions API
-  description: 'The YAML for Harmony SASE Public API.
-
-    '
+  title: Harmony SASE Public Enhanced Regions API
+  description: The YAML for Harmony SASE Public API.
   contact: {}
 servers:
 - description: SwaggerHub API Auto Mocking
@@ -21,15 +19,16 @@ security:
 - bearer: []
 tags:
 - name: Enhanced Regions
-  description: 'The Enhanced Region API allows you to manage and configure enhanced regions, including scale units.
-
-    '
+  description: The Enhanced Region API allows you to manage and configure enhanced regions, including scale units.
 paths:
   /v2.3/networks/enhanced/harmony-sase-regions:
     get:
       operationId: Enhanced_NetworksControllerV2_getRegions
       summary: List of available Harmony SASE regions that supports enhanced networks
-      description: 'Required permissions: `["addon:read"]`<br><br>List of regions.'
+      description: 'Required permissions: `["addon:read"]`
+
+
+        List of regions.'
       parameters: []
       responses:
         '200':
@@ -197,20 +196,78 @@ paths:
         '409':
           description: Network region not found
 components:
-  parameters:
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    regionId:
-      name: regionId
-      in: path
-      required: true
-      schema:
-        type: string
+  responses:
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+    ScaleUnitsOperation:
+      type: object
+      properties:
+        unitType:
+          type: string
+          description: Type of scale unit. Standard units provide basic capacity, while cloudSecurity units offer enhanced security features.
+          enum:
+          - standard
+          - cloudSecurity
+        scaleUnitsCount:
+          $ref: '#/components/schemas/ScaleUnitsCount'
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - unitType
+      - scaleUnitsCount
+    HarmonySaseRegionsList:
+      type: array
+      items:
+        allOf:
+        - $ref: '#/components/schemas/HarmonySaseRegion'
+        - description: List of Harmony SASE regions.
     HarmonySaseRegion:
       type: object
       properties:
@@ -237,20 +294,22 @@ components:
       - name
       - countryCode
       - continentCode
-    Error:
+    EnhancedRegionCreate:
       type: object
       properties:
-        id:
+        harmonySaseRegionId:
           type: string
-        message:
-          type: string
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - harmonySaseRegionId
     EnhancedRegion:
       type: object
       properties:
@@ -311,86 +370,26 @@ components:
       - scaleUnits
       - createdAt
       - attributes
-    HarmonySaseRegionsList:
-      type: array
-      items:
-        allOf:
-        - $ref: '#/components/schemas/HarmonySaseRegion'
-        - description: List of Harmony SASE regions.
-    ScaleUnitsOperation:
+    Error:
       type: object
       properties:
-        unitType:
+        id:
           type: string
-          description: Type of scale unit. Standard units provide basic capacity, while cloudSecurity units offer enhanced security features.
-          enum:
-          - standard
-          - cloudSecurity
-        scaleUnitsCount:
-          $ref: '#/components/schemas/ScaleUnitsCount'
-        idle:
-          type: boolean
-          description: Region is disabled for users if true
-          default: true
-      required:
-      - unitType
-      - scaleUnitsCount
-    ScaleUnitsCount:
-      type: integer
-      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
-
-        Higher values provide greater throughput and connection capacity.
-
-        '
-      minimum: 1
-      maximum: 10
-    EnhancedRegionCreate:
-      type: object
-      properties:
-        harmonySaseRegionId:
+        message:
           type: string
-          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
-        scaleUnits:
-          allOf:
-          - $ref: '#/components/schemas/ScaleUnitsCount'
-          - default: 1
-        idle:
-          type: boolean
-          description: Region is disabled for users if true
-          default: true
-      required:
-      - harmonySaseRegionId
-  responses:
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    regionId:
+      name: regionId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearer:
       scheme: bearer

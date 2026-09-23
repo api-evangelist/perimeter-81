@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 2.3.0
-  title: Harmony SASE Public Application Standard Networks API
-  description: 'The YAML for Harmony SASE Public API.
-
-    '
+  title: Harmony SASE Public Standard Networks API
+  description: The YAML for Harmony SASE Public API.
   contact: {}
 servers:
 - description: SwaggerHub API Auto Mocking
@@ -21,9 +19,7 @@ security:
 - bearer: []
 tags:
 - name: Standard Networks
-  description: 'The Standard Network API allows you to manage and configure standard networks.
-
-    '
+  description: The Standard Network API allows you to manage and configure standard networks.
 paths:
   /v2.3/networks/standard:
     get:
@@ -50,7 +46,10 @@ paths:
     post:
       operationId: Standard_NetworksControllerV2_networkCreate
       summary: Create network
-      description: 'Required permissions: `["network:create"]`<br><br>Create networks.'
+      description: 'Required permissions: `["network:create"]`
+
+
+        Create networks.'
       parameters: []
       requestBody:
         required: true
@@ -79,7 +78,10 @@ paths:
     delete:
       operationId: Standard_NetworksControllerV2_networkDelete
       summary: Delete network
-      description: 'Required permissions: `["network:delete"]`<br><br>Delete network.'
+      description: 'Required permissions: `["network:delete"]`
+
+
+        Delete network.'
       parameters:
       - name: networkId
         required: true
@@ -104,7 +106,10 @@ paths:
     get:
       operationId: Standard_NetworksControllerV2_networkFind
       summary: Get network by Id
-      description: 'Required permissions: `["network:read"]`<br><br>List network.'
+      description: 'Required permissions: `["network:read"]`
+
+
+        List network.'
       parameters:
       - name: networkId
         required: true
@@ -129,7 +134,10 @@ paths:
     put:
       operationId: Standard_NetworksControllerV2_networkUpdate
       summary: Update network
-      description: 'Required permissions: `["network:update"]`<br><br>Update network.'
+      description: 'Required permissions: `["network:update"]`
+
+
+        Update network.'
       parameters:
       - name: networkId
         required: true
@@ -163,7 +171,10 @@ paths:
     get:
       operationId: Standard_NetworksControllerV2_getNetworkHealth
       summary: Get network health status
-      description: 'Required permissions: `["network:read"]`<br><br>Get health status of all gateways and tunnels in the standard network.'
+      description: 'Required permissions: `["network:read"]`
+
+
+        Get health status of all gateways and tunnels in the standard network.'
       parameters:
       - $ref: '#/components/parameters/networkId'
       responses:
@@ -184,8 +195,11 @@ paths:
   /v2.3/networks/standard/status/{statusId}:
     get:
       operationId: Standard_NetworksControllerV2_status
-      summary: Get status of asynchronous operations.
-      description: 'Required permissions: `["network:read"]`<br><br> status of asynchronous operations.'
+      summary: Get status of asynchronous operations
+      description: 'Required permissions: `["network:read"]`
+
+
+        status of asynchronous operations.'
       parameters:
       - name: statusId
         required: true
@@ -209,146 +223,6 @@ paths:
       - Standard Networks
 components:
   schemas:
-    NetworkTunnelIpsecSingle:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - $ref: '#/components/schemas/NetworkIpsecBase'
-    StandardHealthCheckMeta:
-      type: object
-      properties:
-        networkId:
-          type: string
-          description: ID of the network
-        instanceId:
-          type: string
-          description: ID of the instance (gateway or tunnel)
-        tunnelName:
-          type: string
-          description: Name of the tunnel (only for tunnel type)
-      required:
-      - networkId
-      - instanceId
-      additionalProperties: false
-    Network:
-      allOf:
-      - $ref: '#/components/schemas/BasicNetwork'
-      - type: object
-        properties:
-          regions:
-            items:
-              $ref: '#/components/schemas/NetworkRegion'
-            type: array
-            description: Network regions list.
-        required:
-        - regions
-    NetworkInstance:
-      allOf:
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          network:
-            type: string
-            description: ID of the network.
-          region:
-            type: string
-            description: ID of the network region.
-          instanceType:
-            type: string
-          imageType:
-            type: string
-          imageVersion:
-            type: string
-          dns:
-            type: string
-          ip:
-            type: string
-          tunnels:
-            items:
-              $ref: '#/components/schemas/NetworkTunnel'
-            type: array
-            description: List of network tunnels.
-          id:
-            type: string
-            description: Unique ID.
-          tenantId:
-            type: string
-            description: ID of the tenant.
-        required:
-        - network
-        - region
-        - instanceType
-        - imageType
-        - imageVersion
-        - dns
-        - ip
-        - tunnels
-        - id
-        - tenantId
-    IP:
-      type: string
-      format: ipv4
-    IPSecAdvancedSettings:
-      type: object
-      properties:
-        keyExchange:
-          type: string
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-      required:
-      - keyExchange
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
-      additionalProperties: false
-    StandardHealthCheckType:
-      type: string
-      enum:
-      - gateway
-      - tunnel
-      description: Type of health check component for standard networks
-    NetworkTunnelOpenvpn:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - type: object
-        properties:
-          passphrase:
-            $ref: '#/components/schemas/Passphrase'
-          username:
-            type: string
-            description: Openvpn username.
-        required:
-        - passphrase
-        - username
-        additionalProperties: false
-    ASN:
-      type: integer
-      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
-      oneOf:
-      - minimum: 1
-        maximum: 64496
-        description: Public ASN range
-      - minimum: 64512
-        maximum: 65535
-        description: Private ASN range (16-bit)
-      - minimum: 131072
-        maximum: 4294967295
-        description: Private ASN range (32-bit)
     IPSecAlgorithms:
       type: object
       properties:
@@ -412,28 +286,69 @@ components:
             - camellia192ccm16
             - camellia256ccm16
             - chacha20poly1305
-    AsyncOperationResult:
+    CreateRegionInNetworkPayload:
+      properties:
+        harmonySaseRegionId:
+          type: string
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        idle:
+          type: boolean
+          description: Create the gateway as disabled if true.
+          default: true
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+      type: object
+      required:
+      - harmonySaseRegionId
+      - idle
+      additionalProperties: false
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+    AsyncOperationResponse:
       type: object
       properties:
-        resource:
+        statusUrl:
           type: string
-        statusCode:
+        samplingTime:
           type: integer
-        reason:
-          items:
+    IP:
+      type: string
+      format: ipv4
+    NetworkTunnelOpenvpn:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - type: object
+        properties:
+          passphrase:
+            $ref: '#/components/schemas/Passphrase'
+          username:
             type: string
-          type: array
-          description: Reasons list.
-    BaseNetworkDto:
-      properties:
-        name:
-          type: string
-          description: Network name
-        tags:
-          items:
-            type: string
-          type: array
-          description: List of network tags
+            description: Openvpn username.
+        required:
+        - passphrase
+        - username
+        additionalProperties: false
+    UpdatedNetwork:
+      allOf:
+      - $ref: '#/components/schemas/BasicNetwork'
+      - type: object
+        properties:
+          regions:
+            items:
+              type: string
+            type: array
+            description: Network regions id list.
+        required:
+        - regions
     NetworkHaTunnelID:
       allOf:
       - $ref: '#/components/schemas/BaseDates'
@@ -472,9 +387,369 @@ components:
       - $ref: '#/components/schemas/NetworkTunnelWireguard'
       - $ref: '#/components/schemas/NetworkTunnelIpsecSingle'
       - $ref: '#/components/schemas/NetworkTunnelIpsecRedundant'
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    IPSecPhaseCommon:
+      type: object
+      properties:
+        dh:
+          description: Diffie Helman encryption
+          minLength: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            enum:
+            - 2
+            - 5
+            - 14
+            - 19
+            - 20
+            - 21
+            - 31
+      required:
+      - auth
+      - encryption
+      - dh
+      additionalProperties: false
+    Network:
+      allOf:
+      - $ref: '#/components/schemas/BasicNetwork'
+      - type: object
+        properties:
+          regions:
+            items:
+              $ref: '#/components/schemas/NetworkRegion'
+            type: array
+            description: Network regions list.
+        required:
+        - regions
+    StandardHealthCheckType:
+      type: string
+      enum:
+      - gateway
+      - tunnel
+      description: Type of health check component for standard networks
+    BaseNetworkDto:
+      properties:
+        name:
+          type: string
+          description: Network name
+        tags:
+          items:
+            type: string
+          type: array
+          description: List of network tags
+    NetworkTunnelIpsecSingle:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - $ref: '#/components/schemas/NetworkIpsecBase'
+    StandardHealthResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardHealthCheck'
+          description: List of health checks for standard networks (includes gateways and tunnels)
+      required:
+      - data
+      additionalProperties: false
+    NetworkTunnelIpsecRedundant:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - $ref: '#/components/schemas/NetworkIpsecBase'
+      - type: object
+        properties:
+          haTunnelID:
+            $ref: '#/components/schemas/NetworkHaTunnelID'
+          rightASN:
+            $ref: '#/components/schemas/ASN'
+          rightPrivateIP:
+            $ref: '#/components/schemas/IP'
+          leftPrivateIP:
+            $ref: '#/components/schemas/IP'
+        required:
+        - haTunnelID
+        - rightASN
+        - rightPrivateIP
+        - leftPrivateIP
+        additionalProperties: false
+    IPSecAdvancedSettings:
+      type: object
+      properties:
+        keyExchange:
+          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
+    ASN:
+      type: integer
+      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
+      oneOf:
+      - minimum: 1
+        maximum: 64496
+        description: Public ASN range
+      - minimum: 64512
+        maximum: 65535
+        description: Private ASN range (16-bit)
+      - minimum: 131072
+        maximum: 4294967295
+        description: Private ASN range (32-bit)
+    NetworkRegion:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          network:
+            type: string
+            description: ID of the network.
+          dns:
+            type: string
+            description: DNS of the region.
+          name:
+            type: string
+            description: Name of the network region.
+          instances:
+            items:
+              $ref: '#/components/schemas/NetworkInstance'
+            type: array
+            description: Network instances.
+          id:
+            type: string
+            description: Unique ID.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+        required:
+        - network
+        - dns
+        - name
+        - instances
+        - id
+        - tenantId
+    AsyncOperationStatus:
+      type: object
+      properties:
+        completed:
+          type: boolean
+        result:
+          $ref: '#/components/schemas/AsyncOperationResult'
+    NetworkTunnelWireguard:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - type: object
+        properties:
+          leftAllowedIP:
+            minLength: 1
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+          leftEndpoint:
+            $ref: '#/components/schemas/IP'
+          vault:
+            type: string
+            description: vault.
+          requestConfigToken:
+            type: string
+            description: requestConfigToken.
+        required:
+        - leftAllowedIP
+        - leftEndpoint
+        - vault
+        - requestConfigToken
+        additionalProperties: false
+    StandardHealthCheck:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StandardHealthCheckType'
+        meta:
+          $ref: '#/components/schemas/StandardHealthCheckMeta'
+        status:
+          $ref: '#/components/schemas/HealthStatus'
+      required:
+      - type
+      - meta
+      - status
+      additionalProperties: false
     Lifetime:
       type: string
       pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
+    UpdateNetworkDto:
+      type: object
+      properties:
+        network:
+          $ref: '#/components/schemas/BaseNetworkDto'
+      required:
+      - network
+    HealthStatus:
+      type: string
+      enum:
+      - passing
+      - critical
+      - unknown
+      description: Health status of the component
+    CreateNetworkPayload:
+      properties:
+        subnet:
+          type: string
+          maxLength: 20
+          description: Subnet of the network. Cannot be changed later. Allowed private subnet ranges are 10.0.0.0/12-22, 172.16.0.0/12-22, 192.168.0.0/16-22, or 198.18.0.0/15-22.
+          default: 10.255.0.0/16
+        name:
+          type: string
+          description: Network name.
+          minLength: 5
+          maxLength: 32
+        tags:
+          items:
+            type: string
+          type: array
+          description: List of network tags.
+      type: object
+      required:
+      - name
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    NetworkInstance:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          network:
+            type: string
+            description: ID of the network.
+          region:
+            type: string
+            description: ID of the network region.
+          instanceType:
+            type: string
+          imageType:
+            type: string
+          imageVersion:
+            type: string
+          dns:
+            type: string
+          ip:
+            type: string
+          tunnels:
+            items:
+              $ref: '#/components/schemas/NetworkTunnel'
+            type: array
+            description: List of network tunnels.
+          id:
+            type: string
+            description: Unique ID.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+        required:
+        - network
+        - region
+        - instanceType
+        - imageType
+        - imageVersion
+        - dns
+        - ip
+        - tunnels
+        - id
+        - tenantId
+    NetworkTunnelBase:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Unique ID.
+          network:
+            type: string
+            description: ID of the network.
+          region:
+            type: string
+            description: ID of the network region.
+          instance:
+            type: string
+            description: ID of the network instance.
+          interfaceName:
+            type: string
+          type:
+            enum:
+            - connector
+            - ipsec
+            - openvpn
+            type: string
+          isHA:
+            type: boolean
+            description: Indicates if it's a redundant tunnel.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+        required:
+        - id
+        - network
+        - region
+        - instance
+        - interfaceName
+        - type
+        - isHA
+        - tenantId
+        additionalProperties: false
+      - $ref: '#/components/schemas/BaseDates'
+    StandardHealthCheckMeta:
+      type: object
+      properties:
+        networkId:
+          type: string
+          description: ID of the network
+        instanceId:
+          type: string
+          description: ID of the instance (gateway or tunnel)
+        tunnelName:
+          type: string
+          description: Name of the tunnel (only for tunnel type)
+      required:
+      - networkId
+      - instanceId
+      additionalProperties: false
+    Passphrase:
+      type: string
+      pattern: ^[$a-zA-Z1-9_\/\.][$a-zA-Z0-9_\/\.]{7,101}$
     BasicNetwork:
       allOf:
       - $ref: '#/components/schemas/BaseDates'
@@ -525,13 +800,6 @@ components:
         - isDefault
         - id
         - tenantId
-    AsyncOperationStatus:
-      type: object
-      properties:
-        completed:
-          type: boolean
-        result:
-          $ref: '#/components/schemas/AsyncOperationResult'
     DeployNetworkPayload:
       properties:
         network:
@@ -545,6 +813,18 @@ components:
       required:
       - network
       - regions
+    AsyncOperationResult:
+      type: object
+      properties:
+        resource:
+          type: string
+        statusCode:
+          type: integer
+        reason:
+          items:
+            type: string
+          type: array
+          description: Reasons list.
     NetworkIpsecBase:
       allOf:
       - $ref: '#/components/schemas/IPSecAdvancedSettings'
@@ -582,272 +862,6 @@ components:
         - leftSubnets
         - rightSubnets
         additionalProperties: false
-    IPSecPhaseCommon:
-      type: object
-      properties:
-        dh:
-          description: Diffie Helman encryption
-          minLength: 0
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            enum:
-            - 2
-            - 5
-            - 14
-            - 19
-            - 20
-            - 21
-            - 31
-      required:
-      - auth
-      - encryption
-      - dh
-      additionalProperties: false
-    Passphrase:
-      type: string
-      pattern: ^[$a-zA-Z1-9_\/\.][$a-zA-Z0-9_\/\.]{7,101}$
-    StandardHealthCheck:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StandardHealthCheckType'
-        meta:
-          $ref: '#/components/schemas/StandardHealthCheckMeta'
-        status:
-          $ref: '#/components/schemas/HealthStatus'
-      required:
-      - type
-      - meta
-      - status
-      additionalProperties: false
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
-    NetworkRegion:
-      allOf:
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          network:
-            type: string
-            description: ID of the network.
-          dns:
-            type: string
-            description: DNS of the region.
-          name:
-            type: string
-            description: Name of the network region.
-          instances:
-            items:
-              $ref: '#/components/schemas/NetworkInstance'
-            type: array
-            description: Network instances.
-          id:
-            type: string
-            description: Unique ID.
-          tenantId:
-            type: string
-            description: ID of the tenant.
-        required:
-        - network
-        - dns
-        - name
-        - instances
-        - id
-        - tenantId
-    UpdateNetworkDto:
-      type: object
-      properties:
-        network:
-          $ref: '#/components/schemas/BaseNetworkDto'
-      required:
-      - network
-    DPDTime:
-      type: string
-      pattern: ^([5-9]|[1-5][0-9]|60)s$
-    NetworkTunnelWireguard:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - type: object
-        properties:
-          leftAllowedIP:
-            minLength: 1
-            uniqueItems: true
-            type: array
-            items:
-              type: string
-          leftEndpoint:
-            $ref: '#/components/schemas/IP'
-          vault:
-            type: string
-            description: vault.
-          requestConfigToken:
-            type: string
-            description: requestConfigToken.
-        required:
-        - leftAllowedIP
-        - leftEndpoint
-        - vault
-        - requestConfigToken
-        additionalProperties: false
-    StandardHealthResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardHealthCheck'
-          description: List of health checks for standard networks (includes gateways and tunnels)
-      required:
-      - data
-      additionalProperties: false
-    NetworkTunnelIpsecRedundant:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - $ref: '#/components/schemas/NetworkIpsecBase'
-      - type: object
-        properties:
-          haTunnelID:
-            $ref: '#/components/schemas/NetworkHaTunnelID'
-          rightASN:
-            $ref: '#/components/schemas/ASN'
-          rightPrivateIP:
-            $ref: '#/components/schemas/IP'
-          leftPrivateIP:
-            $ref: '#/components/schemas/IP'
-        required:
-        - haTunnelID
-        - rightASN
-        - rightPrivateIP
-        - leftPrivateIP
-        additionalProperties: false
-    HealthStatus:
-      type: string
-      enum:
-      - passing
-      - critical
-      - unknown
-      description: Health status of the component
-    CreateNetworkPayload:
-      properties:
-        subnet:
-          type: string
-          maxLength: 20
-          description: Subnet of the network. Cannot be changed later. Allowed private subnet ranges are 10.0.0.0/12-22, 172.16.0.0/12-22, 192.168.0.0/16-22, or 198.18.0.0/15-22.
-          default: 10.255.0.0/16
-        name:
-          type: string
-          description: Network name.
-          minLength: 5
-          maxLength: 32
-        tags:
-          items:
-            type: string
-          type: array
-          description: List of network tags.
-      type: object
-      required:
-      - name
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
-    UpdatedNetwork:
-      allOf:
-      - $ref: '#/components/schemas/BasicNetwork'
-      - type: object
-        properties:
-          regions:
-            items:
-              type: string
-            type: array
-            description: Network regions id list.
-        required:
-        - regions
-    NetworkTunnelBase:
-      allOf:
-      - type: object
-        properties:
-          id:
-            type: string
-            description: Unique ID.
-          network:
-            type: string
-            description: ID of the network.
-          region:
-            type: string
-            description: ID of the network region.
-          instance:
-            type: string
-            description: ID of the network instance.
-          interfaceName:
-            type: string
-          type:
-            enum:
-            - connector
-            - ipsec
-            - openvpn
-            type: string
-          isHA:
-            type: boolean
-            description: Indicates if it's a redundant tunnel.
-          tenantId:
-            type: string
-            description: ID of the tenant.
-        required:
-        - id
-        - network
-        - region
-        - instance
-        - interfaceName
-        - type
-        - isHA
-        - tenantId
-        additionalProperties: false
-      - $ref: '#/components/schemas/BaseDates'
-    ScaleUnitsCount:
-      type: integer
-      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
-
-        Higher values provide greater throughput and connection capacity.
-
-        '
-      minimum: 1
-      maximum: 10
-    CreateRegionInNetworkPayload:
-      properties:
-        harmonySaseRegionId:
-          type: string
-          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
-        idle:
-          type: boolean
-          description: Create the gateway as disabled if true.
-          default: true
-        scaleUnits:
-          allOf:
-          - $ref: '#/components/schemas/ScaleUnitsCount'
-          - default: 1
-      type: object
-      required:
-      - harmonySaseRegionId
-      - idle
-      additionalProperties: false
   parameters:
     networkId:
       name: networkId

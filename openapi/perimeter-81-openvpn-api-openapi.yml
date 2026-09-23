@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 2.3.0
-  title: Harmony SASE Public Application OpenVPN API
-  description: 'The YAML for Harmony SASE Public API.
-
-    '
+  title: Harmony SASE Public Open VPN API
+  description: The YAML for Harmony SASE Public API.
   contact: {}
 servers:
 - description: SwaggerHub API Auto Mocking
@@ -135,20 +133,16 @@ components:
       required:
       - createdAt
       additionalProperties: false
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    AsyncOperationResponse:
+    OpenVPNAsyncOperationResponse:
       type: object
       properties:
         statusUrl:
           type: string
         samplingTime:
           type: integer
+        secretAccessKey:
+          type: string
+          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
     BaseTunnelValues:
       type: object
       properties:
@@ -164,22 +158,13 @@ components:
       - regionID
       - gatewayID
       - tunnelName
-    OpenVPNAsyncOperationResponse:
+    AsyncOperationResponse:
       type: object
       properties:
         statusUrl:
           type: string
         samplingTime:
           type: integer
-        secretAccessKey:
-          type: string
-          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
     OpenVPNTunnel:
       allOf:
       - $ref: '#/components/schemas/BaseTunnelValues'
@@ -196,9 +181,35 @@ components:
         secretAccessKey:
           type: string
           description: Secret access key for the OpenVPN tunnel. This is only the hashed value. The original value will not be retrievable after creation.
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+  parameters:
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    '422':
-      description: Unprocessable entity
+    '404':
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -209,20 +220,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '404':
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '202':
       description: Request accepted
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AsyncOperationResponse'
-    '401':
-      description: Unauthorized
+    '422':
+      description: Unprocessable entity
       content:
         application/json:
           schema:
@@ -233,19 +238,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    networkIdParam:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    tunnelIdParam:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearer:
       scheme: bearer

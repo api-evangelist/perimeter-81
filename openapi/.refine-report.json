@@ -1,23 +1,7 @@
 {
   "provider": "perimeter-81",
   "sources": [
-    "perimeter-81-application-api-openapi.yml",
-    "perimeter-81-enhanced-networks-api-openapi.yml",
-    "perimeter-81-enhanced-regions-api-openapi.yml",
-    "perimeter-81-enhanced-route-tables-api-openapi.yml",
-    "perimeter-81-enhanced-tunnels-api-openapi.yml",
-    "perimeter-81-firewall-policy-api-openapi.yml",
-    "perimeter-81-gateways-api-openapi.yml",
-    "perimeter-81-ipsec-redundant-api-openapi.yml",
-    "perimeter-81-ipsec-single-api-openapi.yml",
-    "perimeter-81-networks-api-openapi.yml",
-    "perimeter-81-objects-addresses-api-openapi.yml",
-    "perimeter-81-objects-services-api-openapi.yml",
-    "perimeter-81-openvpn-api-openapi.yml",
-    "perimeter-81-regions-api-openapi.yml",
-    "perimeter-81-route-table-api-openapi.yml",
-    "perimeter-81-standard-networks-api-openapi.yml",
-    "perimeter-81-wireguard-api-openapi.yml"
+    "_original/perimeter-81-openapi-original.json"
   ],
   "outputs": [
     "perimeter-81-application-api-openapi.yml",
@@ -41,6 +25,29 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "perimeter-81-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "perimeter-81-openapi-original.json: declared missing tag: Objects Addresses",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "perimeter-81-application-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-enhanced-networks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-enhanced-regions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-enhanced-route-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-enhanced-tunnels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-firewall-policy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-gateways-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-ipsec-redundant-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-ipsec-single-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-networks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-objects-addresses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-objects-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-openvpn-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-regions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-route-table-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-standard-networks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "perimeter-81-wireguard-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 2.3.0
-  title: Harmony SASE Public Application Enhanced Route Tables API
-  description: 'The YAML for Harmony SASE Public API.
-
-    '
+  title: Harmony SASE Public Enhanced Route Tables API
+  description: The YAML for Harmony SASE Public API.
   contact: {}
 servers:
 - description: SwaggerHub API Auto Mocking
@@ -21,9 +19,7 @@ security:
 - bearer: []
 tags:
 - name: Enhanced Route Tables
-  description: 'The Enhanced Route Tables API allows you to manage and configure enhanced route tables of static and dynamic tunnels.
-
-    '
+  description: The Enhanced Route Tables API allows you to manage and configure enhanced route tables of static and dynamic tunnels.
 paths:
   /v2.3/networks/enhanced/{networkId}/route-table:
     get:
@@ -195,20 +191,77 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
-  parameters:
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    routeId:
-      name: routeId
-      in: path
-      required: true
-      schema:
-        type: string
+  responses:
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    RouteTableUpdate:
+      type: object
+      properties:
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - subnets
+    EnhancedRouteTableDynamicCreate:
+      type: object
+      properties:
+        tunnelIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: All IDs of dynamic tunnels
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelIds
+      - subnets
     EnhancedRouteTableStaticCreate:
       type: object
       properties:
@@ -232,45 +285,6 @@ components:
           type: string
         message:
           type: string
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
-    EnhancedRouteTableDynamicCreate:
-      type: object
-      properties:
-        tunnelIds:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: All IDs of dynamic tunnels
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - tunnelIds
-      - subnets
-    RouteTableUpdate:
-      type: object
-      properties:
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - subnets
     EnhancedRouteTable:
       type: object
       properties:
@@ -298,37 +312,19 @@ components:
       - tunnelIds
       - subnets
       - propagated
-  responses:
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearer:
       scheme: bearer
