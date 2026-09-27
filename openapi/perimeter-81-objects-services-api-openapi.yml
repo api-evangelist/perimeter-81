@@ -123,26 +123,32 @@ paths:
       - Objects Services
 components:
   schemas:
-    ObjectServiceProtocolSingle:
+    ObjectsServicesResponseObj:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ObjectsName'
+        description:
+          type: string
+        protocols:
+          items:
+            $ref: '#/components/schemas/ObjectsServicesProtocolResponseObj'
+          type: array
+      required:
+      - name
+      - protocols
+    ObjectServiceProtocolICMPResponse:
       type: object
       required:
-      - valueType
-      - value
+      - protocol
+      - protocolOptions
       properties:
-        valueType:
+        protocol:
           type: string
           enum:
-          - single
-        value:
-          type: array
-          minItems: 1
-          maxItems: 1
-          items:
-            $ref: '#/components/schemas/PortNumber'
-    ObjectsServicesProtocolRequestObj:
-      anyOf:
-      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
-      - $ref: '#/components/schemas/ObjectServiceProtocolICMPRequest'
+          - icmp
+        protocolOptions:
+          $ref: '#/components/schemas/ObjectServiceProtocolOptionsICMPresponse'
     ObjectServiceProtocolOptionsICMPresponse:
       description: -1 means 'any', the rest of the values are the RFC default ICMP parameters
       type: object
@@ -180,45 +186,10 @@ components:
         description: Extended Echo Request
       - code: 43
         description: Extended Echo Reply
-    ObjectsServicesResponse:
-      allOf:
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/ObjectsServicesResponseObj'
-        required:
-        - data
-      - $ref: '#/components/schemas/ObjectsPaginationObj'
-    ObjectServiceProtocolRange:
-      type: object
-      required:
-      - valueType
-      - value
-      properties:
-        valueType:
-          type: string
-          enum:
-          - range
-        value:
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            $ref: '#/components/schemas/PortNumber'
-    ObjectServiceProtocolICMPResponse:
-      type: object
-      required:
-      - protocol
-      - protocolOptions
-      properties:
-        protocol:
-          type: string
-          enum:
-          - icmp
-        protocolOptions:
-          $ref: '#/components/schemas/ObjectServiceProtocolOptionsICMPresponse'
+    NumberPositive500:
+      type: number
+      minimum: 0
+      maximum: 500
     ObjectsPaginationObj:
       type: object
       properties:
@@ -232,30 +203,16 @@ components:
       - page
       - totalPage
       - itemsTotal
-    NumberPositive500:
-      type: number
-      minimum: 0
-      maximum: 500
     ObjectsName:
       type: string
       pattern: ^[a-zA-Z0-9_ ]+$
       description: The name of the Objects
       minLength: 3
       maxLength: 100
-    ObjectServiceProtocolTCPUDP:
-      oneOf:
-      - $ref: '#/components/schemas/ObjectServiceProtocolSingle'
-      - $ref: '#/components/schemas/ObjectServiceProtocolRange'
-      - $ref: '#/components/schemas/ObjectServiceProtocolList'
-      type: object
-      required:
-      - protocol
-      properties:
-        protocol:
-          type: string
-          enum:
-          - tcp
-          - udp
+    PortNumber:
+      type: integer
+      minimum: 1
+      maximum: 65535
     ObjectServiceProtocolList:
       type: object
       required:
@@ -271,43 +228,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/PortNumber'
-    ObjectsServicesResponseObj:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/ObjectsName'
-        description:
-          type: string
-        protocols:
-          items:
-            $ref: '#/components/schemas/ObjectsServicesProtocolResponseObj'
-          type: array
-      required:
-      - name
-      - protocols
-    ObjectsServicesProtocolResponseObj:
-      anyOf:
-      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
-      - $ref: '#/components/schemas/ObjectServiceProtocolICMPResponse'
-    ObjectsServicesRequestObj:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/ObjectsName'
-        description:
-          type: string
-        protocols:
-          items:
-            $ref: '#/components/schemas/ObjectsServicesProtocolRequestObj'
-          type: array
-      additionalProperties: false
-      required:
-      - name
-      - protocols
-    PortNumber:
-      type: integer
-      minimum: 1
-      maximum: 65535
     ObjectServiceProtocolICMPRequest:
       type: object
       required:
@@ -320,6 +240,17 @@ components:
           - icmp
         protocolOptions:
           $ref: '#/components/schemas/ObjectServiceProtocolOptionsICMPrequest'
+    ObjectsServicesResponse:
+      allOf:
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectsServicesResponseObj'
+        required:
+        - data
+      - $ref: '#/components/schemas/ObjectsPaginationObj'
     ObjectServiceProtocolOptionsICMPrequest:
       description: -1 means 'any', the rest of the values are the RFC default ICMP parameters
       type: integer
@@ -338,6 +269,75 @@ components:
       - 40
       - 42
       - 43
+    ObjectsServicesRequestObj:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ObjectsName'
+        description:
+          type: string
+        protocols:
+          items:
+            $ref: '#/components/schemas/ObjectsServicesProtocolRequestObj'
+          type: array
+      additionalProperties: false
+      required:
+      - name
+      - protocols
+    ObjectServiceProtocolRange:
+      type: object
+      required:
+      - valueType
+      - value
+      properties:
+        valueType:
+          type: string
+          enum:
+          - range
+        value:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/PortNumber'
+    ObjectsServicesProtocolResponseObj:
+      anyOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
+      - $ref: '#/components/schemas/ObjectServiceProtocolICMPResponse'
+    ObjectsServicesProtocolRequestObj:
+      anyOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolTCPUDP'
+      - $ref: '#/components/schemas/ObjectServiceProtocolICMPRequest'
+    ObjectServiceProtocolTCPUDP:
+      oneOf:
+      - $ref: '#/components/schemas/ObjectServiceProtocolSingle'
+      - $ref: '#/components/schemas/ObjectServiceProtocolRange'
+      - $ref: '#/components/schemas/ObjectServiceProtocolList'
+      type: object
+      required:
+      - protocol
+      properties:
+        protocol:
+          type: string
+          enum:
+          - tcp
+          - udp
+    ObjectServiceProtocolSingle:
+      type: object
+      required:
+      - valueType
+      - value
+      properties:
+        valueType:
+          type: string
+          enum:
+          - single
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/PortNumber'
   securitySchemes:
     bearer:
       scheme: bearer

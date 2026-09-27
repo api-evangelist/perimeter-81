@@ -119,20 +119,13 @@ paths:
       - OpenVPN
 components:
   schemas:
-    BaseDates:
+    AsyncOperationResponse:
       type: object
       properties:
-        createdAt:
-          format: date-time
+        statusUrl:
           type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
+        samplingTime:
+          type: integer
     OpenVPNAsyncOperationResponse:
       type: object
       properties:
@@ -143,28 +136,12 @@ components:
         secretAccessKey:
           type: string
           description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
-    BaseTunnelValues:
-      type: object
-      properties:
-        regionID:
-          type: string
-          description: Region ID
-        gatewayID:
-          type: string
-          description: Gateway ID
-        tunnelName:
-          $ref: '#/components/schemas/TunnelName'
-      required:
-      - regionID
-      - gatewayID
-      - tunnelName
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
     OpenVPNTunnel:
       allOf:
       - $ref: '#/components/schemas/BaseTunnelValues'
@@ -188,12 +165,35 @@ components:
           type: string
         message:
           type: string
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    BaseTunnelValues:
+      type: object
+      properties:
+        regionID:
+          type: string
+          description: Region ID
+        gatewayID:
+          type: string
+          description: Gateway ID
+        tunnelName:
+          $ref: '#/components/schemas/TunnelName'
+      required:
+      - regionID
+      - gatewayID
+      - tunnelName
   parameters:
     tunnelIdParam:
       name: tunnelId
@@ -208,26 +208,14 @@ components:
       schema:
         type: string
   responses:
-    '404':
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '402':
-      description: Insufficient licenses
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '202':
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
     '422':
       description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -238,8 +226,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Unauthorized
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
       content:
         application/json:
           schema:

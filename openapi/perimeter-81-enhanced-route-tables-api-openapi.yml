@@ -191,37 +191,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
-  responses:
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     AsyncOperationResponse:
       type: object
@@ -241,6 +210,22 @@ components:
           uniqueItems: true
           description: List of subnet CIDR blocks
       required:
+      - subnets
+    EnhancedRouteTableStaticCreate:
+      type: object
+      properties:
+        tunnelId:
+          type: string
+          description: Static tunnel ID
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelId
       - subnets
     EnhancedRouteTableDynamicCreate:
       type: object
@@ -262,29 +247,6 @@ components:
       required:
       - tunnelIds
       - subnets
-    EnhancedRouteTableStaticCreate:
-      type: object
-      properties:
-        tunnelId:
-          type: string
-          description: Static tunnel ID
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - tunnelId
-      - subnets
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
     EnhancedRouteTable:
       type: object
       properties:
@@ -312,6 +274,13 @@ components:
       - tunnelIds
       - subnets
       - propagated
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
   parameters:
     routeId:
       name: routeId
@@ -325,6 +294,37 @@ components:
       required: true
       schema:
         type: string
+  responses:
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearer:
       scheme: bearer

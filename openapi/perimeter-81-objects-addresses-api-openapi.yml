@@ -124,25 +124,35 @@ paths:
       - Objects Addresses
 components:
   schemas:
+    FQDN:
+      type: string
+      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
+    NumberPositive500:
+      type: number
+      minimum: 0
+      maximum: 500
+    ObjectsPaginationObj:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/NumberPositive500'
+        totalPage:
+          $ref: '#/components/schemas/NumberPositive500'
+        itemsTotal:
+          $ref: '#/components/schemas/NumberPositive500'
+      required:
+      - page
+      - totalPage
+      - itemsTotal
+    ObjectsName:
+      type: string
+      pattern: ^[a-zA-Z0-9_ ]+$
+      description: The name of the Objects
+      minLength: 3
+      maxLength: 100
     IP:
       type: string
       format: ipv4
-    ObjectsAddressFQDN:
-      type: object
-      required:
-      - value
-      - valueType
-      properties:
-        valueType:
-          type: string
-          enum:
-          - fqdn
-        value:
-          type: array
-          minItems: 1
-          maxItems: 1
-          items:
-            $ref: '#/components/schemas/FQDN'
     ObjectsAddressCIDR:
       type: object
       required:
@@ -159,23 +169,22 @@ components:
           maxItems: 1
           items:
             $ref: '#/components/schemas/CIDR'
-    ObjectsPaginationObj:
+    ObjectsAddressIP:
       type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/NumberPositive500'
-        totalPage:
-          $ref: '#/components/schemas/NumberPositive500'
-        itemsTotal:
-          $ref: '#/components/schemas/NumberPositive500'
       required:
-      - page
-      - totalPage
-      - itemsTotal
-    NumberPositive500:
-      type: number
-      minimum: 0
-      maximum: 500
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - ip
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/IP'
     ObjectsAddressObj:
       required:
       - name
@@ -197,28 +206,17 @@ components:
         - $ref: '#/components/schemas/ObjectsAddressIPList'
         - $ref: '#/components/schemas/ObjectsAddressCIDR'
         - $ref: '#/components/schemas/ObjectsAddressFQDN'
-    ObjectsName:
-      type: string
-      pattern: ^[a-zA-Z0-9_ ]+$
-      description: The name of the Objects
-      minLength: 3
-      maxLength: 100
-    ObjectsAddressIP:
-      type: object
-      required:
-      - value
-      - valueType
-      properties:
-        valueType:
-          type: string
-          enum:
-          - ip
-        value:
-          type: array
-          minItems: 1
-          maxItems: 1
-          items:
-            $ref: '#/components/schemas/IP'
+    ObjectsAddressesResponse:
+      allOf:
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectsAddressObj'
+        required:
+        - data
+      - $ref: '#/components/schemas/ObjectsPaginationObj'
     ObjectsAddressIPList:
       type: object
       required:
@@ -235,20 +233,22 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/IP'
-    FQDN:
-      type: string
-      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
-    ObjectsAddressesResponse:
-      allOf:
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/ObjectsAddressObj'
-        required:
-        - data
-      - $ref: '#/components/schemas/ObjectsPaginationObj'
+    ObjectsAddressFQDN:
+      type: object
+      required:
+      - value
+      - valueType
+      properties:
+        valueType:
+          type: string
+          enum:
+          - fqdn
+        value:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/FQDN'
     CIDR:
       type: string
       pattern: ^((?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3})(\/(3[0-2]|[1-2][0-9]|[0-9]))$
