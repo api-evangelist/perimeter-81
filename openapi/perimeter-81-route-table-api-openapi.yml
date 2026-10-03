@@ -71,12 +71,6 @@ components:
         message:
           type: string
   responses:
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '403':
       description: Forbidden
       content:
@@ -85,6 +79,12 @@ components:
             $ref: '#/components/schemas/Error'
     '404':
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:

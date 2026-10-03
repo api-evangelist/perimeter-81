@@ -81,6 +81,16 @@ paths:
       - Firewall Policy
 components:
   schemas:
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
+    SourcesAndDestinations:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/UsersAndGroups'
+      - $ref: '#/components/schemas/Addresses'
     AsyncOperationResponse:
       type: object
       properties:
@@ -88,42 +98,6 @@ components:
           type: string
         samplingTime:
           type: integer
-    FirewallPolicyRule:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/Alphanumeric'
-          - description: Policy rule ID.
-        name:
-          type: string
-          minLength: 5
-          maxLength: 50
-          description: Policy rule ID.
-        enabled:
-          type: boolean
-          description: wether the rule is enabled.
-        allowed:
-          type: boolean
-          description: wether the rule is enabled.
-        sources:
-          $ref: '#/components/schemas/SourcesAndDestinations'
-        destinations:
-          $ref: '#/components/schemas/SourcesAndDestinations'
-        services:
-          items:
-            type: string
-            pattern: ^[a-zA-Z0-9_- ]+$
-          type: array
-          minItems: 1
-          description: List of services objects IDs.
-      required:
-      - name
-      - enabled
-      - allowed
-      - sources
-      - destinations
-      additionalProperties: false
     Addresses:
       type: object
       properties:
@@ -136,11 +110,6 @@ components:
       required:
       - addresses
       additionalProperties: false
-    Alphanumeric:
-      type: string
-      pattern: ^[a-zA-Z0-9]+$
-      description: Any alphanumeric value w/o space
-      minLength: 1
     UsersAndGroups:
       type: object
       properties:
@@ -189,16 +158,47 @@ components:
       - id
       - policyRules
       additionalProperties: false
+    FirewallPolicyRule:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/Alphanumeric'
+          - description: Policy rule ID.
+        name:
+          type: string
+          minLength: 5
+          maxLength: 50
+          description: Policy rule ID.
+        enabled:
+          type: boolean
+          description: wether the rule is enabled.
+        allowed:
+          type: boolean
+          description: wether the rule is enabled.
+        sources:
+          $ref: '#/components/schemas/SourcesAndDestinations'
+        destinations:
+          $ref: '#/components/schemas/SourcesAndDestinations'
+        services:
+          items:
+            type: string
+            pattern: ^[a-zA-Z0-9_- ]+$
+          type: array
+          minItems: 1
+          description: List of services objects IDs.
+      required:
+      - name
+      - enabled
+      - allowed
+      - sources
+      - destinations
+      additionalProperties: false
     AlphanumericWithSpace:
       type: string
       pattern: ^[a-zA-Z0-9 ]+$
       description: Any alphanumeric value with space
       minLength: 1
-    SourcesAndDestinations:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/UsersAndGroups'
-      - $ref: '#/components/schemas/Addresses'
   securitySchemes:
     bearer:
       scheme: bearer

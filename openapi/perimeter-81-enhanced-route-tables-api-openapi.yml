@@ -191,6 +191,19 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
+  parameters:
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
     AsyncOperationResponse:
       type: object
@@ -199,34 +212,6 @@ components:
           type: string
         samplingTime:
           type: integer
-    RouteTableUpdate:
-      type: object
-      properties:
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - subnets
-    EnhancedRouteTableStaticCreate:
-      type: object
-      properties:
-        tunnelId:
-          type: string
-          description: Static tunnel ID
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - tunnelId
-      - subnets
     EnhancedRouteTableDynamicCreate:
       type: object
       properties:
@@ -274,6 +259,18 @@ components:
       - tunnelIds
       - subnets
       - propagated
+    RouteTableUpdate:
+      type: object
+      properties:
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - subnets
     Error:
       type: object
       properties:
@@ -281,26 +278,23 @@ components:
           type: string
         message:
           type: string
-  parameters:
-    routeId:
-      name: routeId
-      in: path
-      required: true
-      schema:
-        type: string
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
+    EnhancedRouteTableStaticCreate:
+      type: object
+      properties:
+        tunnelId:
+          type: string
+          description: Static tunnel ID
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelId
+      - subnets
   responses:
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
     400_BadRequest:
       description: Bad Request
       content:
@@ -325,6 +319,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
   securitySchemes:
     bearer:
       scheme: bearer

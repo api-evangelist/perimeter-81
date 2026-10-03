@@ -126,31 +126,6 @@ components:
           type: string
         samplingTime:
           type: integer
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
-    IP:
-      type: string
-      format: ipv4
-    WireguardTunnel:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          tunnelID:
-            type: string
-          type:
-            type: string
-            default: wireguard
-    CreateWireguardTunnelPayload:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
     Error:
       type: object
       properties:
@@ -158,20 +133,6 @@ components:
           type: string
         message:
           type: string
-    WireGuradDetails:
-      type: object
-      properties:
-        remoteEndpoint:
-          $ref: '#/components/schemas/IP'
-        remoteSubnets:
-          minLength: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-      required:
-      - remoteEndpoint
-      - remoteSubnets
     BaseDates:
       type: object
       properties:
@@ -186,6 +147,31 @@ components:
       required:
       - createdAt
       additionalProperties: false
+    IP:
+      type: string
+      format: ipv4
+    CreateWireguardTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    WireguardTunnel:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          tunnelID:
+            type: string
+          type:
+            type: string
+            default: wireguard
     BaseTunnelValues:
       type: object
       properties:
@@ -201,26 +187,34 @@ components:
       - regionID
       - gatewayID
       - tunnelName
+    WireGuradDetails:
+      type: object
+      properties:
+        remoteEndpoint:
+          $ref: '#/components/schemas/IP'
+        remoteSubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      required:
+      - remoteEndpoint
+      - remoteSubnets
   parameters:
-    tunnelIdParam:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
     networkIdParam:
       name: networkId
       in: path
       required: true
       schema:
         type: string
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    '422':
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '403':
       description: Forbidden
       content:
@@ -233,20 +227,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '202':
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
     '402':
       description: Insufficient licenses
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
     '404':
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '422':
+      description: Unprocessable entity
       content:
         application/json:
           schema:

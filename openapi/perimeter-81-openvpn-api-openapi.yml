@@ -126,16 +126,27 @@ components:
           type: string
         samplingTime:
           type: integer
-    OpenVPNAsyncOperationResponse:
+    Error:
       type: object
       properties:
-        statusUrl:
+        id:
           type: string
-        samplingTime:
-          type: integer
-        secretAccessKey:
+        message:
           type: string
-          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
     TunnelName:
       type: string
       pattern: ^[a-zA-Z0-9]*$
@@ -158,27 +169,6 @@ components:
         secretAccessKey:
           type: string
           description: Secret access key for the OpenVPN tunnel. This is only the hashed value. The original value will not be retrievable after creation.
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
     BaseTunnelValues:
       type: object
       properties:
@@ -194,34 +184,38 @@ components:
       - regionID
       - gatewayID
       - tunnelName
+    OpenVPNAsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+        secretAccessKey:
+          type: string
+          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
   parameters:
-    tunnelIdParam:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
     networkIdParam:
       name: networkId
       in: path
       required: true
       schema:
         type: string
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    '422':
-      description: Unprocessable entity
+    '403':
+      description: Forbidden
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     '401':
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
       content:
         application/json:
           schema:
@@ -240,6 +234,12 @@ components:
             $ref: '#/components/schemas/Error'
     '404':
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '422':
+      description: Unprocessable entity
       content:
         application/json:
           schema:

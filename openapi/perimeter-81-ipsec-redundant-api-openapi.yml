@@ -117,76 +117,13 @@ paths:
       - IPSec-Redundant
 components:
   schemas:
-    DPDTime:
-      type: string
-      pattern: ^([5-9]|[1-5][0-9]|60)s$
-    IPSecAdvancedSettings:
+    AsyncOperationResponse:
       type: object
       properties:
-        keyExchange:
+        statusUrl:
           type: string
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-      required:
-      - keyExchange
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
-      additionalProperties: false
-    IPSecRedundantTunnelPayload:
-      allOf:
-      - $ref: '#/components/schemas/IPSecRedundantTunnelDetails'
-      - type: object
-        properties:
-          gatewayID:
-            type: string
-        required:
-        - gatewayID
-        additionalProperties: false
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    UpdateIPSecRedundantPayload:
-      type: object
-      properties:
-        tunnel1:
-          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
-        tunnel2:
-          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
-        sharedSettings:
-          $ref: '#/components/schemas/IPSecSharedSettings'
-        advancedSettings:
-          $ref: '#/components/schemas/IPSecAdvancedSettings'
-      required:
-      - tunnels
-      - sharedSettings
-      - advancedSettings
-      additionalProperties: false
-    remoteID:
-      oneOf:
-      - $ref: '#/components/schemas/IP'
-      - type: string
-        pattern: ^[a-zA-Z0-9]{3,25}$
+        samplingTime:
+          type: integer
     IPSecSharedSettings:
       type: object
       properties:
@@ -220,6 +157,78 @@ components:
       - p81GatewaySubnets
       - remoteGatewaySubnets
       additionalProperties: false
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    IPSecAdvancedSettings:
+      type: object
+      properties:
+        keyExchange:
+          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
+    IPSecPhaseConfig:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAlgorithms'
+      - $ref: '#/components/schemas/IPSecPhaseCommon'
+    IPSecRedundantTunnels:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          tunnelName:
+            $ref: '#/components/schemas/TunnelName'
+          regionID:
+            type: string
+          tunnel1:
+            $ref: '#/components/schemas/IPSecRedundantTunnel'
+          tunnel2:
+            $ref: '#/components/schemas/IPSecRedundantTunnel'
+          sharedSettings:
+            $ref: '#/components/schemas/IPSecSharedSettings'
+          advancedSettings:
+            $ref: '#/components/schemas/IPSecAdvancedSettings'
+    IP:
+      type: string
+      format: ipv4
+    CreatePassphrase:
+      type: string
+      pattern: ^[a-zA-Z1-9._][a-zA-Z0-9._]{7,63}$
+    IPSecRedundantTunnelUpdatePayload:
+      allOf:
+      - $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+      - type: object
+        properties:
+          tunnelId:
+            type: string
+        required:
+        - tunnelId
+        additionalProperties: false
     IPSecPhaseCommon:
       type: object
       properties:
@@ -243,99 +252,13 @@ components:
       - encryption
       - dh
       additionalProperties: false
-    IPSecRedundantTunnelDetails:
-      type: object
-      properties:
-        passphrase:
-          $ref: '#/components/schemas/CreatePassphrase'
-        p81GWInternalIP:
-          $ref: '#/components/schemas/IP'
-        remoteGWInternalIP:
-          $ref: '#/components/schemas/IP'
-        remotePublicIP:
-          $ref: '#/components/schemas/IP'
-        remoteASN:
-          $ref: '#/components/schemas/RemoteASN'
-        remoteID:
-          $ref: '#/components/schemas/remoteID'
-      required:
-      - passphrase
-      - p81GWInternalIP
-      - remoteGWInternalIP
-      - remotePublicIP
-      - remoteASN
-      - remoteID
-      additionalProperties: false
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
-    IPSecPhaseConfig:
-      allOf:
-      - $ref: '#/components/schemas/IPSecAlgorithms'
-      - $ref: '#/components/schemas/IPSecPhaseCommon'
-    Lifetime:
-      type: string
-      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
-    PeakBandwidth:
-      type: integer
-      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
-      minimum: 10
-      maximum: 8000
-      default: 1000
-    IPSecRedundantTunnelUpdatePayload:
+    IPSecRedundantTunnel:
       allOf:
       - $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
       - type: object
         properties:
-          tunnelId:
+          tunnelID:
             type: string
-        required:
-        - tunnelId
-        additionalProperties: false
-    IPSecRedundantTunnels:
-      allOf:
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          tunnelName:
-            $ref: '#/components/schemas/TunnelName'
-          regionID:
-            type: string
-          tunnel1:
-            $ref: '#/components/schemas/IPSecRedundantTunnel'
-          tunnel2:
-            $ref: '#/components/schemas/IPSecRedundantTunnel'
-          sharedSettings:
-            $ref: '#/components/schemas/IPSecSharedSettings'
-          advancedSettings:
-            $ref: '#/components/schemas/IPSecAdvancedSettings'
-    IP:
-      type: string
-      format: ipv4
     IPSecAlgorithms:
       type: object
       properties:
@@ -422,16 +345,16 @@ components:
       - sharedSettings
       - advancedSettings
       additionalProperties: false
-    IPSecRedundantTunnel:
+    IPSecRedundantTunnelPayload:
       allOf:
-      - $ref: '#/components/schemas/IPSecRedundantTunnelPayload'
+      - $ref: '#/components/schemas/IPSecRedundantTunnelDetails'
       - type: object
         properties:
-          tunnelID:
+          gatewayID:
             type: string
-    CreatePassphrase:
-      type: string
-      pattern: ^[a-zA-Z1-9._][a-zA-Z0-9._]{7,63}$
+        required:
+        - gatewayID
+        additionalProperties: false
     IPSecSharedSettingsCreate:
       allOf:
       - $ref: '#/components/schemas/IPSecSharedSettings'
@@ -441,6 +364,39 @@ components:
             $ref: '#/components/schemas/RemoteASN'
       required:
       - p81ASN
+      additionalProperties: false
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    UpdateIPSecRedundantPayload:
+      type: object
+      properties:
+        tunnel1:
+          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
+        tunnel2:
+          $ref: '#/components/schemas/IPSecRedundantTunnelUpdatePayload'
+        sharedSettings:
+          $ref: '#/components/schemas/IPSecSharedSettings'
+        advancedSettings:
+          $ref: '#/components/schemas/IPSecAdvancedSettings'
+      required:
+      - tunnels
+      - sharedSettings
+      - advancedSettings
       additionalProperties: false
     RemoteASN:
       type: integer
@@ -457,6 +413,50 @@ components:
       - type: integer
         minimum: 131072
         maximum: 4294967294
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    PeakBandwidth:
+      type: integer
+      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
+      minimum: 10
+      maximum: 8000
+      default: 1000
+    Lifetime:
+      type: string
+      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
+    IPSecRedundantTunnelDetails:
+      type: object
+      properties:
+        passphrase:
+          $ref: '#/components/schemas/CreatePassphrase'
+        p81GWInternalIP:
+          $ref: '#/components/schemas/IP'
+        remoteGWInternalIP:
+          $ref: '#/components/schemas/IP'
+        remotePublicIP:
+          $ref: '#/components/schemas/IP'
+        remoteASN:
+          $ref: '#/components/schemas/RemoteASN'
+        remoteID:
+          $ref: '#/components/schemas/remoteID'
+      required:
+      - passphrase
+      - p81GWInternalIP
+      - remoteGWInternalIP
+      - remotePublicIP
+      - remoteASN
+      - remoteID
+      additionalProperties: false
+    remoteID:
+      oneOf:
+      - $ref: '#/components/schemas/IP'
+      - type: string
+        pattern: ^[a-zA-Z0-9]{3,25}$
   parameters:
     networkIdParam:
       name: networkId
@@ -471,20 +471,8 @@ components:
       schema:
         type: string
   responses:
-    '402':
-      description: Insufficient licenses
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Resource not found
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -501,8 +489,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '401':
-      description: Unauthorized
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Insufficient licenses
       content:
         application/json:
           schema:
