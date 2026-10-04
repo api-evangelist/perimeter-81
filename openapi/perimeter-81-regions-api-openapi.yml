@@ -151,169 +151,6 @@ paths:
       - Regions
 components:
   schemas:
-    NetworkTunnelIpsecSingle:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - $ref: '#/components/schemas/NetworkIpsecBase'
-    NetworkInstance:
-      allOf:
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          network:
-            type: string
-            description: ID of the network.
-          region:
-            type: string
-            description: ID of the network region.
-          instanceType:
-            type: string
-          imageType:
-            type: string
-          imageVersion:
-            type: string
-          dns:
-            type: string
-          ip:
-            type: string
-          tunnels:
-            items:
-              $ref: '#/components/schemas/NetworkTunnel'
-            type: array
-            description: List of network tunnels.
-          id:
-            type: string
-            description: Unique ID.
-          tenantId:
-            type: string
-            description: ID of the tenant.
-        required:
-        - network
-        - region
-        - instanceType
-        - imageType
-        - imageVersion
-        - dns
-        - ip
-        - tunnels
-        - id
-        - tenantId
-    IPSecAdvancedSettings:
-      type: object
-      properties:
-        keyExchange:
-          type: string
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-      required:
-      - keyExchange
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
-      additionalProperties: false
-    IPSecPhaseConfig:
-      allOf:
-      - $ref: '#/components/schemas/IPSecAlgorithms'
-      - $ref: '#/components/schemas/IPSecPhaseCommon'
-    IP:
-      type: string
-      format: ipv4
-    IPSecPhaseCommon:
-      type: object
-      properties:
-        dh:
-          description: Diffie Helman encryption
-          minLength: 0
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            enum:
-            - 2
-            - 5
-            - 14
-            - 19
-            - 20
-            - 21
-            - 31
-      required:
-      - auth
-      - encryption
-      - dh
-      additionalProperties: false
-    RemoveRegionDTO:
-      properties:
-        regionId:
-          type: string
-      type: object
-      required:
-      - regionId
-      additionalProperties: false
-    NetworkTunnel:
-      anyOf:
-      - $ref: '#/components/schemas/NetworkTunnelOpenvpn'
-      - $ref: '#/components/schemas/NetworkTunnelWireguard'
-      - $ref: '#/components/schemas/NetworkTunnelIpsecSingle'
-      - $ref: '#/components/schemas/NetworkTunnelIpsecRedundant'
-    CreateRegionInNetworkPayload:
-      properties:
-        harmonySaseRegionId:
-          type: string
-          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
-        idle:
-          type: boolean
-          description: Create the gateway as disabled if true.
-          default: true
-        scaleUnits:
-          allOf:
-          - $ref: '#/components/schemas/ScaleUnitsCount'
-          - default: 1
-      type: object
-      required:
-      - harmonySaseRegionId
-      - idle
-      additionalProperties: false
-    NetworkTunnelWireguard:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - type: object
-        properties:
-          leftAllowedIP:
-            minLength: 1
-            uniqueItems: true
-            type: array
-            items:
-              type: string
-          leftEndpoint:
-            $ref: '#/components/schemas/IP'
-          vault:
-            type: string
-            description: vault.
-          requestConfigToken:
-            type: string
-            description: requestConfigToken.
-        required:
-        - leftAllowedIP
-        - leftEndpoint
-        - vault
-        - requestConfigToken
-        additionalProperties: false
     IPSecAlgorithms:
       type: object
       properties:
@@ -377,6 +214,211 @@ components:
             - camellia192ccm16
             - camellia256ccm16
             - chacha20poly1305
+    ASN:
+      type: integer
+      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
+      oneOf:
+      - minimum: 1
+        maximum: 64496
+        description: Public ASN range
+      - minimum: 64512
+        maximum: 65535
+        description: Private ASN range (16-bit)
+      - minimum: 131072
+        maximum: 4294967295
+        description: Private ASN range (32-bit)
+    NetworkRegion:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          network:
+            type: string
+            description: ID of the network.
+          dns:
+            type: string
+            description: DNS of the region.
+          name:
+            type: string
+            description: Name of the network region.
+          instances:
+            items:
+              $ref: '#/components/schemas/NetworkInstance'
+            type: array
+            description: Network instances.
+          id:
+            type: string
+            description: Unique ID.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+        required:
+        - network
+        - dns
+        - name
+        - instances
+        - id
+        - tenantId
+    NetworkIpsecBase:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAdvancedSettings'
+      - type: object
+        properties:
+          right:
+            $ref: '#/components/schemas/IP'
+          rightID:
+            oneOf:
+            - $ref: '#/components/schemas/IP'
+            - type: string
+              pattern: ^[a-zA-Z0-9]{3,25}$
+          passphrase:
+            $ref: '#/components/schemas/Passphrase'
+          dpdAction:
+            type: string
+            description: dpdAction.
+          leftSubnets:
+            minLength: 1
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+          rightSubnets:
+            minLength: 1
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+        required:
+        - right
+        - rightID
+        - passphrase
+        - dpdAction
+        - leftSubnets
+        - rightSubnets
+        additionalProperties: false
+    IPSecPhaseCommon:
+      type: object
+      properties:
+        dh:
+          description: Diffie Helman encryption
+          minLength: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            enum:
+            - 2
+            - 5
+            - 14
+            - 19
+            - 20
+            - 21
+            - 31
+      required:
+      - auth
+      - encryption
+      - dh
+      additionalProperties: false
+    IPSecPhaseConfig:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAlgorithms'
+      - $ref: '#/components/schemas/IPSecPhaseCommon'
+    NetworkTunnelIpsecRedundant:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - $ref: '#/components/schemas/NetworkIpsecBase'
+      - type: object
+        properties:
+          haTunnelID:
+            $ref: '#/components/schemas/NetworkHaTunnelID'
+          rightASN:
+            $ref: '#/components/schemas/ASN'
+          rightPrivateIP:
+            $ref: '#/components/schemas/IP'
+          leftPrivateIP:
+            $ref: '#/components/schemas/IP'
+        required:
+        - haTunnelID
+        - rightASN
+        - rightPrivateIP
+        - leftPrivateIP
+        additionalProperties: false
+    Region:
+      properties:
+        countryCode:
+          type: string
+        continentCode:
+          type: string
+        displayName:
+          type: string
+        name:
+          type: string
+        className:
+          type: string
+        objectName:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        id:
+          type: string
+    RegionsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Region'
+      description: description of regions dto object.
+    NetworkInstance:
+      allOf:
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          network:
+            type: string
+            description: ID of the network.
+          region:
+            type: string
+            description: ID of the network region.
+          instanceType:
+            type: string
+          imageType:
+            type: string
+          imageVersion:
+            type: string
+          dns:
+            type: string
+          ip:
+            type: string
+          tunnels:
+            items:
+              $ref: '#/components/schemas/NetworkTunnel'
+            type: array
+            description: List of network tunnels.
+          id:
+            type: string
+            description: Unique ID.
+          tenantId:
+            type: string
+            description: ID of the tenant.
+        required:
+        - network
+        - region
+        - instanceType
+        - imageType
+        - imageVersion
+        - dns
+        - ip
+        - tunnels
+        - id
+        - tenantId
+    RemoveRegionDTO:
+      properties:
+        regionId:
+          type: string
+      type: object
+      required:
+      - regionId
+      additionalProperties: false
     NetworkHaTunnelID:
       allOf:
       - $ref: '#/components/schemas/BaseDates'
@@ -405,31 +447,114 @@ components:
         - tenantId
         - id
         additionalProperties: false
-    RegionsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Region'
-      description: description of regions dto object.
-    Region:
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+    NetworkTunnel:
+      anyOf:
+      - $ref: '#/components/schemas/NetworkTunnelOpenvpn'
+      - $ref: '#/components/schemas/NetworkTunnelWireguard'
+      - $ref: '#/components/schemas/NetworkTunnelIpsecSingle'
+      - $ref: '#/components/schemas/NetworkTunnelIpsecRedundant'
+    NetworkTunnelWireguard:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - type: object
+        properties:
+          leftAllowedIP:
+            minLength: 1
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+          leftEndpoint:
+            $ref: '#/components/schemas/IP'
+          vault:
+            type: string
+            description: vault.
+          requestConfigToken:
+            type: string
+            description: requestConfigToken.
+        required:
+        - leftAllowedIP
+        - leftEndpoint
+        - vault
+        - requestConfigToken
+        additionalProperties: false
+    Lifetime:
+      type: string
+      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
+    CreateRegionInNetworkPayload:
       properties:
-        countryCode:
+        harmonySaseRegionId:
           type: string
-        continentCode:
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        idle:
+          type: boolean
+          description: Create the gateway as disabled if true.
+          default: true
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+      type: object
+      required:
+      - harmonySaseRegionId
+      - idle
+      additionalProperties: false
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    IP:
+      type: string
+      format: ipv4
+    AsyncOperationResult:
+      type: object
+      properties:
+        resource:
           type: string
-        displayName:
+        statusCode:
+          type: integer
+        reason:
+          items:
+            type: string
+          type: array
+          description: Reasons list.
+    IPSecAdvancedSettings:
+      type: object
+      properties:
+        keyExchange:
           type: string
-        name:
-          type: string
-        className:
-          type: string
-        objectName:
-          type: string
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-        id:
-          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
     BaseDates:
       type: object
       properties:
@@ -444,6 +569,27 @@ components:
       required:
       - createdAt
       additionalProperties: false
+    NetworkTunnelIpsecSingle:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - $ref: '#/components/schemas/NetworkIpsecBase'
+    Passphrase:
+      type: string
+      pattern: ^[$a-zA-Z1-9_\/\.][$a-zA-Z0-9_\/\.]{7,101}$
+    NetworkTunnelOpenvpn:
+      allOf:
+      - $ref: '#/components/schemas/NetworkTunnelBase'
+      - type: object
+        properties:
+          passphrase:
+            $ref: '#/components/schemas/Passphrase'
+          username:
+            type: string
+            description: Openvpn username.
+        required:
+        - passphrase
+        - username
+        additionalProperties: false
     NetworkTunnelBase:
       allOf:
       - type: object
@@ -485,152 +631,6 @@ components:
         - tenantId
         additionalProperties: false
       - $ref: '#/components/schemas/BaseDates'
-    Passphrase:
-      type: string
-      pattern: ^[$a-zA-Z1-9_\/\.][$a-zA-Z0-9_\/\.]{7,101}$
-    DPDTime:
-      type: string
-      pattern: ^([5-9]|[1-5][0-9]|60)s$
-    AsyncOperationResult:
-      type: object
-      properties:
-        resource:
-          type: string
-        statusCode:
-          type: integer
-        reason:
-          items:
-            type: string
-          type: array
-          description: Reasons list.
-    ASN:
-      type: integer
-      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
-      oneOf:
-      - minimum: 1
-        maximum: 64496
-        description: Public ASN range
-      - minimum: 64512
-        maximum: 65535
-        description: Private ASN range (16-bit)
-      - minimum: 131072
-        maximum: 4294967295
-        description: Private ASN range (32-bit)
-    NetworkTunnelIpsecRedundant:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - $ref: '#/components/schemas/NetworkIpsecBase'
-      - type: object
-        properties:
-          haTunnelID:
-            $ref: '#/components/schemas/NetworkHaTunnelID'
-          rightASN:
-            $ref: '#/components/schemas/ASN'
-          rightPrivateIP:
-            $ref: '#/components/schemas/IP'
-          leftPrivateIP:
-            $ref: '#/components/schemas/IP'
-        required:
-        - haTunnelID
-        - rightASN
-        - rightPrivateIP
-        - leftPrivateIP
-        additionalProperties: false
-    NetworkIpsecBase:
-      allOf:
-      - $ref: '#/components/schemas/IPSecAdvancedSettings'
-      - type: object
-        properties:
-          right:
-            $ref: '#/components/schemas/IP'
-          rightID:
-            oneOf:
-            - $ref: '#/components/schemas/IP'
-            - type: string
-              pattern: ^[a-zA-Z0-9]{3,25}$
-          passphrase:
-            $ref: '#/components/schemas/Passphrase'
-          dpdAction:
-            type: string
-            description: dpdAction.
-          leftSubnets:
-            minLength: 1
-            uniqueItems: true
-            type: array
-            items:
-              type: string
-          rightSubnets:
-            minLength: 1
-            uniqueItems: true
-            type: array
-            items:
-              type: string
-        required:
-        - right
-        - rightID
-        - passphrase
-        - dpdAction
-        - leftSubnets
-        - rightSubnets
-        additionalProperties: false
-    Lifetime:
-      type: string
-      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
-    NetworkTunnelOpenvpn:
-      allOf:
-      - $ref: '#/components/schemas/NetworkTunnelBase'
-      - type: object
-        properties:
-          passphrase:
-            $ref: '#/components/schemas/Passphrase'
-          username:
-            type: string
-            description: Openvpn username.
-        required:
-        - passphrase
-        - username
-        additionalProperties: false
-    NetworkRegion:
-      allOf:
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          network:
-            type: string
-            description: ID of the network.
-          dns:
-            type: string
-            description: DNS of the region.
-          name:
-            type: string
-            description: Name of the network region.
-          instances:
-            items:
-              $ref: '#/components/schemas/NetworkInstance'
-            type: array
-            description: Network instances.
-          id:
-            type: string
-            description: Unique ID.
-          tenantId:
-            type: string
-            description: ID of the tenant.
-        required:
-        - network
-        - dns
-        - name
-        - instances
-        - id
-        - tenantId
-    ScaleUnitsCount:
-      type: integer
-      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
-
-        Higher values provide greater throughput and connection capacity.
-
-        '
-      minimum: 1
-      maximum: 10
   securitySchemes:
     bearer:
       scheme: bearer

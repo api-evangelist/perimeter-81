@@ -119,13 +119,9 @@ paths:
       - Wireguard
 components:
   schemas:
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
+    IP:
+      type: string
+      format: ipv4
     Error:
       type: object
       properties:
@@ -133,6 +129,18 @@ components:
           type: string
         message:
           type: string
+    WireguardTunnel:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+      - $ref: '#/components/schemas/BaseDates'
+      - type: object
+        properties:
+          tunnelID:
+            type: string
+          type:
+            type: string
+            default: wireguard
     BaseDates:
       type: object
       properties:
@@ -147,31 +155,6 @@ components:
       required:
       - createdAt
       additionalProperties: false
-    IP:
-      type: string
-      format: ipv4
-    CreateWireguardTunnelPayload:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
-    WireguardTunnel:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
-      - $ref: '#/components/schemas/BaseDates'
-      - type: object
-        properties:
-          tunnelID:
-            type: string
-          type:
-            type: string
-            default: wireguard
     BaseTunnelValues:
       type: object
       properties:
@@ -187,6 +170,13 @@ components:
       - regionID
       - gatewayID
       - tunnelName
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
     WireGuradDetails:
       type: object
       properties:
@@ -201,6 +191,53 @@ components:
       required:
       - remoteEndpoint
       - remoteSubnets
+    CreateWireguardTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+  responses:
+    '422':
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     networkIdParam:
       name: networkId
@@ -214,43 +251,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '402':
-      description: Insufficient licenses
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '202':
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    '404':
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '422':
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearer:
       scheme: bearer

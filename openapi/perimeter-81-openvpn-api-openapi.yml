@@ -119,34 +119,16 @@ paths:
       - OpenVPN
 components:
   schemas:
-    AsyncOperationResponse:
+    OpenVPNAsyncOperationResponse:
       type: object
       properties:
         statusUrl:
           type: string
         samplingTime:
           type: integer
-    Error:
-      type: object
-      properties:
-        id:
+        secretAccessKey:
           type: string
-        message:
-          type: string
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
+          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
     TunnelName:
       type: string
       pattern: ^[a-zA-Z0-9]*$
@@ -169,6 +151,20 @@ components:
         secretAccessKey:
           type: string
           description: Secret access key for the OpenVPN tunnel. This is only the hashed value. The original value will not be retrievable after creation.
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
     BaseTunnelValues:
       type: object
       properties:
@@ -184,16 +180,57 @@ components:
       - regionID
       - gatewayID
       - tunnelName
-    OpenVPNAsyncOperationResponse:
+    AsyncOperationResponse:
       type: object
       properties:
         statusUrl:
           type: string
         samplingTime:
           type: integer
-        secretAccessKey:
+    Error:
+      type: object
+      properties:
+        id:
           type: string
-          description: Secret access key to download OpenVPN configuration file. This key will be shown only once in the response for security reasons. Make sure to store it securely.
+        message:
+          type: string
+  responses:
+    '422':
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     networkIdParam:
       name: networkId
@@ -207,43 +244,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '202':
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    '402':
-      description: Insufficient licenses
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '404':
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '422':
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearer:
       scheme: bearer

@@ -179,68 +179,51 @@ paths:
       - Enhanced Networks
 components:
   schemas:
-    AsyncOperationResponse:
+    EnhancedRegionCreate:
       type: object
       properties:
-        statusUrl:
+        harmonySaseRegionId:
           type: string
-        samplingTime:
-          type: integer
-    Attributes:
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - harmonySaseRegionId
+    EnhancedNetworkUpdate:
       type: object
       properties:
-        splitTunneling:
+        network:
           type: object
           properties:
-            enabled:
-              type: boolean
-        customDNS:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-        networkController:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-        dnsFiltering:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-        openVPNTCP:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-      additionalProperties: false
-    NetworkCustomerCertificateResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: Certificate ID
-          displayName:
-            type: string
-            description: Certificate display name
-          expiresAt:
-            type: string
-            format: date-time
-            description: Certificate expiration date
-        required:
-        - id
-        - displayName
-        - expiresAt
-    EnhancedNetwork:
-      allOf:
-      - $ref: '#/components/schemas/BasicNetwork'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/Attributes'
+            name:
+              type: string
+              description: Network name.
+              minLength: 5
+              maxLength: 32
+            tags:
+              type: array
+              items:
+                type: string
+              description: List of network tags.
+    ASN:
+      type: integer
+      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
+      oneOf:
+      - minimum: 1
+        maximum: 64496
+        description: Public ASN range
+      - minimum: 64512
+        maximum: 65535
+        description: Private ASN range (16-bit)
+      - minimum: 131072
+        maximum: 4294967295
+        description: Private ASN range (32-bit)
     DeployEnhancedNetwork:
       type: object
       properties:
@@ -272,6 +255,13 @@ components:
       required:
       - network
       - regions
+    EnhancedNetwork:
+      allOf:
+      - $ref: '#/components/schemas/BasicNetwork'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/Attributes'
     BasicNetwork:
       allOf:
       - $ref: '#/components/schemas/BaseDates'
@@ -333,6 +323,96 @@ components:
       required:
       - data
       additionalProperties: false
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+    NetworkCustomerCertificateResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Certificate ID
+          displayName:
+            type: string
+            description: Certificate display name
+          expiresAt:
+            type: string
+            format: date-time
+            description: Certificate expiration date
+        required:
+        - id
+        - displayName
+        - expiresAt
+    EnhancedHealthCheckType:
+      type: string
+      enum:
+      - tunnel
+      description: Type of health check component for enhanced networks (tunnel only)
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    Attributes:
+      type: object
+      properties:
+        splitTunneling:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        customDNS:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        networkController:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        dnsFiltering:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        openVPNTCP:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+      additionalProperties: false
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
     HealthStatus:
       type: string
       enum:
@@ -361,36 +441,6 @@ components:
       - tunnelId
       - regionId
       additionalProperties: false
-    EnhancedRegionCreate:
-      type: object
-      properties:
-        harmonySaseRegionId:
-          type: string
-          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
-        scaleUnits:
-          allOf:
-          - $ref: '#/components/schemas/ScaleUnitsCount'
-          - default: 1
-        idle:
-          type: boolean
-          description: Region is disabled for users if true
-          default: true
-      required:
-      - harmonySaseRegionId
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
     EnhancedHealthCheck:
       type: object
       properties:
@@ -405,65 +455,9 @@ components:
       - meta
       - status
       additionalProperties: false
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    ASN:
-      type: integer
-      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
-      oneOf:
-      - minimum: 1
-        maximum: 64496
-        description: Public ASN range
-      - minimum: 64512
-        maximum: 65535
-        description: Private ASN range (16-bit)
-      - minimum: 131072
-        maximum: 4294967295
-        description: Private ASN range (32-bit)
-    EnhancedNetworkUpdate:
-      type: object
-      properties:
-        network:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Network name.
-              minLength: 5
-              maxLength: 32
-            tags:
-              type: array
-              items:
-                type: string
-              description: List of network tags.
-    EnhancedHealthCheckType:
-      type: string
-      enum:
-      - tunnel
-      description: Type of health check component for enhanced networks (tunnel only)
-    ScaleUnitsCount:
-      type: integer
-      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
-
-        Higher values provide greater throughput and connection capacity.
-
-        '
-      minimum: 1
-      maximum: 10
   responses:
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
+    402_Insufficient_licenses:
+      description: Insufficient licenses
       content:
         application/json:
           schema:
@@ -474,20 +468,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     202_Accepted:
       description: Request accepted
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AsyncOperationResponse'
-    402_Insufficient_licenses:
-      description: Insufficient licenses
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
       content:
         application/json:
           schema:

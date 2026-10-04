@@ -117,13 +117,25 @@ paths:
       - IPSec-Single
 components:
   schemas:
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
+    CreateIPSecSinglePayload:
+      allOf:
+      - $ref: '#/components/schemas/BaseTunnelValues'
+      - $ref: '#/components/schemas/IPSecSharedSettings'
+      - $ref: '#/components/schemas/IPSecSingleDetails'
+      required:
+      - regionID
+      - gatewayID
+      - tunnelName
+      - passphrase
+      - remotePublicIP
+      - p81GatewaySubnets
+      - remoteGatewaySubnets
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
     IPSecSharedSettings:
       type: object
       properties:
@@ -172,93 +184,6 @@ components:
           type:
             type: string
             default: ipsec
-    IPSecPhaseConfig:
-      allOf:
-      - $ref: '#/components/schemas/IPSecAlgorithms'
-      - $ref: '#/components/schemas/IPSecPhaseCommon'
-    IPSecAdvancedSettings:
-      type: object
-      properties:
-        keyExchange:
-          type: string
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfig'
-      required:
-      - keyExchange
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
-      additionalProperties: false
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
-    IP:
-      type: string
-      format: ipv4
-    CreatePassphrase:
-      type: string
-      pattern: ^[a-zA-Z1-9._][a-zA-Z0-9._]{7,63}$
-    IPSecPhaseCommon:
-      type: object
-      properties:
-        dh:
-          description: Diffie Helman encryption
-          minLength: 0
-          uniqueItems: true
-          type: array
-          items:
-            type: integer
-            enum:
-            - 2
-            - 5
-            - 14
-            - 19
-            - 20
-            - 21
-            - 31
-      required:
-      - auth
-      - encryption
-      - dh
-      additionalProperties: false
-    CreateIPSecSinglePayload:
-      allOf:
-      - $ref: '#/components/schemas/BaseTunnelValues'
-      - $ref: '#/components/schemas/IPSecSharedSettings'
-      - $ref: '#/components/schemas/IPSecSingleDetails'
-      required:
-      - regionID
-      - gatewayID
-      - tunnelName
-      - passphrase
-      - remotePublicIP
-      - p81GatewaySubnets
-      - remoteGatewaySubnets
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
     IPSecAlgorithms:
       type: object
       properties:
@@ -322,38 +247,38 @@ components:
             - camellia192ccm16
             - camellia256ccm16
             - chacha20poly1305
-    BaseDates:
+    IPSecPhaseCommon:
       type: object
       properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
+        dh:
+          description: Diffie Helman encryption
+          minLength: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            enum:
+            - 2
+            - 5
+            - 14
+            - 19
+            - 20
+            - 21
+            - 31
       required:
-      - createdAt
+      - auth
+      - encryption
+      - dh
       additionalProperties: false
-    DPDTime:
-      type: string
-      pattern: ^([5-9]|[1-5][0-9]|60)s$
-    RemoteASN:
-      type: integer
+    IPSecPhaseConfig:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAlgorithms'
+      - $ref: '#/components/schemas/IPSecPhaseCommon'
+    remoteID:
       oneOf:
-      - type: integer
-        minimum: 1
-        maximum: 23455
-      - type: integer
-        minimum: 23457
-        maximum: 64495
-      - type: integer
-        minimum: 64512
-        maximum: 65534
-      - type: integer
-        minimum: 131072
-        maximum: 4294967294
+      - $ref: '#/components/schemas/IP'
+      - type: string
+        pattern: ^[a-zA-Z0-9]{3,25}$
     IPSecSingleDetails:
       allOf:
       - $ref: '#/components/schemas/IPSecAdvancedSettings'
@@ -370,19 +295,6 @@ components:
             $ref: '#/components/schemas/IPSecPhaseConfig'
           phase2:
             $ref: '#/components/schemas/IPSecPhaseConfig'
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    PeakBandwidth:
-      type: integer
-      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
-      minimum: 10
-      maximum: 8000
-      default: 1000
     BaseTunnelValues:
       type: object
       properties:
@@ -401,25 +313,106 @@ components:
     Lifetime:
       type: string
       pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
-    remoteID:
+    PeakBandwidth:
+      type: integer
+      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
+      minimum: 10
+      maximum: 8000
+      default: 1000
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    IP:
+      type: string
+      format: ipv4
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    CreatePassphrase:
+      type: string
+      pattern: ^[a-zA-Z1-9._][a-zA-Z0-9._]{7,63}$
+    TunnelName:
+      type: string
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
+    IPSecAdvancedSettings:
+      type: object
+      properties:
+        keyExchange:
+          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfig'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
+    RemoteASN:
+      type: integer
       oneOf:
-      - $ref: '#/components/schemas/IP'
-      - type: string
-        pattern: ^[a-zA-Z0-9]{3,25}$
-  parameters:
-    networkIdParam:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    tunnelIdParam:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
+      - type: integer
+        minimum: 1
+        maximum: 23455
+      - type: integer
+        minimum: 23457
+        maximum: 64495
+      - type: integer
+        minimum: 64512
+        maximum: 65534
+      - type: integer
+        minimum: 131072
+        maximum: 4294967294
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
   responses:
+    '402':
+      description: Insufficient licenses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     '401':
       description: Unauthorized
       content:
@@ -438,24 +431,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '402':
-      description: Insufficient licenses
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     '404':
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    networkIdParam:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    tunnelIdParam:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearer:
       scheme: bearer

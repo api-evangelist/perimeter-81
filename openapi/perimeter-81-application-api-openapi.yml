@@ -184,87 +184,22 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ApplicationHost:
+    HttpAttributes:
       type: object
-      description: Application host settings
+      description: HTTP Application attributes
       properties:
-        value:
-          type: string
-          minLength: 1
-        source:
-          type: string
-          minLength: 1
-      required:
-      - value
-      - source
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
+        checkStatus:
           type: integer
-    RdpAttributes:
-      type: object
-      description: RDP Application attributes
-      properties:
-        clientType:
+          default: 200
+        checkPath:
           type: string
-          description: RDP client type
-          default: web
-          enum:
-          - web
-          - native
-        disableClipboard:
-          type: boolean
-          default: false
-        disablePrinting:
-          type: boolean
-          default: false
-        ignoreTLSVerification:
-          type: boolean
-          default: true
-        adminConsole:
-          type: boolean
-          default: false
-        maxConnections:
-          oneOf:
-          - type: integer
-            minimum: 1
-            maximum: 1024
-            default: 32
-            description: Maximum connections value for Web client
-          - type: integer
-            minimum: 1
-            maximum: 1
-            default: 1
-            description: Maximum connections value for Native client
-        rdpSecurity:
-          oneOf:
-          - type: string
-            enum:
-            - any
-            - nla
-            - nla-ext
-            - tls
-            - vmconnect
-            - rdp
-            default: any
-            description: Security mode for Web client
-          - type: string
-            enum:
-            - any
-            default: any
-            description: Security mode for Native client
-        enableMultiMonitors:
-          type: boolean
-    HttpApplication:
-      allOf:
-      - $ref: '#/components/schemas/WebApplication'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/HttpAttributes'
+          default: ''
+          example: checkPath
+        startRelativePath:
+          type: string
+          default: ''
+          pattern: ^$|^\/[\w\d-._~!$&'()*+,;=:@/?#%]+$
+          example: /startRelativePath
     CommonCreateApplication:
       type: object
       properties:
@@ -330,114 +265,10 @@ components:
             type: array
         required:
         - groups
-    FixedPort:
-      type: object
-      description: Application port fixed data
-      properties:
-        source:
-          type: string
-          description: Application port source
-          enum:
-          - fixed
-        value:
-          allOf:
-          - $ref: '#/components/schemas/PortNumber'
-          - description: Application port value
-          - example: 443
-      required:
-      - source
-      - value
-    IP:
-      type: string
-      format: ipv4
-    ApplicationsListResponse:
-      type: array
-      description: List of retrieved applications
-      items:
-        $ref: '#/components/schemas/ApplicationsListObject'
-    ApplicationStatusResponse:
-      type: object
-      properties:
-        completed:
-          type: boolean
-          description: Shows whether the operation is completed
-        result:
-          type: object
-          properties:
-            statusCode:
-              type: integer
-              description: Response status code
-            resource:
-              type: string
-              description: Endpoint to get the resource if exists
-            reason:
-              type: array
-              description: Failure reasons
-              items:
-                type: string
-    HttpAttributes:
-      type: object
-      description: HTTP Application attributes
-      properties:
-        checkStatus:
-          type: integer
-          default: 200
-        checkPath:
-          type: string
-          default: ''
-          example: checkPath
-        startRelativePath:
-          type: string
-          default: ''
-          pattern: ^$|^\/[\w\d-._~!$&'()*+,;=:@/?#%]+$
-          example: /startRelativePath
     PortNumber:
       type: integer
       minimum: 1
       maximum: 65535
-    Alphanumeric:
-      type: string
-      pattern: ^[a-zA-Z0-9]+$
-      description: Any alphanumeric value w/o space
-      minLength: 1
-    VncApplication:
-      allOf:
-      - $ref: '#/components/schemas/BasicApplication'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/VncAttributes'
-    ApplicationsListPaginatedResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ApplicationsListResponse'
-        page:
-          type: integer
-          description: Current page number
-        totalPage:
-          type: integer
-          description: Number of all pages
-        itemsTotal:
-          type: integer
-          description: Number of all items
-    ApplicationPort:
-      type: object
-      description: Application port settings
-      properties:
-        value:
-          oneOf:
-          - type: integer
-            minimum: 1
-            maximum: 65353
-          - type: string
-            minLength: 1
-        source:
-          type: string
-          minLength: 1
-      required:
-      - value
-      - source
     HttpsAttributes:
       allOf:
       - $ref: '#/components/schemas/HttpAttributes'
@@ -447,19 +278,13 @@ components:
           sslCertificateVerification:
             type: boolean
             default: true
-    WebCreateApplication:
+    SshApplication:
       allOf:
-      - $ref: '#/components/schemas/CommonCreateApplication'
+      - $ref: '#/components/schemas/BasicApplication'
       - type: object
         properties:
-          headers:
-            type: object
-            description: Application specific headers. Keys must not contain . and $
-            pattern: ^[^.$]+$
-            example:
-              X-Custom-Header: value
-        required:
-        - headers
+          attributes:
+            $ref: '#/components/schemas/SshAttributes'
     SshAttributes:
       type: object
       description: SSH Application attributes
@@ -468,87 +293,26 @@ components:
           type: integer
       required:
       - maxConnections
-    RdpApplication:
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
+    WebApplication:
       allOf:
       - $ref: '#/components/schemas/BasicApplication'
       - type: object
         properties:
-          attributes:
-            $ref: '#/components/schemas/RdpAttributes'
-    IdpHost:
-      type: object
-      description: Application host idp data
-      properties:
-        source:
-          type: string
-          description: Application host source
-          enum:
-          - idp
-        value:
-          type: string
-          description: Application host value
-          pattern: ^[a-zA-Z0-9_.-]{2,255}$
-          example: idpExample
-      required:
-      - source
-      - value
-    ApplicationsListObject:
+          headers:
+            type: object
+            description: Web Application headers
+    HttpsApplication:
       allOf:
-      - $ref: '#/components/schemas/CommonApplication'
+      - $ref: '#/components/schemas/WebApplication'
       - type: object
         properties:
-          network:
-            type: object
-            description: Application related Network data
-            properties:
-              id:
-                type: string
-                description: Network Id
-              name:
-                type: string
-                description: Network name
-            required:
-            - id
-            - name
-          host:
-            type: string
-            description: Application host
-          port:
-            oneOf:
-            - type: integer
-              minimum: 1
-              maximum: 65353
-            - type: string
-              minLength: 1
-            description: Application port
-        required:
-        - network
-        - host
-        - port
-    VncAttributes:
-      type: object
-      description: VNC Application attributes
-      properties:
-        maxConnections:
-          type: integer
-        disableClipboard:
-          type: boolean
-      required:
-      - maxConnections
-    ApplicationAlias:
-      type: object
-      description: URL alias settings to access the application via a user-friendly URL under your own domain
-      properties:
-        aliasEnabled:
-          type: boolean
-        cname:
-          type: string
-          minLength: 1
-        sslCertificate:
-          type: string
-          minLength: 1
-      required:
-      - aliasEnabled
+          attributes:
+            $ref: '#/components/schemas/HttpsAttributes'
     BasicApplication:
       allOf:
       - $ref: '#/components/schemas/CommonApplication'
@@ -638,46 +402,16 @@ components:
         - fqdn
         - host
         - port
-    SshApplication:
-      allOf:
-      - $ref: '#/components/schemas/BasicApplication'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/SshAttributes'
-    HttpsCreateApplication:
-      allOf:
-      - $ref: '#/components/schemas/WebCreateApplication'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/HttpsAttributes'
-        required:
-        - attributes
-    HttpsApplication:
-      allOf:
-      - $ref: '#/components/schemas/WebApplication'
-      - type: object
-        properties:
-          attributes:
-            $ref: '#/components/schemas/HttpsAttributes'
-    IdpPort:
+    VncAttributes:
       type: object
-      description: Application port idp data
+      description: VNC Application attributes
       properties:
-        source:
-          type: string
-          description: Application port source
-          enum:
-          - idp
-        value:
-          type: string
-          description: Application port value
-          pattern: ^[a-zA-Z0-9_.-]{2,255}$
-          example: idpExample
+        maxConnections:
+          type: integer
+        disableClipboard:
+          type: boolean
       required:
-      - source
-      - value
+      - maxConnections
     FixedHost:
       type: object
       description: Application host fixed data
@@ -702,6 +436,9 @@ components:
       required:
       - source
       - value
+    FQDN:
+      type: string
+      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
     HttpCreateApplication:
       allOf:
       - $ref: '#/components/schemas/WebCreateApplication'
@@ -711,14 +448,36 @@ components:
             $ref: '#/components/schemas/HttpAttributes'
         required:
         - attributes
-    WebApplication:
+    RdpCreateApplication:
       allOf:
-      - $ref: '#/components/schemas/BasicApplication'
+      - $ref: '#/components/schemas/CommonCreateApplication'
       - type: object
         properties:
-          headers:
-            type: object
-            description: Web Application headers
+          attributes:
+            $ref: '#/components/schemas/RdpAttributes'
+          auth:
+            $ref: '#/components/schemas/ApplicationAuth'
+        required:
+        - attributes
+        - auth
+    ApplicationHost:
+      type: object
+      description: Application host settings
+      properties:
+        value:
+          type: string
+          minLength: 1
+        source:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - source
+    ApplicationsListResponse:
+      type: array
+      description: List of retrieved applications
+      items:
+        $ref: '#/components/schemas/ApplicationsListObject'
     ApplicationAuth:
       type: object
       description: Authentication settings related to the application
@@ -737,21 +496,208 @@ components:
           example: domain.com
       required:
       - authEnabled
-    RdpCreateApplication:
+    AlphanumericWithSpace:
+      type: string
+      pattern: ^[a-zA-Z0-9 ]+$
+      description: Any alphanumeric value with space
+      minLength: 1
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    IP:
+      type: string
+      format: ipv4
+    VncApplication:
       allOf:
-      - $ref: '#/components/schemas/CommonCreateApplication'
+      - $ref: '#/components/schemas/BasicApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/VncAttributes'
+    HttpApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpAttributes'
+    ApplicationsListObject:
+      allOf:
+      - $ref: '#/components/schemas/CommonApplication'
+      - type: object
+        properties:
+          network:
+            type: object
+            description: Application related Network data
+            properties:
+              id:
+                type: string
+                description: Network Id
+              name:
+                type: string
+                description: Network name
+            required:
+            - id
+            - name
+          host:
+            type: string
+            description: Application host
+          port:
+            oneOf:
+            - type: integer
+              minimum: 1
+              maximum: 65353
+            - type: string
+              minLength: 1
+            description: Application port
+        required:
+        - network
+        - host
+        - port
+    RdpApplication:
+      allOf:
+      - $ref: '#/components/schemas/BasicApplication'
       - type: object
         properties:
           attributes:
             $ref: '#/components/schemas/RdpAttributes'
-          auth:
-            $ref: '#/components/schemas/ApplicationAuth'
-        required:
-        - attributes
-        - auth
-    FQDN:
-      type: string
-      pattern: (?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)
+    IdpHost:
+      type: object
+      description: Application host idp data
+      properties:
+        source:
+          type: string
+          description: Application host source
+          enum:
+          - idp
+        value:
+          type: string
+          description: Application host value
+          pattern: ^[a-zA-Z0-9_.-]{2,255}$
+          example: idpExample
+      required:
+      - source
+      - value
+    ApplicationsListPaginatedResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApplicationsListResponse'
+        page:
+          type: integer
+          description: Current page number
+        totalPage:
+          type: integer
+          description: Number of all pages
+        itemsTotal:
+          type: integer
+          description: Number of all items
+    RdpAttributes:
+      type: object
+      description: RDP Application attributes
+      properties:
+        clientType:
+          type: string
+          description: RDP client type
+          default: web
+          enum:
+          - web
+          - native
+        disableClipboard:
+          type: boolean
+          default: false
+        disablePrinting:
+          type: boolean
+          default: false
+        ignoreTLSVerification:
+          type: boolean
+          default: true
+        adminConsole:
+          type: boolean
+          default: false
+        maxConnections:
+          oneOf:
+          - type: integer
+            minimum: 1
+            maximum: 1024
+            default: 32
+            description: Maximum connections value for Web client
+          - type: integer
+            minimum: 1
+            maximum: 1
+            default: 1
+            description: Maximum connections value for Native client
+        rdpSecurity:
+          oneOf:
+          - type: string
+            enum:
+            - any
+            - nla
+            - nla-ext
+            - tls
+            - vmconnect
+            - rdp
+            default: any
+            description: Security mode for Web client
+          - type: string
+            enum:
+            - any
+            default: any
+            description: Security mode for Native client
+        enableMultiMonitors:
+          type: boolean
+    IdpPort:
+      type: object
+      description: Application port idp data
+      properties:
+        source:
+          type: string
+          description: Application port source
+          enum:
+          - idp
+        value:
+          type: string
+          description: Application port value
+          pattern: ^[a-zA-Z0-9_.-]{2,255}$
+          example: idpExample
+      required:
+      - source
+      - value
+    ApplicationPort:
+      type: object
+      description: Application port settings
+      properties:
+        value:
+          oneOf:
+          - type: integer
+            minimum: 1
+            maximum: 65353
+          - type: string
+            minLength: 1
+        source:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - source
+    ApplicationAlias:
+      type: object
+      description: URL alias settings to access the application via a user-friendly URL under your own domain
+      properties:
+        aliasEnabled:
+          type: boolean
+        cname:
+          type: string
+          minLength: 1
+        sslCertificate:
+          type: string
+          minLength: 1
+      required:
+      - aliasEnabled
     CommonApplication:
       type: object
       properties:
@@ -793,11 +739,65 @@ components:
       - id
       - name
       - type
-    AlphanumericWithSpace:
-      type: string
-      pattern: ^[a-zA-Z0-9 ]+$
-      description: Any alphanumeric value with space
-      minLength: 1
+    FixedPort:
+      type: object
+      description: Application port fixed data
+      properties:
+        source:
+          type: string
+          description: Application port source
+          enum:
+          - fixed
+        value:
+          allOf:
+          - $ref: '#/components/schemas/PortNumber'
+          - description: Application port value
+          - example: 443
+      required:
+      - source
+      - value
+    HttpsCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/WebCreateApplication'
+      - type: object
+        properties:
+          attributes:
+            $ref: '#/components/schemas/HttpsAttributes'
+        required:
+        - attributes
+    ApplicationStatusResponse:
+      type: object
+      properties:
+        completed:
+          type: boolean
+          description: Shows whether the operation is completed
+        result:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+              description: Response status code
+            resource:
+              type: string
+              description: Endpoint to get the resource if exists
+            reason:
+              type: array
+              description: Failure reasons
+              items:
+                type: string
+    WebCreateApplication:
+      allOf:
+      - $ref: '#/components/schemas/CommonCreateApplication'
+      - type: object
+        properties:
+          headers:
+            type: object
+            description: Application specific headers. Keys must not contain . and $
+            pattern: ^[^.$]+$
+            example:
+              X-Custom-Header: value
+        required:
+        - headers
   securitySchemes:
     bearer:
       scheme: bearer

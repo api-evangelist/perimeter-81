@@ -197,6 +197,49 @@ paths:
           description: Network region not found
 components:
   schemas:
+    ScaleUnitsCount:
+      type: integer
+      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
+
+        Higher values provide greater throughput and connection capacity.
+
+        '
+      minimum: 1
+      maximum: 10
+    EnhancedRegionCreate:
+      type: object
+      properties:
+        harmonySaseRegionId:
+          type: string
+          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
+        scaleUnits:
+          allOf:
+          - $ref: '#/components/schemas/ScaleUnitsCount'
+          - default: 1
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - harmonySaseRegionId
+    ScaleUnitsOperation:
+      type: object
+      properties:
+        unitType:
+          type: string
+          description: Type of scale unit. Standard units provide basic capacity, while cloudSecurity units offer enhanced security features.
+          enum:
+          - standard
+          - cloudSecurity
+        scaleUnitsCount:
+          $ref: '#/components/schemas/ScaleUnitsCount'
+        idle:
+          type: boolean
+          description: Region is disabled for users if true
+          default: true
+      required:
+      - unitType
+      - scaleUnitsCount
     HarmonySaseRegion:
       type: object
       properties:
@@ -223,42 +266,6 @@ components:
       - name
       - countryCode
       - continentCode
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    HarmonySaseRegionsList:
-      type: array
-      items:
-        allOf:
-        - $ref: '#/components/schemas/HarmonySaseRegion'
-        - description: List of Harmony SASE regions.
-    EnhancedRegionCreate:
-      type: object
-      properties:
-        harmonySaseRegionId:
-          type: string
-          description: Harmony SASE region ID, Take id from GET Harmony sases regions endpoint (/networks/enhanced/harmony-sase-regions).
-        scaleUnits:
-          allOf:
-          - $ref: '#/components/schemas/ScaleUnitsCount'
-          - default: 1
-        idle:
-          type: boolean
-          description: Region is disabled for users if true
-          default: true
-      required:
-      - harmonySaseRegionId
     EnhancedRegion:
       type: object
       properties:
@@ -319,59 +326,27 @@ components:
       - scaleUnits
       - createdAt
       - attributes
-    ScaleUnitsCount:
-      type: integer
-      description: 'Number of scale units for the region. Scale units determine the capacity and performance level of the enhanced region.
-
-        Higher values provide greater throughput and connection capacity.
-
-        '
-      minimum: 1
-      maximum: 10
-    ScaleUnitsOperation:
+    AsyncOperationResponse:
       type: object
       properties:
-        unitType:
+        statusUrl:
           type: string
-          description: Type of scale unit. Standard units provide basic capacity, while cloudSecurity units offer enhanced security features.
-          enum:
-          - standard
-          - cloudSecurity
-        scaleUnitsCount:
-          $ref: '#/components/schemas/ScaleUnitsCount'
-        idle:
-          type: boolean
-          description: Region is disabled for users if true
-          default: true
-      required:
-      - unitType
-      - scaleUnitsCount
-  parameters:
-    regionId:
-      name: regionId
-      in: path
-      required: true
-      schema:
-        type: string
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
+        samplingTime:
+          type: integer
+    HarmonySaseRegionsList:
+      type: array
+      items:
+        allOf:
+        - $ref: '#/components/schemas/HarmonySaseRegion'
+        - description: List of Harmony SASE regions.
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
   responses:
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     202_Accepted:
       description: Request accepted
       content:
@@ -384,12 +359,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     403_Forbidden:
       description: Forbidden
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    regionId:
+      name: regionId
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearer:
       scheme: bearer

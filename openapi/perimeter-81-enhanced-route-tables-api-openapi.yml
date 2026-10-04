@@ -191,6 +191,37 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
+  responses:
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     routeId:
       name: routeId
@@ -205,13 +236,6 @@ components:
       schema:
         type: string
   schemas:
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
     EnhancedRouteTableDynamicCreate:
       type: object
       properties:
@@ -259,25 +283,6 @@ components:
       - tunnelIds
       - subnets
       - propagated
-    RouteTableUpdate:
-      type: object
-      properties:
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - subnets
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
     EnhancedRouteTableStaticCreate:
       type: object
       properties:
@@ -294,37 +299,32 @@ components:
       required:
       - tunnelId
       - subnets
-  responses:
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
+    RouteTableUpdate:
+      type: object
+      properties:
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - subnets
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
   securitySchemes:
     bearer:
       scheme: bearer

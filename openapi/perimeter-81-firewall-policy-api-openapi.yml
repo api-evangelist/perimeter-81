@@ -81,23 +81,6 @@ paths:
       - Firewall Policy
 components:
   schemas:
-    Alphanumeric:
-      type: string
-      pattern: ^[a-zA-Z0-9]+$
-      description: Any alphanumeric value w/o space
-      minLength: 1
-    SourcesAndDestinations:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/UsersAndGroups'
-      - $ref: '#/components/schemas/Addresses'
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
     Addresses:
       type: object
       properties:
@@ -158,6 +141,18 @@ components:
       - id
       - policyRules
       additionalProperties: false
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
     FirewallPolicyRule:
       type: object
       properties:
@@ -199,6 +194,11 @@ components:
       pattern: ^[a-zA-Z0-9 ]+$
       description: Any alphanumeric value with space
       minLength: 1
+    SourcesAndDestinations:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/UsersAndGroups'
+      - $ref: '#/components/schemas/Addresses'
   securitySchemes:
     bearer:
       scheme: bearer
