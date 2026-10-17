@@ -119,9 +119,12 @@ paths:
       - Wireguard
 components:
   schemas:
-    IP:
+    TunnelName:
       type: string
-      format: ipv4
+      pattern: ^[a-zA-Z0-9]*$
+      description: The name of the tunnel
+      minLength: 3
+      maxLength: 15
     Error:
       type: object
       properties:
@@ -129,6 +132,13 @@ components:
           type: string
         message:
           type: string
+    CreateWireguardTunnelPayload:
+      allOf:
+      - $ref: '#/components/schemas/WireGuradDetails'
+      - $ref: '#/components/schemas/BaseTunnelValues'
+    IP:
+      type: string
+      format: ipv4
     WireguardTunnel:
       allOf:
       - $ref: '#/components/schemas/WireGuradDetails'
@@ -141,20 +151,6 @@ components:
           type:
             type: string
             default: wireguard
-    BaseDates:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: The date when this record was created.
-        updatedAt:
-          format: date-time
-          type: string
-          description: The date of last update of the record.
-      required:
-      - createdAt
-      additionalProperties: false
     BaseTunnelValues:
       type: object
       properties:
@@ -170,6 +166,20 @@ components:
       - regionID
       - gatewayID
       - tunnelName
+    BaseDates:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: The date when this record was created.
+        updatedAt:
+          format: date-time
+          type: string
+          description: The date of last update of the record.
+      required:
+      - createdAt
+      additionalProperties: false
     AsyncOperationResponse:
       type: object
       properties:
@@ -191,29 +201,7 @@ components:
       required:
       - remoteEndpoint
       - remoteSubnets
-    CreateWireguardTunnelPayload:
-      allOf:
-      - $ref: '#/components/schemas/WireGuradDetails'
-      - $ref: '#/components/schemas/BaseTunnelValues'
-    TunnelName:
-      type: string
-      pattern: ^[a-zA-Z0-9]*$
-      description: The name of the tunnel
-      minLength: 3
-      maxLength: 15
   responses:
-    '422':
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '202':
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
     '402':
       description: Insufficient licenses
       content:
@@ -226,8 +214,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    '404':
-      description: Resource not found
+    '422':
+      description: Unprocessable entity
       content:
         application/json:
           schema:
@@ -238,15 +226,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    '202':
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    '404':
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    networkIdParam:
-      name: networkId
+    tunnelIdParam:
+      name: tunnelId
       in: path
       required: true
       schema:
         type: string
-    tunnelIdParam:
-      name: tunnelId
+    networkIdParam:
+      name: networkId
       in: path
       required: true
       schema:

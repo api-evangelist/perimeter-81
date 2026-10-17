@@ -93,66 +93,6 @@ components:
       required:
       - addresses
       additionalProperties: false
-    UsersAndGroups:
-      type: object
-      properties:
-        users:
-          items:
-            $ref: '#/components/schemas/AlphanumericWithSpace'
-          type: array
-          minItems: 1
-          maxItems: 10
-          description: List of IDs of users.
-        groups:
-          items:
-            $ref: '#/components/schemas/AlphanumericWithSpace'
-          type: array
-          minItems: 1
-          description: List of IDs of groups.
-      additionalProperties: false
-    FirewallPolicy:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: whether the policy is enabled.
-        allowed:
-          type: boolean
-          description: whether the policy is accept or drop.
-        id:
-          allOf:
-          - $ref: '#/components/schemas/Alphanumeric'
-          - description: network policy id
-          - example: ZwAeo5wqiF
-        policyRules:
-          items:
-            $ref: '#/components/schemas/FirewallPolicyRule'
-          type: array
-          description: an array of policy rules.
-          required:
-          - sources
-          - destinations
-        trace:
-          type: boolean
-          description: whether the policy is traced.
-      required:
-      - enabled
-      - allowed
-      - id
-      - policyRules
-      additionalProperties: false
-    Alphanumeric:
-      type: string
-      pattern: ^[a-zA-Z0-9]+$
-      description: Any alphanumeric value w/o space
-      minLength: 1
-    AsyncOperationResponse:
-      type: object
-      properties:
-        statusUrl:
-          type: string
-        samplingTime:
-          type: integer
     FirewallPolicyRule:
       type: object
       properties:
@@ -189,6 +129,37 @@ components:
       - sources
       - destinations
       additionalProperties: false
+    FirewallPolicy:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: whether the policy is enabled.
+        allowed:
+          type: boolean
+          description: whether the policy is accept or drop.
+        id:
+          allOf:
+          - $ref: '#/components/schemas/Alphanumeric'
+          - description: network policy id
+          - example: ZwAeo5wqiF
+        policyRules:
+          items:
+            $ref: '#/components/schemas/FirewallPolicyRule'
+          type: array
+          description: an array of policy rules.
+          required:
+          - sources
+          - destinations
+        trace:
+          type: boolean
+          description: whether the policy is traced.
+      required:
+      - enabled
+      - allowed
+      - id
+      - policyRules
+      additionalProperties: false
     AlphanumericWithSpace:
       type: string
       pattern: ^[a-zA-Z0-9 ]+$
@@ -199,6 +170,35 @@ components:
       oneOf:
       - $ref: '#/components/schemas/UsersAndGroups'
       - $ref: '#/components/schemas/Addresses'
+    UsersAndGroups:
+      type: object
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+          type: array
+          minItems: 1
+          maxItems: 10
+          description: List of IDs of users.
+        groups:
+          items:
+            $ref: '#/components/schemas/AlphanumericWithSpace'
+          type: array
+          minItems: 1
+          description: List of IDs of groups.
+      additionalProperties: false
+    AsyncOperationResponse:
+      type: object
+      properties:
+        statusUrl:
+          type: string
+        samplingTime:
+          type: integer
+    Alphanumeric:
+      type: string
+      pattern: ^[a-zA-Z0-9]+$
+      description: Any alphanumeric value w/o space
+      minLength: 1
   securitySchemes:
     bearer:
       scheme: bearer

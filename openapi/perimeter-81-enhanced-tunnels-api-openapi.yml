@@ -315,40 +315,173 @@ paths:
         '422':
           $ref: '#/components/responses/422_UnprocessableEntity'
 components:
+  parameters:
+    regionId:
+      name: regionId
+      in: path
+      required: true
+      schema:
+        type: string
+    dynamicTunnelId:
+      name: dynamicTunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    tunnelId:
+      name: tunnelId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    404_NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
   schemas:
-    IPSecSharedSettings:
-      type: object
-      properties:
-        p81GatewaySubnets:
-          minLength: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        remoteGatewaySubnets:
-          minLength: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        peakBandwidth:
-          $ref: '#/components/schemas/PeakBandwidth'
-        p81ASN:
-          $ref: '#/components/schemas/RemoteASN'
-        features:
-          type: object
-          properties:
-            symmetricInnerMesh:
-              type: object
-              properties:
-                enabled:
-                  type: boolean
-                  default: false
-              additionalProperties: false
-      required:
-      - p81GatewaySubnets
-      - remoteGatewaySubnets
+    EnhancedIPSecSharedSettingsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/IPSecSharedSettings'
+      - type: object
+        properties:
+          features:
+            $ref: '#/components/schemas/NetworkFeaturesCreate'
       additionalProperties: false
+    RoutingType:
+      type: string
+      description: Routing mode for the tunnel
+      enum:
+      - route
+      - policy
+      default: route
+    RemoteASN:
+      type: integer
+      oneOf:
+      - type: integer
+        minimum: 1
+        maximum: 23455
+      - type: integer
+        minimum: 23457
+        maximum: 64495
+      - type: integer
+        minimum: 64512
+        maximum: 65534
+      - type: integer
+        minimum: 131072
+        maximum: 4294967294
+    EnhancedTunnelBase:
+      allOf:
+      - $ref: '#/components/schemas/TunnelAuthConfig'
+      - type: object
+        properties:
+          regionID:
+            type: string
+            description: Target region ID
+          tunnelName:
+            type: string
+            description: Name of the static tunnel
+          p81GatewaySubnets:
+            type: array
+            items:
+              type: string
+            minItems: 1
+            description: Harmony Sase gateway subnets
+          remoteGatewaySubnets:
+            type: array
+            items:
+              type: string
+            minItems: 1
+            description: Remote gateway subnets
+          keyExchange:
+            type: string
+            description: IKE version for key exchange
+            enum:
+            - ikev1
+            - ikev2
+            default: ikev2
+          ikeLifeTime:
+            $ref: '#/components/schemas/Lifetime'
+          lifetime:
+            $ref: '#/components/schemas/Lifetime'
+          dpdDelay:
+            $ref: '#/components/schemas/DPDTime'
+          dpdTimeout:
+            $ref: '#/components/schemas/DPDTime'
+          phase1:
+            $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
+          phase2:
+            $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
+          remotePublicIP:
+            type: string
+            format: ipv4
+            description: Remote gateway public IP address
+          remoteID:
+            type: string
+            description: Remote gateway ID
+          description:
+            type: string
+            description: Optional tunnel description
+          features:
+            $ref: '#/components/schemas/NetworkFeatures'
+          routingType:
+            $ref: '#/components/schemas/RoutingType'
+          peakBandwidth:
+            $ref: '#/components/schemas/PeakBandwidth'
+        required:
+        - regionID
+        - tunnelName
+        - p81GatewaySubnets
+        - remoteGatewaySubnets
+        - keyExchange
+        - phase1
+        - phase2
+        - authType
+        - remotePublicIP
+        - remoteID
+        - features
+        - ikeLifeTime
+        - lifetime
+        - dpdDelay
+        - dpdTimeout
     DynamicTunnelDetails:
       type: object
       properties:
@@ -387,6 +520,111 @@ components:
       - remoteASN
       - remoteID
       - routingType
+    IPSecSharedSettings:
+      type: object
+      properties:
+        p81GatewaySubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        remoteGatewaySubnets:
+          minLength: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        peakBandwidth:
+          $ref: '#/components/schemas/PeakBandwidth'
+        p81ASN:
+          $ref: '#/components/schemas/RemoteASN'
+        features:
+          type: object
+          properties:
+            symmetricInnerMesh:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  default: false
+              additionalProperties: false
+      required:
+      - p81GatewaySubnets
+      - remoteGatewaySubnets
+      additionalProperties: false
+    DPDTime:
+      type: string
+      pattern: ^([5-9]|[1-5][0-9]|60)s$
+    RoutingTypeUpdate:
+      type: string
+      description: Routing mode for the tunnel
+      enum:
+      - route
+      - policy
+    TunnelAuthConfig:
+      type: object
+      properties:
+        authType:
+          type: string
+          enum:
+          - psk
+          - cert
+          description: Authentication type for tunnel (psk for pre-shared key, cert for certificate)
+        passphrase:
+          type: string
+          minLength: 8
+          maxLength: 64
+          description: Pre-shared key for tunnel authentication (8-64 characters). Required when authType is psk.
+        customerRootCA:
+          type: string
+          description: Customer root certificate authority. Required when authType is cert.
+    IPSecPhaseConfigV2_3:
+      allOf:
+      - $ref: '#/components/schemas/IPSecAlgorithms'
+      - $ref: '#/components/schemas/IPSecPhaseCommonV2_3'
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    PeakBandwidth:
+      type: integer
+      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
+      minimum: 10
+      maximum: 8000
+      default: 1000
+    IPSecAdvancedSettingsV2_3:
+      type: object
+      properties:
+        keyExchange:
+          type: string
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
+      required:
+      - keyExchange
+      - ikeLifeTime
+      - lifetime
+      - dpdDelay
+      - dpdTimeout
+      - phase1
+      - phase2
+      additionalProperties: false
     IPSecAlgorithms:
       type: object
       properties:
@@ -450,31 +688,42 @@ components:
             - camellia192ccm16
             - camellia256ccm16
             - chacha20poly1305
-    IPSecPhaseConfigV2_3:
-      allOf:
-      - $ref: '#/components/schemas/IPSecAlgorithms'
-      - $ref: '#/components/schemas/IPSecPhaseCommonV2_3'
-    ASN:
-      type: integer
-      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
-      oneOf:
-      - minimum: 1
-        maximum: 64496
-        description: Public ASN range
-      - minimum: 64512
-        maximum: 65535
-        description: Private ASN range (16-bit)
-      - minimum: 131072
-        maximum: 4294967295
-        description: Private ASN range (32-bit)
-    NetworkFeaturesCreate:
-      allOf:
-      - $ref: '#/components/schemas/NetworkFeatures'
-      - required:
-        - cloudSecurity
-        - symmetricInnerMesh
-        - DNSServices
-    DynamicTunnelDetailsUpdate:
+    StaticTunnelUpdate:
+      type: object
+      properties:
+        tunnelName:
+          type: string
+          description: Name of the static tunnel
+        p81GatewaySubnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Harmony Sase gateway subnets
+        remoteGatewaySubnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Remote gateway subnets
+        keyExchange:
+          type: string
+          description: IKE version for key exchange
+          enum:
+          - ikev1
+          - ikev2
+        ikeLifeTime:
+          $ref: '#/components/schemas/Lifetime'
+        lifetime:
+          $ref: '#/components/schemas/Lifetime'
+        dpdDelay:
+          $ref: '#/components/schemas/DPDTime'
+        dpdTimeout:
+          $ref: '#/components/schemas/DPDTime'
+        phase1:
+          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
+        phase2:
+          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
       allOf:
       - $ref: '#/components/schemas/TunnelAuthConfig'
       - type: object
@@ -483,44 +732,48 @@ components:
             type: string
             format: ipv4
             description: Remote gateway public IP address
-          remoteASN:
-            $ref: '#/components/schemas/ASN'
           remoteID:
             type: string
             description: Remote gateway ID
-          routingType:
-            $ref: '#/components/schemas/RoutingTypeUpdate'
-    RoutingTypeUpdate:
-      type: string
-      description: Routing mode for the tunnel
-      enum:
-      - route
-      - policy
-    TunnelAuthConfig:
-      type: object
-      properties:
-        authType:
-          type: string
-          enum:
-          - psk
-          - cert
-          description: Authentication type for tunnel (psk for pre-shared key, cert for certificate)
-        passphrase:
-          type: string
-          minLength: 8
-          maxLength: 64
-          description: Pre-shared key for tunnel authentication (8-64 characters). Required when authType is psk.
-        customerRootCA:
-          type: string
-          description: Customer root certificate authority. Required when authType is cert.
-    EnhancedIPSecSharedSettingsUpdate:
-      allOf:
-      - $ref: '#/components/schemas/IPSecSharedSettings'
-      - type: object
-        properties:
+          description:
+            type: string
+            description: Optional tunnel description
           features:
             $ref: '#/components/schemas/NetworkFeaturesCreate'
+          routingType:
+            $ref: '#/components/schemas/RoutingType'
+          peakBandwidth:
+            $ref: '#/components/schemas/PeakBandwidth'
+    IPSecPhaseCommonV2_3:
+      type: object
+      properties:
+        keyExchangeMethod:
+          description: Key exchange method encryption
+          minLength: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - modp1024
+            - modp1536
+            - modp2048
+            - ecp256
+            - ecp384
+            - ecp521
+            - curve25519
+      required:
+      - auth
+      - encryption
+      - keyExchangeMethod
       additionalProperties: false
+    NetworkFeaturesCreate:
+      allOf:
+      - $ref: '#/components/schemas/NetworkFeatures'
+      - required:
+        - cloudSecurity
+        - symmetricInnerMesh
+        - DNSServices
     StaticTunnelCreate:
       type: object
       properties:
@@ -598,289 +851,6 @@ components:
       - dpdTimeout
       - features
       - routingType
-    NetworkFeatures:
-      type: object
-      properties:
-        cloudSecurity:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-              default: false
-          required:
-          - enabled
-        symmetricInnerMesh:
-          type: object
-          properties:
-            enabled:
-              type: boolean
-              default: false
-          required:
-          - enabled
-        DNSServices:
-          type: object
-          properties:
-            redirectToResolver:
-              type: object
-              properties:
-                enabled:
-                  type: boolean
-                  default: true
-              required:
-              - enabled
-          required:
-          - redirectToResolver
-    IPSecAdvancedSettingsUpdateV2_3:
-      type: object
-      properties:
-        keyExchange:
-          type: string
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-      additionalProperties: false
-    StaticTunnelUpdate:
-      type: object
-      properties:
-        tunnelName:
-          type: string
-          description: Name of the static tunnel
-        p81GatewaySubnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          description: Harmony Sase gateway subnets
-        remoteGatewaySubnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          description: Remote gateway subnets
-        keyExchange:
-          type: string
-          description: IKE version for key exchange
-          enum:
-          - ikev1
-          - ikev2
-        ikeLifeTime:
-          $ref: '#/components/schemas/Lifetime'
-        lifetime:
-          $ref: '#/components/schemas/Lifetime'
-        dpdDelay:
-          $ref: '#/components/schemas/DPDTime'
-        dpdTimeout:
-          $ref: '#/components/schemas/DPDTime'
-        phase1:
-          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-        phase2:
-          $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-      allOf:
-      - $ref: '#/components/schemas/TunnelAuthConfig'
-      - type: object
-        properties:
-          remotePublicIP:
-            type: string
-            format: ipv4
-            description: Remote gateway public IP address
-          remoteID:
-            type: string
-            description: Remote gateway ID
-          description:
-            type: string
-            description: Optional tunnel description
-          features:
-            $ref: '#/components/schemas/NetworkFeaturesCreate'
-          routingType:
-            $ref: '#/components/schemas/RoutingType'
-          peakBandwidth:
-            $ref: '#/components/schemas/PeakBandwidth'
-    EnhancedIPSecSharedSettingsCreate:
-      allOf:
-      - $ref: '#/components/schemas/IPSecSharedSettings'
-      - type: object
-        properties:
-          features:
-            $ref: '#/components/schemas/NetworkFeaturesCreate'
-      - type: object
-        properties:
-          leftASN:
-            $ref: '#/components/schemas/RemoteASN'
-      required:
-      - features
-      - leftASN
-      additionalProperties: false
-    EnhancedTunnel:
-      allOf:
-      - $ref: '#/components/schemas/EnhancedTunnelBase'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: Enhanced tunnel ID
-          haTunnelID:
-            type: string
-            description: Enhanced dynamic tunnel group ID (or tunnel ID for static tunnel)
-          dpdAction:
-            type: string
-            description: Enhanced tunnel DPDTime actions.
-        required:
-        - id
-        - haTunnelID
-        - dpdAction
-    IPSecPhaseCommonV2_3:
-      type: object
-      properties:
-        keyExchangeMethod:
-          description: Key exchange method encryption
-          minLength: 0
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - modp1024
-            - modp1536
-            - modp2048
-            - ecp256
-            - ecp384
-            - ecp521
-            - curve25519
-      required:
-      - auth
-      - encryption
-      - keyExchangeMethod
-      additionalProperties: false
-    Lifetime:
-      type: string
-      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
-    PeakBandwidth:
-      type: integer
-      description: Expected peak throughput of the tunnel communication in Mbps. Typical connection will be of 1000Mbps.
-      minimum: 10
-      maximum: 8000
-      default: 1000
-    DynamicTunnelCreate:
-      type: object
-      properties:
-        tunnelName:
-          type: string
-          description: Name of the tunnel
-        description:
-          type: string
-          description: Optional description for the tunnel
-        tunnels:
-          type: array
-          description: List of tunnels
-          items:
-            $ref: '#/components/schemas/DynamicTunnelDetails'
-          minItems: 1
-          maxItems: 8
-        sharedSettings:
-          $ref: '#/components/schemas/EnhancedIPSecSharedSettingsCreate'
-        advancedSettings:
-          $ref: '#/components/schemas/IPSecAdvancedSettingsV2_3'
-      required:
-      - tunnelName
-      - tunnels
-      - sharedSettings
-      - advancedSettings
-    RoutingType:
-      type: string
-      description: Routing mode for the tunnel
-      enum:
-      - route
-      - policy
-      default: route
-    EnhancedTunnelBase:
-      allOf:
-      - $ref: '#/components/schemas/TunnelAuthConfig'
-      - type: object
-        properties:
-          regionID:
-            type: string
-            description: Target region ID
-          tunnelName:
-            type: string
-            description: Name of the static tunnel
-          p81GatewaySubnets:
-            type: array
-            items:
-              type: string
-            minItems: 1
-            description: Harmony Sase gateway subnets
-          remoteGatewaySubnets:
-            type: array
-            items:
-              type: string
-            minItems: 1
-            description: Remote gateway subnets
-          keyExchange:
-            type: string
-            description: IKE version for key exchange
-            enum:
-            - ikev1
-            - ikev2
-            default: ikev2
-          ikeLifeTime:
-            $ref: '#/components/schemas/Lifetime'
-          lifetime:
-            $ref: '#/components/schemas/Lifetime'
-          dpdDelay:
-            $ref: '#/components/schemas/DPDTime'
-          dpdTimeout:
-            $ref: '#/components/schemas/DPDTime'
-          phase1:
-            $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-          phase2:
-            $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-          remotePublicIP:
-            type: string
-            format: ipv4
-            description: Remote gateway public IP address
-          remoteID:
-            type: string
-            description: Remote gateway ID
-          description:
-            type: string
-            description: Optional tunnel description
-          features:
-            $ref: '#/components/schemas/NetworkFeatures'
-          routingType:
-            $ref: '#/components/schemas/RoutingType'
-          peakBandwidth:
-            $ref: '#/components/schemas/PeakBandwidth'
-        required:
-        - regionID
-        - tunnelName
-        - p81GatewaySubnets
-        - remoteGatewaySubnets
-        - keyExchange
-        - phase1
-        - phase2
-        - authType
-        - remotePublicIP
-        - remoteID
-        - features
-        - ikeLifeTime
-        - lifetime
-        - dpdDelay
-        - dpdTimeout
-    DPDTime:
-      type: string
-      pattern: ^([5-9]|[1-5][0-9]|60)s$
     DynamicTunnelUpdate:
       type: object
       properties:
@@ -928,7 +898,7 @@ components:
           $ref: '#/components/schemas/RoutingType'
       required:
       - tunnelName
-    IPSecAdvancedSettingsV2_3:
+    IPSecAdvancedSettingsUpdateV2_3:
       type: object
       properties:
         keyExchange:
@@ -948,15 +918,116 @@ components:
           $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
         phase2:
           $ref: '#/components/schemas/IPSecPhaseConfigV2_3'
-      required:
-      - keyExchange
-      - ikeLifeTime
-      - lifetime
-      - dpdDelay
-      - dpdTimeout
-      - phase1
-      - phase2
       additionalProperties: false
+    EnhancedTunnel:
+      allOf:
+      - $ref: '#/components/schemas/EnhancedTunnelBase'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Enhanced tunnel ID
+          haTunnelID:
+            type: string
+            description: Enhanced dynamic tunnel group ID (or tunnel ID for static tunnel)
+          dpdAction:
+            type: string
+            description: Enhanced tunnel DPDTime actions.
+        required:
+        - id
+        - haTunnelID
+        - dpdAction
+    DynamicTunnelCreate:
+      type: object
+      properties:
+        tunnelName:
+          type: string
+          description: Name of the tunnel
+        description:
+          type: string
+          description: Optional description for the tunnel
+        tunnels:
+          type: array
+          description: List of tunnels
+          items:
+            $ref: '#/components/schemas/DynamicTunnelDetails'
+          minItems: 1
+          maxItems: 8
+        sharedSettings:
+          $ref: '#/components/schemas/EnhancedIPSecSharedSettingsCreate'
+        advancedSettings:
+          $ref: '#/components/schemas/IPSecAdvancedSettingsV2_3'
+      required:
+      - tunnelName
+      - tunnels
+      - sharedSettings
+      - advancedSettings
+    NetworkFeatures:
+      type: object
+      properties:
+        cloudSecurity:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              default: false
+          required:
+          - enabled
+        symmetricInnerMesh:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              default: false
+          required:
+          - enabled
+        DNSServices:
+          type: object
+          properties:
+            redirectToResolver:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  default: true
+              required:
+              - enabled
+          required:
+          - redirectToResolver
+    EnhancedIPSecSharedSettingsCreate:
+      allOf:
+      - $ref: '#/components/schemas/IPSecSharedSettings'
+      - type: object
+        properties:
+          features:
+            $ref: '#/components/schemas/NetworkFeaturesCreate'
+      - type: object
+        properties:
+          leftASN:
+            $ref: '#/components/schemas/RemoteASN'
+      required:
+      - features
+      - leftASN
+      additionalProperties: false
+    DynamicTunnelDetailsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/TunnelAuthConfig'
+      - type: object
+        properties:
+          remotePublicIP:
+            type: string
+            format: ipv4
+            description: Remote gateway public IP address
+          remoteASN:
+            $ref: '#/components/schemas/ASN'
+          remoteID:
+            type: string
+            description: Remote gateway ID
+          routingType:
+            $ref: '#/components/schemas/RoutingTypeUpdate'
+    Lifetime:
+      type: string
+      pattern: ^((1[0-9]|[2-9][0-9]|[1-9][0-9]{2,3}|[1-7][0-9]{4}|8[0-5][0-9]{3}|86[0-3][0-9]{2}|86400)s)|(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-3][0-9][0-9]|14[0-3][0-9]|1440)m)|(([1-9]|1[0-9]|2[0-4])h)$
     AsyncOperationResponse:
       type: object
       properties:
@@ -964,90 +1035,19 @@ components:
           type: string
         samplingTime:
           type: integer
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-    RemoteASN:
+    ASN:
       type: integer
+      description: Autonomous System Number (ASN) for BGP routing. It will be automatically assigned an ASN once creating the first dynamic tunnel in this network. The network ASN can never be changed once it is set.
       oneOf:
-      - type: integer
-        minimum: 1
-        maximum: 23455
-      - type: integer
-        minimum: 23457
-        maximum: 64495
-      - type: integer
-        minimum: 64512
-        maximum: 65534
-      - type: integer
-        minimum: 131072
-        maximum: 4294967294
-  responses:
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
-    regionId:
-      name: regionId
-      in: path
-      required: true
-      schema:
-        type: string
-    dynamicTunnelId:
-      name: dynamicTunnelId
-      in: path
-      required: true
-      schema:
-        type: string
-    tunnelId:
-      name: tunnelId
-      in: path
-      required: true
-      schema:
-        type: string
+      - minimum: 1
+        maximum: 64496
+        description: Public ASN range
+      - minimum: 64512
+        maximum: 65535
+        description: Private ASN range (16-bit)
+      - minimum: 131072
+        maximum: 4294967295
+        description: Private ASN range (32-bit)
   securitySchemes:
     bearer:
       scheme: bearer

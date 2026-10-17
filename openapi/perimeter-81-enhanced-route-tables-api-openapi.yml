@@ -192,14 +192,8 @@ paths:
           $ref: '#/components/responses/404_NotFound'
 components:
   responses:
-    202_Accepted:
-      description: Request accepted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsyncOperationResponse'
-    401_Unauthorized:
-      description: Unauthorized
+    400_BadRequest:
+      description: Bad Request
       content:
         application/json:
           schema:
@@ -216,46 +210,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad Request
+    202_Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AsyncOperationResponse'
+    401_Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    routeId:
-      name: routeId
-      in: path
-      required: true
-      schema:
-        type: string
-    networkId:
-      name: networkId
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
-    EnhancedRouteTableDynamicCreate:
-      type: object
-      properties:
-        tunnelIds:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: All IDs of dynamic tunnels
-        subnets:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          uniqueItems: true
-          description: List of subnet CIDR blocks
-      required:
-      - tunnelIds
-      - subnets
     EnhancedRouteTable:
       type: object
       properties:
@@ -299,6 +266,33 @@ components:
       required:
       - tunnelId
       - subnets
+    Error:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+    EnhancedRouteTableDynamicCreate:
+      type: object
+      properties:
+        tunnelIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: All IDs of dynamic tunnels
+        subnets:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+          description: List of subnet CIDR blocks
+      required:
+      - tunnelIds
+      - subnets
     RouteTableUpdate:
       type: object
       properties:
@@ -318,13 +312,19 @@ components:
           type: string
         samplingTime:
           type: integer
-    Error:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
+  parameters:
+    networkId:
+      name: networkId
+      in: path
+      required: true
+      schema:
+        type: string
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearer:
       scheme: bearer
