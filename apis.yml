@@ -464,6 +464,8 @@ apis:
   humanURL: https://support.perimeter81.com/docs/api-getting-started
   baseURL: https://api.perimeter81.com/api/rest
   tags:
+  - Route-Table
+  tags_raw:
   - Route Table
   properties:
   - type: OpenAPI
