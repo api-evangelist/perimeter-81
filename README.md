@@ -64,6 +64,154 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Perimeter 81 is a company surfaced as a portfolio company of insight-partners and added to the API Evangelist network as a stub for enrichment. Sector: cybersecurity. This profile is a lead awaiting the enrichment pipeline.
+Perimeter 81 is a cloud-native Secure Access Service Edge (SASE) and Zero Trust Network Access (ZTNA) platform, now part of Check Point as Check Point Harmony SASE following its 2023 acquisition. It lets organizations build and manage secure, software-defined networks that connect a distributed workforce to on-premises resources, cloud infrastructure, and SaaS applications without legacy hardware appliances. The Harmony SASE Public API (v2.3) exposes programmatic control over networks, regions and points-of-presence, gateways, IPSec/WireGuard/OpenVPN tunnels, route tables, firewall policies, and network objects, using a two-step API-key-to-JWT access-token authentication model across US, EU, Australia, and India regional gateways.
 
-Backed by: insight-partners — https://www.perimeter81.com/
+**Areas:** Company · Cybersecurity · SASE · Zero Trust · Networking · VPN · ZTNA · Security · Cloud Security
+
+## Perimeter 81 on APIs.io
+
+Everything profiled for Perimeter 81 is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/perimeter-81/](https://apis.io/providers/perimeter-81/)** — or go straight to one of the APIs or properties below.
+
+### APIs (17)
+
+- [Perimeter 81 Application API](https://apis.io/apis/perimeter-81/perimeter-81-application-api/) — The Application API from Perimeter 81 — 3 operation(s) for application.
+- [Perimeter 81 Enhanced Networks API](https://apis.io/apis/perimeter-81/perimeter-81-enhanced-networks-api/) — The Enhanced Network API allows you to manage and configure enhanced networks.
+- [Perimeter 81 Enhanced Regions API](https://apis.io/apis/perimeter-81/perimeter-81-enhanced-regions-api/) — The Enhanced Region API allows you to manage and configure enhanced regions, including scale units.
+- [Perimeter 81 Enhanced Route Tables API](https://apis.io/apis/perimeter-81/perimeter-81-enhanced-route-tables-api/) — The Enhanced Route Tables API allows you to manage and configure enhanced route tables of static and dynamic tunnels.
+- [Perimeter 81 Enhanced Tunnels API](https://apis.io/apis/perimeter-81/perimeter-81-enhanced-tunnels-api/) — The Enhanced Tunnel API allows you to manage and configure enhanced tunnels.
+- [Perimeter 81 Firewall Policy API](https://apis.io/apis/perimeter-81/perimeter-81-firewall-policy-api/) — The Firewall Policy API from Perimeter 81 — 1 operation(s) for firewall policy.
+- [Perimeter 81 Gateways API](https://apis.io/apis/perimeter-81/perimeter-81-gateways-api/) — The Gateways API from Perimeter 81 — 2 operation(s) for gateways.
+- [Perimeter 81 IPSec-Redundant API](https://apis.io/apis/perimeter-81/perimeter-81-ipsec-redundant-api/) — The IPSec-Redundant API from Perimeter 81 — 2 operation(s) for ipsec-redundant.
+- [Perimeter 81 IPSec-Single API](https://apis.io/apis/perimeter-81/perimeter-81-ipsec-single-api/) — The IPSec-Single API from Perimeter 81 — 2 operation(s) for ipsec-single.
+- [Perimeter 81 Networks API](https://apis.io/apis/perimeter-81/perimeter-81-networks-api/) — This API allows you to manage and configure standard networks using the old API and keep you BC.
+- [Perimeter 81 Objects Addresses API](https://apis.io/apis/perimeter-81/perimeter-81-objects-addresses-api/) — The Objects Addresses API from Perimeter 81 — 2 operation(s) for objects addresses.
+- [Perimeter 81 Objects Services API](https://apis.io/apis/perimeter-81/perimeter-81-objects-services-api/) — The Objects Services API from Perimeter 81 — 2 operation(s) for objects services.
+- [Perimeter 81 OpenVPN API](https://apis.io/apis/perimeter-81/perimeter-81-openvpn-api/) — The OpenVPN API from Perimeter 81 — 2 operation(s) for openvpn.
+- [Perimeter 81 Regions API](https://apis.io/apis/perimeter-81/perimeter-81-regions-api/) — The Regions API from Perimeter 81 — 3 operation(s) for regions.
+- [Perimeter 81 Route Table API](https://apis.io/apis/perimeter-81/perimeter-81-route-table-api/) — The Route Table API from Perimeter 81 — 1 operation(s) for route table.
+- [Perimeter 81 Standard Networks API](https://apis.io/apis/perimeter-81/perimeter-81-standard-networks-api/) — The Standard Network API allows you to manage and configure standard networks.
+- [Perimeter 81 Wireguard API](https://apis.io/apis/perimeter-81/perimeter-81-wireguard-api/) — The Wireguard API from Perimeter 81 — 2 operation(s) for wireguard.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [perimeter-81](https://apis.io/servers/perimeter-81/perimeter-81/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Perimeter 81 Agentic Access](https://apis.io/agentic-access/perimeter-81/perimeter-81-agentic-access/)
+
+#### Collections (17)
+
+Postman and Open Collection request collections.
+
+- [Harmony SASE Public Application API](https://apis.io/collections/perimeter-81/open-perimeter-81-application-api/)
+- [Harmony SASE Public Application Enhanced Networks API](https://apis.io/collections/perimeter-81/open-perimeter-81-enhanced-networks-api/)
+- [Harmony SASE Public Application Enhanced Regions API](https://apis.io/collections/perimeter-81/open-perimeter-81-enhanced-regions-api/)
+- [Harmony SASE Public Application Enhanced Route Tables API](https://apis.io/collections/perimeter-81/open-perimeter-81-enhanced-route-tables-api/)
+- [Harmony SASE Public Application Enhanced Tunnels API](https://apis.io/collections/perimeter-81/open-perimeter-81-enhanced-tunnels-api/)
+- [Harmony SASE Public Application Firewall Policy API](https://apis.io/collections/perimeter-81/open-perimeter-81-firewall-policy-api/)
+- [Harmony SASE Public Application Gateways API](https://apis.io/collections/perimeter-81/open-perimeter-81-gateways-api/)
+- [Harmony SASE Public Application IPSec-Redundant API](https://apis.io/collections/perimeter-81/open-perimeter-81-ipsec-redundant-api/)
+- [Harmony SASE Public Application IPSec-Single API](https://apis.io/collections/perimeter-81/open-perimeter-81-ipsec-single-api/)
+- [Harmony SASE Public Application Networks API](https://apis.io/collections/perimeter-81/open-perimeter-81-networks-api/)
+- [Harmony SASE Public Application Objects Addresses API](https://apis.io/collections/perimeter-81/open-perimeter-81-objects-addresses-api/)
+- [Harmony SASE Public Application Objects Services API](https://apis.io/collections/perimeter-81/open-perimeter-81-objects-services-api/)
+- [Harmony SASE Public Application OpenVPN API](https://apis.io/collections/perimeter-81/open-perimeter-81-openvpn-api/)
+- [Harmony SASE Public Application Regions API](https://apis.io/collections/perimeter-81/open-perimeter-81-regions-api/)
+- [Harmony SASE Public Application Route Table API](https://apis.io/collections/perimeter-81/open-perimeter-81-route-table-api/)
+- [Harmony SASE Public Application Standard Networks API](https://apis.io/collections/perimeter-81/open-perimeter-81-standard-networks-api/)
+- [Harmony SASE Public Application Wireguard API](https://apis.io/collections/perimeter-81/open-perimeter-81-wireguard-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Perimeter 81 Openapi Overlay](https://apis.io/overlays/perimeter-81/perimeter-81-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Perimeter 81 Authentication](https://apis.io/security/perimeter-81/perimeter-81-authentication/)
+- [Perimeter 81 Domain Security](https://apis.io/security/perimeter-81/perimeter-81-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Perimeter 81 Plans Pricing](https://apis.io/plans/perimeter-81/perimeter-81-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.perimeter81.com/)
+- [Documentation](https://support.perimeter81.com/docs)
+- [Getting started](https://support.perimeter81.com/docs/api-getting-started)
+- [API reference](https://app.swaggerhub.com/apis/Check-Point/Harmony-SASE-API)
+- [Pricing](https://www.perimeter81.com/pricing)
+- [Support](https://support.perimeter81.com/)
+- [Blog](https://www.perimeter81.com/blog)
+- [Privacy policy](https://www.perimeter81.com/privacy-policy)
+- [Status](https://status.perimeter81.com/)
+
+## API Evangelist rating
+
+**Kin Score 28.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 52.9 |
+| Contract governance | 4.5 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 19.6 |
+| Access clarity | 10.5 |
+
+**Agent readiness 23.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/perimeter-81/](https://apis.io/providers/perimeter-81/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Perimeter 81: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/perimeter-81/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
